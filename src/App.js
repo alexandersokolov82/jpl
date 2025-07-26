@@ -1,104 +1,102 @@
 // src/App.js
 import React, { useState } from 'react';
-import { projectData as initialData } from './data';
-import { Breadcrumbs, DetailView, ListView } from './components';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Breadcrumbs, DetailView, CardListView } from './components';
+import { projectData } from './data';
 import './App.css';
 
 function App() {
-  const [projectData, setProjectData] = useState(initialData);
-  const [viewStack, setViewStack] = useState(['PROJ_001']);
+    const [data, setData] = useState(projectData);
+    const [viewStack, setViewStack] = useState(['PROJ_001']);
 
-  const handleDrillDown = (itemId) => {
-    setViewStack([...viewStack, itemId]);
-  };
-
-  const handleBreadcrumbClick = (index) => {
-    setViewStack(viewStack.slice(0, index + 1));
-  };
-
-  // --- НОВАЯ ФУНКЦИЯ (добавление записи) ---
-  const handleAddItem = (parentId) => {
-    const parent = projectData[parentId];
-    if (!parent) return;
-
-    let childType;
-    if (parent.type === 'project') childType = 'sequence';
-    else if (parent.type === 'sequence') childType = 'scene';
-    else if (parent.type === 'scene') childType = 'shot';
-    else return; // Нельзя добавить дочерний элемент к шоту
-
-    const newId = `${childType.toUpperCase()}_${Date.now()}`;
-    const newItem = {
-      id: newId,
-      type: childType,
-      name: `New ${childType}`,
-      code: newId,
-      description: 'A new item description.',
-      image: `https://picsum.photos/seed/${newId}/400/225`,
-      ...(childType !== 'shot' && { children: [] }), // Добавляем children, если это не шот
+    const handleDrillDown = (itemId) => {
+        setViewStack([...viewStack, itemId]);
     };
 
-    setProjectData(prevData => ({
-      ...prevData,
-      [newId]: newItem,
-      [parentId]: {
-        ...parent,
-        children: [...parent.children, newId],
-      },
-    }));
-  };
-  
-  // --- НОВАЯ ФУНКЦИЯ (переход к соседней записи) ---
-  const handleNavigateSibling = (direction) => {
-    if (viewStack.length < 2) return; // Нельзя перемещаться на уровне проекта
+    const handleBreadcrumbClick = (index) => {
+        setViewStack(viewStack.slice(0, index + 1));
+    };
 
-    const parentId = viewStack[viewStack.length - 2];
-    const parent = projectData[parentId];
-    const siblings = parent.children;
-    const currentId = viewStack[viewStack.length - 1];
-    const currentIndex = siblings.indexOf(currentId);
+    const handleAddItem = (parentId) => {
+        const parent = data[parentId];
+        if (!parent) return;
 
-    let newIndex = direction === 'next' ? currentIndex + 1 : currentIndex - 1;
+        let childType;
+        if (parent.type === 'project') childType = 'sequence';
+        else if (parent.type === 'sequence') childType = 'scene';
+        else if (parent.type === 'scene') childType = 'shot';
+        else return;
 
-    if (newIndex >= 0 && newIndex < siblings.length) {
-      const newId = siblings[newIndex];
-      setViewStack(prevStack => [...prevStack.slice(0, -1), newId]);
-    }
-  };
+        const newId = `${childType.toUpperCase()}_${Date.now()}`;
+        const newItem = {
+            id: newId,
+            type: childType,
+            name: `New ${childType}`,
+            code: newId,
+            description: 'A new item description.',
+            image: `https://picsum.photos/seed/${newId}/400/225`,
+            ...(childType !== 'shot' && { children: [] }),
+        };
 
-  const currentItemId = viewStack[viewStack.length - 1];
-  const currentItem = projectData[currentItemId];
+        setData(prevData => ({
+            ...prevData,
+            [newId]: newItem,
+            [parentId]: {
+                ...parent,
+                children: [...parent.children, newId],
+            },
+        }));
+    };
 
-  const breadcrumbItems = viewStack.map(itemId => projectData[itemId]);
-  const childItems = currentItem.children?.map(childId => projectData[childId]) || [];
+    const handleNavigateSibling = (direction) => {
+        if (viewStack.length < 2) return;
 
-  const getChildType = () => {
-    if (currentItem.type === 'project') return 'Sequences';
-    if (currentItem.type === 'sequence') return 'Scenes';
-    if (currentItem.type === 'scene') return 'Shots';
-    return null;
-  };
-  
-  return (
-    <div className="app-container">
-      <Breadcrumbs items={breadcrumbItems} onClick={handleBreadcrumbClick} />
-      <div className="main-content">
-        <DetailView 
-          item={currentItem}
-          onAddItem={() => handleAddItem(currentItemId)}
-          onNavigate={handleNavigateSibling}
-          isRoot={viewStack.length === 1}
-        />
-        {childItems.length > 0 && (
-          <ListView
-            items={childItems}
-            title={getChildType()}
-            onItemClick={handleDrillDown}
-          />
-        )}
-      </div>
-    </div>
-  );
+        const parentId = viewStack[viewStack.length - 2];
+        const parent = data[parentId];
+        const siblings = parent.children;
+        const currentId = viewStack[viewStack.length - 1];
+        const currentIndex = siblings.indexOf(currentId);
+
+        let newIndex = direction === 'next' ? currentIndex + 1 : currentIndex - 1;
+
+        if (newIndex >= 0 && newIndex < siblings.length) {
+            const newId = siblings[newIndex];
+            setViewStack(prevStack => [...prevStack.slice(0, -1), newId]);
+        }
+    };
+
+    const handleUpdateItem = (updatedItem) => {
+        setData(prevData => ({
+            ...prevData,
+            [updatedItem.id]: updatedItem,
+        }));
+    };
+
+    const currentItem = data[viewStack[viewStack.length - 1]];
+    const breadcrumbItems = viewStack.map(itemId => data[itemId]);
+    const childItems = currentItem.children?.map(childId => data[childId]) || [];
+
+    return (
+        <div className="app-container">
+            <Breadcrumbs items={breadcrumbItems} onClick={handleBreadcrumbClick} />
+            <div className="main-content">
+                <AnimatePresence mode="wait">
+                    <motion.div
+                        key={currentItem.id}
+                        initial={{ opacity: 0, x: -50 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: 50 }}
+                        transition={{ duration: 0.3 }}
+                    >
+                        <DetailView item={currentItem} onAddItem={() => handleAddItem(currentItem.id)} onNavigate={handleNavigateSibling} onUpdateItem={handleUpdateItem} />
+                    </motion.div>
+                </AnimatePresence>
+                <AnimatePresence>
+                    <CardListView items={childItems} onItemClick={handleDrillDown} />
+                </AnimatePresence>
+            </div>
+        </div>
+    );
 }
 
 export default App;
