@@ -2,11 +2,12 @@ export const projectData = {
     PROJ_001: {
         id: 'PROJ_001',
         type: 'project',
-        name: 'Cyberpunk City',
+        name: 'Untitled',
         code: 'CP-2077',
         description: 'A sprawling metropolis of the future, filled with high-tech wonders and dark secrets.',
         image: 'https://picsum.photos/seed/PROJ_001/400/225',
         children: ['SEQ_001', 'SEQ_002', 'SEQ_003', 'SEQ_004', 'SEQ_005'],
+        studio: 'Universal'
     },
     SEQ_001: {
         id: 'SEQ_001',
@@ -17,6 +18,7 @@ export const projectData = {
         image: 'https://picsum.photos/seed/SEQ_001/400/225',
         children: ['SC_001', 'SC_002', 'SC_003'],
         duration: 0,
+        studio: 'Universal'
     },
     SEQ_002: {
         id: 'SEQ_002',
@@ -27,6 +29,7 @@ export const projectData = {
         image: 'https://picsum.photos/seed/SEQ_002/400/225',
         children: ['SC_004', 'SC_005', 'SC_010'],
         duration: 0,
+        studio: 'Universal'
     },
     SEQ_003: {
         id: 'SEQ_003',
@@ -37,6 +40,7 @@ export const projectData = {
         image: 'https://picsum.photos/seed/SEQ_003/400/225',
         children: ['SC_006', 'SC_011', 'SC_012'],
         duration: 0,
+        studio: 'Universal'
     },
     SEQ_004: {
         id: 'SEQ_004',
@@ -46,6 +50,7 @@ export const projectData = {
         description: 'Dealing with the consequences of the heist.',
         image: 'https://picsum.photos/seed/SEQ_004/400/225',
         children: ['SC_007', 'SC_013', 'SC_014'],
+        studio: 'Universal'
     },
     SEQ_005: {
         id: 'SEQ_005',
@@ -55,6 +60,7 @@ export const projectData = {
         description: 'The final escape from the city.',
         image: 'https://picsum.photos/seed/SEQ_005/400/225',
         children: ['SC_008', 'SC_009', 'SC_015'],
+        studio: 'Universal'
     },
     SC_001: {
         id: 'SC_001',
@@ -65,6 +71,7 @@ export const projectData = {
         image: 'https://picsum.photos/seed/SC_001/400/225',
         children: ['SHOT_001', 'SHOT_002', 'SHOT_004', 'SHOT_005'],
         duration: 0,
+        studio: 'Universal'
     },
     SC_002: {
         id: 'SC_002',
@@ -75,6 +82,7 @@ export const projectData = {
         image: 'https://picsum.photos/seed/SC_002/400/225',
         children: ['SHOT_003', 'SHOT_006', 'SHOT_007', 'SHOT_008'],
         duration: 0,
+        studio: 'Universal'
     },
     SC_003: {
         id: 'SC_003',
@@ -85,6 +93,7 @@ export const projectData = {
         image: 'https://picsum.photos/seed/SC_003/400/225',
         children: ['SHOT_009', 'SHOT_010', 'SHOT_011', 'SHOT_012'],
         duration: 0,
+        studio: 'Universal'
     },
     SC_004: {
         id: 'SC_004',
@@ -95,6 +104,7 @@ export const projectData = {
         image: 'https://picsum.photos/seed/SC_004/400/225',
         children: ['SHOT_013', 'SHOT_014', 'SHOT_015', 'SHOT_016'],
         duration: 0,
+        studio: 'Universal'
     },
     SC_005: {
         id: 'SC_005',
@@ -105,6 +115,7 @@ export const projectData = {
         image: 'https://picsum.photos/seed/SC_005/400/225',
         children: ['SHOT_017', 'SHOT_018', 'SHOT_019', 'SHOT_020'],
         duration: 0,
+        studio: 'Universal'
     },
     SC_006: {
         id: 'SC_006',
@@ -115,6 +126,7 @@ export const projectData = {
         image: 'https://picsum.photos/seed/SC_006/400/225',
         children: ['SHOT_021', 'SHOT_022', 'SHOT_023', 'SHOT_024'],
         duration: 0,
+        studio: 'Universal'
     },
     SC_007: {
         id: 'SC_007',
@@ -125,6 +137,7 @@ export const projectData = {
         image: 'https://picsum.photos/seed/SC_007/400/225',
         children: ['SHOT_025', 'SHOT_026', 'SHOT_027', 'SHOT_028'],
         duration: 0,
+        studio: 'Universal'
     },
     SC_008: {
         id: 'SC_008',
@@ -135,6 +148,7 @@ export const projectData = {
         image: 'https://picsum.photos/seed/SC_008/400/225',
         children: ['SHOT_029', 'SHOT_030', 'SHOT_031', 'SHOT_032'],
         duration: 0,
+        studio: 'Universal'
     },
     SC_009: {
         id: 'SC_009',
@@ -145,6 +159,7 @@ export const projectData = {
         image: 'https://picsum.photos/seed/SC_009/400/225',
         children: ['SHOT_033', 'SHOT_034', 'SHOT_035', 'SHOT_036'],
         duration: 0,
+        studio: 'Universal'
     },
     SC_010: {
         id: 'SC_010',
@@ -155,6 +170,7 @@ export const projectData = {
         image: 'https://picsum.photos/seed/SC_010/400/225',
         children: ['SHOT_037', 'SHOT_038', 'SHOT_039', 'SHOT_040'],
         duration: 0,
+        studio: 'Universal'
     },
     SC_011: {
         id: 'SC_011',
@@ -165,6 +181,7 @@ export const projectData = {
         image: 'https://picsum.photos/seed/SC_011/400/225',
         children: ['SHOT_041', 'SHOT_042', 'SHOT_043', 'SHOT_044'],
         duration: 0,
+        studio: 'Universal'
     },
     SC_012: {
         id: 'SC_012',
@@ -175,6 +192,7 @@ export const projectData = {
         image: 'https://picsum.photos/seed/SC_012/400/225',
         children: ['SHOT_045', 'SHOT_046', 'SHOT_047', 'SHOT_048'],
         duration: 0,
+        studio: 'Universal'
     },
     SC_013: {
         id: 'SC_013',
@@ -185,6 +203,7 @@ export const projectData = {
         image: 'https://picsum.photos/seed/SC_013/400/225',
         children: ['SHOT_049', 'SHOT_050', 'SHOT_051', 'SHOT_052'],
         duration: 0,
+        studio: 'Universal'
     },
     SC_014: {
         id: 'SC_014',
@@ -195,6 +214,7 @@ export const projectData = {
         image: 'https://picsum.photos/seed/SC_014/400/225',
         children: ['SHOT_053', 'SHOT_054', 'SHOT_055', 'SHOT_056'],
         duration: 0,
+        studio: 'Universal'
     },
     SC_015: {
         id: 'SC_015',
@@ -204,6 +224,7 @@ export const projectData = {
         description: 'The final hurdle in the escape.',
         image: 'https://picsum.photos/seed/SC_015/400/225',
         children: ['SHOT_057', 'SHOT_058', 'SHOT_059', 'SHOT_060'],
+        studio: 'Universal'
     },
     SHOT_001: {
         id: 'SHOT_001',
@@ -213,6 +234,7 @@ export const projectData = {
         description: 'A wide establishing shot of the futuristic city skyline at dawn.',
         image: 'https://picsum.photos/seed/SHOT_001/400/225',
         duration: 120,
+        studio: 'Universal'
     },
     SHOT_002: {
         id: 'SHOT_002',
@@ -222,6 +244,7 @@ export const projectData = {
         description: 'A medium shot of the main character waking up in their apartment.',
         image: 'https://picsum.photos/seed/SHOT_002/400/225',
         duration: 180,
+        studio: 'Universal'
     },
     SHOT_003: {
         id: 'SHOT_003',
@@ -231,6 +254,7 @@ export const projectData = {
         description: 'A close-up on a holographic interface displaying critical information.',
         image: 'https://picsum.photos/seed/SHOT_003/400/225',
         duration: 90,
+        studio: 'Universal'
     },
     SHOT_004: {
         id: 'SHOT_004',
@@ -240,6 +264,7 @@ export const projectData = {
         description: 'A tracking shot following a character through a bustling market.',
         image: 'https://picsum.photos/seed/SHOT_004/400/225',
         duration: 240,
+        studio: 'Universal'
     },
     SHOT_005: {
         id: 'SHOT_005',
@@ -249,6 +274,7 @@ export const projectData = {
         description: 'An over-the-shoulder shot of the antagonist observing the city.',
         image: 'https://picsum.photos/seed/SHOT_005/400/225',
         duration: 150,
+        studio: 'Universal'
     },
     SHOT_006: {
         id: 'SHOT_006',
@@ -258,6 +284,7 @@ export const projectData = {
         description: 'A shot from the perspective of a security camera.',
         image: 'https://picsum.photos/seed/SHOT_006/400/225',
         duration: 60,
+        studio: 'Universal'
     },
     SHOT_007: {
         id: 'SHOT_007',
@@ -267,6 +294,7 @@ export const projectData = {
         description: 'A close-up of the netrunner hacking a keypad.',
         image: 'https://picsum.photos/seed/SHOT_007/400/225',
         duration: 75,
+        studio: 'Universal'
     },
     SHOT_008: {
         id: 'SHOT_008',
@@ -276,6 +304,7 @@ export const projectData = {
         description: 'A shot of a heavy security door sliding open.',
         image: 'https://picsum.photos/seed/SHOT_008/400/225',
         duration: 100,
+        studio: 'Universal'
     },
     SHOT_009: {
         id: 'SHOT_009',
@@ -285,6 +314,7 @@ export const projectData = {
         description: 'A shot of a laser grid deactivating.',
         image: 'https://picsum.photos/seed/SHOT_009/400/225',
         duration: 50,
+        studio: 'Universal'
     },
     SHOT_010: {
         id: 'SHOT_010',
@@ -294,6 +324,7 @@ export const projectData = {
         description: 'A close-up of the crew member grabbing the package.',
         image: 'https://picsum.photos/seed/SHOT_010/400/225',
         duration: 80,
+        studio: 'Universal'
     },
     SHOT_011: {
         id: 'SHOT_011',
@@ -303,6 +334,7 @@ export const projectData = {
         description: 'A shot of a red alarm light flashing.',
         image: 'https://picsum.photos/seed/SHOT_011/400/225',
         duration: 40,
+        studio: 'Universal'
     },
     SHOT_012: {
         id: 'SHOT_012',
@@ -312,6 +344,7 @@ export const projectData = {
         description: 'A shot of the team running out of the vault.',
         image: 'https://picsum.photos/seed/SHOT_012/400/225',
         duration: 110,
+        studio: 'Universal'
     },
     SHOT_013: {
         id: 'SHOT_013',
@@ -321,6 +354,7 @@ export const projectData = {
         description: 'A shot of the team knocking over a fruit stand.',
         image: 'https://picsum.photos/seed/SHOT_013/400/225',
         duration: 95,
+        studio: 'Universal'
     },
     SHOT_014: {
         id: 'SHOT_014',
@@ -330,6 +364,7 @@ export const projectData = {
         description: 'A shot of the protagonist jumping over a car.',
         image: 'https://picsum.photos/seed/SHOT_014/400/225',
         duration: 130,
+        studio: 'Universal'
     },
     SHOT_015: {
         id: 'SHOT_015',
@@ -339,6 +374,7 @@ export const projectData = {
         description: 'A shot of the protagonist sliding under a closing gate.',
         image: 'https://picsum.photos/seed/SHOT_015/400/225',
         duration: 70,
+        studio: 'Universal'
     },
     SHOT_016: {
         id: 'SHOT_016',
@@ -348,6 +384,7 @@ export const projectData = {
         description: 'A shot of the protagonist looking back at their pursuers.',
         image: 'https://picsum.photos/seed/SHOT_016/400/225',
         duration: 85,
+        studio: 'Universal'
     },
     SHOT_017: {
         id: 'SHOT_017',
@@ -357,6 +394,7 @@ export const projectData = {
         description: 'A shot of a car exploding on the highway.',
         image: 'https://picsum.photos/seed/SHOT_017/400/225',
         duration: 160,
+        studio: 'Universal'
     },
     SHOT_018: {
         id: 'SHOT_018',
@@ -366,6 +404,7 @@ export const projectData = {
         description: 'A close-up of a tire being shot out.',
         image: 'https://picsum.photos/seed/SHOT_018/400/225',
         duration: 55,
+        studio: 'Universal'
     },
     SHOT_019: {
         id: 'SHOT_019',
@@ -375,6 +414,7 @@ export const projectData = {
         description: 'A shot of the protagonist jumping from one car to another.',
         image: 'https://picsum.photos/seed/SHOT_019/400/225',
         duration: 140,
+        studio: 'Universal'
     },
     SHOT_020: {
         id: 'SHOT_020',
@@ -384,6 +424,7 @@ export const projectData = {
         description: 'A shot of a helicopter flying overhead.',
         image: 'https://picsum.photos/seed/SHOT_020/400/225',
         duration: 115,
+        studio: 'Universal'
     },
     SHOT_021: {
         id: 'SHOT_021',
@@ -393,6 +434,7 @@ export const projectData = {
         description: 'A close-up of the protagonist and antagonist drawing their weapons.',
         image: 'https://picsum.photos/seed/SHOT_021/400/225',
         duration: 90,
+        studio: 'Universal'
     },
     SHOT_022: {
         id: 'SHOT_022',
@@ -402,6 +444,7 @@ export const projectData = {
         description: 'A shot of an intense staredown between the two characters.',
         image: 'https://picsum.photos/seed/SHOT_022/400/225',
         duration: 105,
+        studio: 'Universal'
     },
     SHOT_023: {
         id: 'SHOT_023',
@@ -411,6 +454,7 @@ export const projectData = {
         description: 'A shot of rain pouring down on the rooftop.',
         image: 'https://picsum.photos/seed/SHOT_023/400/225',
         duration: 70,
+        studio: 'Universal'
     },
     SHOT_024: {
         id: 'SHOT_024',
@@ -420,6 +464,7 @@ export const projectData = {
         description: 'A shot of the first shot being fired.',
         image: 'https://picsum.photos/seed/SHOT_024/400/225',
         duration: 65,
+        studio: 'Universal'
     },
     SHOT_025: {
         id: 'SHOT_025',
@@ -429,6 +474,7 @@ export const projectData = {
         description: 'A shot of the crew cleaning their weapons.',
         image: 'https://picsum.photos/seed/SHOT_025/400/225',
         duration: 80,
+        studio: 'Universal'
     },
     SHOT_026: {
         id: 'SHOT_026',
@@ -438,6 +484,7 @@ export const projectData = {
         description: 'A shot of a crew member tending to their wounds.',
         image: 'https://picsum.photos/seed/SHOT_026/400/225',
         duration: 95,
+        studio: 'Universal'
     },
     SHOT_027: {
         id: 'SHOT_027',
@@ -447,6 +494,7 @@ export const projectData = {
         description: 'A shot of the crew looking at their score.',
         image: 'https://picsum.photos/seed/SHOT_027/400/225',
         duration: 110,
+        studio: 'Universal'
     },
     SHOT_028: {
         id: 'SHOT_028',
@@ -456,6 +504,7 @@ export const projectData = {
         description: 'A shot of the crew planning their next move.',
         image: 'https://picsum.photos/seed/SHOT_028/400/225',
         duration: 125,
+        studio: 'Universal'
     },
     SHOT_029: {
         id: 'SHOT_029',
@@ -465,6 +514,7 @@ export const projectData = {
         description: 'A shot of the protagonist buying tickets at the mag-lev station.',
         image: 'https://picsum.photos/seed/SHOT_029/400/225',
         duration: 70,
+        studio: 'Universal'
     },
     SHOT_030: {
         id: 'SHOT_030',
@@ -474,6 +524,7 @@ export const projectData = {
         description: 'A shot of the protagonist spotting an enemy in the crowd.',
         image: 'https://picsum.photos/seed/SHOT_030/400/225',
         duration: 85,
+        studio: 'Universal'
     },
     SHOT_031: {
         id: 'SHOT_031',
@@ -483,6 +534,7 @@ export const projectData = {
         description: 'A shot of the protagonist boarding the train.',
         image: 'https://picsum.photos/seed/SHOT_031/400/225',
         duration: 100,
+        studio: 'Universal'
     },
     SHOT_032: {
         id: 'SHOT_032',
@@ -492,6 +544,7 @@ export const projectData = {
         description: 'A shot of the train doors closing.',
         image: 'https://picsum.photos/seed/SHOT_032/400/225',
         duration: 60,
+        studio: 'Universal'
     },
     SHOT_033: {
         id: 'SHOT_033',
@@ -501,6 +554,7 @@ export const projectData = {
         description: 'A shot of the protagonist looking out the window as the train leaves the city.',
         image: 'https://picsum.photos/seed/SHOT_033/400/225',
         duration: 120,
+        studio: 'Universal'
     },
     SHOT_034: {
         id: 'SHOT_034',
@@ -510,6 +564,7 @@ export const projectData = {
         description: 'A shot of the city skyline receding in the distance.',
         image: 'https://picsum.photos/seed/SHOT_034/400/225',
         duration: 150,
+        studio: 'Universal'
     },
     SHOT_035: {
         id: 'SHOT_035',
@@ -519,6 +574,7 @@ export const projectData = {
         description: 'A close-up of the protagonist showing a sense of relief.',
         image: 'https://picsum.photos/seed/SHOT_035/400/225',
         duration: 90,
+        studio: 'Universal'
     },
     SHOT_036: {
         id: 'SHOT_036',
@@ -528,6 +584,7 @@ export const projectData = {
         description: 'The screen fades to black.',
         image: 'https://picsum.photos/seed/SHOT_036/400/225',
         duration: 30,
+        studio: 'Universal'
     },
     SHOT_037: {
         id: 'SHOT_037',
@@ -537,6 +594,7 @@ export const projectData = {
         description: 'A shot of the protagonist dodging traffic on the freeway overpass.',
         image: 'https://picsum.photos/seed/SHOT_037/400/225',
         duration: 110,
+        studio: 'Universal'
     },
     SHOT_038: {
         id: 'SHOT_038',
@@ -546,6 +604,7 @@ export const projectData = {
         description: 'A shot of the protagonist jumping to a lower level of the freeway.',
         image: 'https://picsum.photos/seed/SHOT_038/400/225',
         duration: 80,
+        studio: 'Universal'
     },
     SHOT_039: {
         id: 'SHOT_039',
@@ -555,6 +614,7 @@ export const projectData = {
         description: 'A shot of a massive car pile-up.',
         image: 'https://picsum.photos/seed/SHOT_039/400/225',
         duration: 130,
+        studio: 'Universal'
     },
     SHOT_040: {
         id: 'SHOT_040',
@@ -564,6 +624,7 @@ export const projectData = {
         description: 'A shot of the protagonist escaping into the city streets below.',
         image: 'https://picsum.photos/seed/SHOT_040/400/225',
         duration: 95,
+        studio: 'Universal'
     },
     SHOT_041: {
         id: 'SHOT_041',
@@ -573,6 +634,7 @@ export const projectData = {
         description: 'A shot of the protagonist running towards the helipad.',
         image: 'https://picsum.photos/seed/SHOT_041/400/225',
         duration: 70,
+        studio: 'Universal'
     },
     SHOT_042: {
         id: 'SHOT_042',
@@ -580,8 +642,9 @@ export const projectData = {
         name: 'Jumping into the helicopter',
         code: 'S03-SC02-SH02',
         description: 'A shot of the protagonist jumping into the helicopter.',
-        image: 'https://picsum.photos/seed/SHOT_042/400/225',
+        image: 'https://picsum.photos/seed/SHOT_042/400/22.5',
         duration: 85,
+        studio: 'Universal'
     },
     SHOT_043: {
         id: 'SHOT_043',
@@ -591,6 +654,7 @@ export const projectData = {
         description: 'A shot of the helicopter taking off from the helipad.',
         image: 'https://picsum.photos/seed/SHOT_043/400/225',
         duration: 100,
+        studio: 'Universal'
     },
     SHOT_044: {
         id: 'SHOT_044',
@@ -600,6 +664,7 @@ export const projectData = {
         description: 'A shot of the protagonist looking down at the city from the helicopter.',
         image: 'https://picsum.photos/seed/SHOT_044/400/225',
         duration: 115,
+        studio: 'Universal'
     },
     SHOT_045: {
         id: 'SHOT_045',
@@ -609,6 +674,7 @@ export const projectData = {
         description: 'A shot of the protagonist walking through the rooftop garden.',
         image: 'https://picsum.photos/seed/SHOT_045/400/225',
         duration: 90,
+        studio: 'Universal'
     },
     SHOT_046: {
         id: 'SHOT_046',
@@ -618,6 +684,7 @@ export const projectData = {
         description: 'A shot of the protagonist looking at the city lights.',
         image: 'https://picsum.photos/seed/SHOT_046/400/225',
         duration: 105,
+        studio: 'Universal'
     },
     SHOT_047: {
         id: 'SHOT_047',
@@ -627,6 +694,7 @@ export const projectData = {
         description: 'A shot of the protagonist having a moment of peace.',
         image: 'https://picsum.photos/seed/SHOT_047/400/225',
         duration: 70,
+        studio: 'Universal'
     },
     SHOT_048: {
         id: 'SHOT_048',
@@ -636,6 +704,7 @@ export const projectData = {
         description: 'A shot of the protagonist leaving the garden.',
         image: 'https://picsum.photos/seed/SHOT_048/400/225',
         duration: 65,
+        studio: 'Universal'
     },
     SHOT_049: {
         id: 'SHOT_049',
@@ -645,6 +714,7 @@ export const projectData = {
         description: 'A shot of the protagonist sitting at the interrogation table.',
         image: 'https://picsum.photos/seed/SHOT_049/400/225',
         duration: 80,
+        studio: 'Universal'
     },
     SHOT_050: {
         id: 'SHOT_050',
@@ -654,6 +724,7 @@ export const projectData = {
         description: 'A shot of the protagonist being intensely questioned.',
         image: 'https://picsum.photos/seed/SHOT_050/400/225',
         duration: 95,
+        studio: 'Universal'
     },
     SHOT_051: {
         id: 'SHOT_051',
@@ -663,6 +734,7 @@ export const projectData = {
         description: 'A shot of the protagonist showing a moment of defiance.',
         image: 'https://picsum.photos/seed/SHOT_051/400/225',
         duration: 110,
+        studio: 'Universal'
     },
     SHOT_052: {
         id: 'SHOT_052',
@@ -672,6 +744,7 @@ export const projectData = {
         description: 'A shot of the protagonist leaving the interrogation room.',
         image: 'https://picsum.photos/seed/SHOT_052/400/225',
         duration: 125,
+        studio: 'Universal'
     },
     SHOT_053: {
         id: 'SHOT_053',
@@ -681,6 +754,7 @@ export const projectData = {
         description: 'A shot of the team looking at the evidence board.',
         image: 'https://picsum.photos/seed/SHOT_053/400/225',
         duration: 70,
+        studio: 'Universal'
     },
     SHOT_054: {
         id: 'SHOT_054',
@@ -690,6 +764,7 @@ export const projectData = {
         description: 'A shot of a crew member connecting the dots on the board.',
         image: 'https://picsum.photos/seed/SHOT_054/400/225',
         duration: 85,
+        studio: 'Universal'
     },
     SHOT_055: {
         id: 'SHOT_055',
@@ -699,6 +774,7 @@ export const projectData = {
         description: 'A shot of a crew member having a moment of realization.',
         image: 'https://picsum.photos/seed/SHOT_055/400/225',
         duration: 100,
+        studio: 'Universal'
     },
     SHOT_056: {
         id: 'SHOT_056',
@@ -708,6 +784,7 @@ export const projectData = {
         description: 'A shot of the team getting ready to leave.',
         image: 'https://picsum.photos/seed/SHOT_056/400/225',
         duration: 60,
+        studio: 'Universal'
     },
     SHOT_057: {
         id: 'SHOT_057',
@@ -717,6 +794,7 @@ export const projectData = {
         description: 'A shot of the protagonist showing fake passports to the border guard.',
         image: 'https://picsum.photos/seed/SHOT_057/400/225',
         duration: 120,
+        studio: 'Universal'
     },
     SHOT_058: {
         id: 'SHOT_058',
@@ -726,6 +804,7 @@ export const projectData = {
         description: 'A tense moment as the guard inspects the passports.',
         image: 'https://picsum.photos/seed/SHOT_058/400/225',
         duration: 150,
+        studio: 'Universal'
     },
     SHOT_059: {
         id: 'SHOT_059',
@@ -735,6 +814,7 @@ export const projectData = {
         description: 'A shot of the guard waving them through.',
         image: 'https://picsum.photos/seed/SHOT_059/400/225',
         duration: 90,
+        studio: 'Universal'
     },
     SHOT_060: {
         id: 'SHOT_060',
@@ -744,5 +824,6 @@ export const projectData = {
         description: 'A shot of the car driving away from the border.',
         image: 'https://picsum.photos/seed/SHOT_060/400/225',
         duration: 30,
+        studio: 'Universal'
     },
 };

@@ -19,6 +19,7 @@ export const DetailView = ({ item, onAddItem, onNavigate, onUpdateItem }) => {
     const [editedDescription, setEditedDescription] = React.useState(item.description);
     const [editedChildrenCount, setEditedChildrenCount] = React.useState(item.children ? item.children.length : 0);
     const [editedDuration, setEditedDuration] = React.useState(item.duration);
+    const [editedStudio, setEditedStudio] = React.useState(item.studio);
     const [showModal, setShowModal] = React.useState(false);
 
     React.useEffect(() => {
@@ -26,6 +27,7 @@ export const DetailView = ({ item, onAddItem, onNavigate, onUpdateItem }) => {
         setEditedDescription(item.description);
         setEditedChildrenCount(item.children ? item.children.length : 0);
         setEditedDuration(item.duration);
+        setEditedStudio(item.studio);
     }, [item]);
 
     const childTypeName = {
@@ -39,7 +41,7 @@ export const DetailView = ({ item, onAddItem, onNavigate, onUpdateItem }) => {
     };
 
     const handleSaveClick = () => {
-        const updatedItem = { ...item, code: editedCode, description: editedDescription };
+        const updatedItem = { ...item, code: editedCode, description: editedDescription, studio: editedStudio };
         if (item.type === 'shot') {
             updatedItem.duration = editedDuration;
         }
@@ -52,6 +54,7 @@ export const DetailView = ({ item, onAddItem, onNavigate, onUpdateItem }) => {
         setEditedDescription(item.description);
         setEditedChildrenCount(item.children ? item.children.length : 0);
         setEditedDuration(item.duration);
+        setEditedStudio(item.studio);
         setIsEditing(false);
     };
 
@@ -60,6 +63,7 @@ export const DetailView = ({ item, onAddItem, onNavigate, onUpdateItem }) => {
         if (name === 'code') setEditedCode(value);
         else if (name === 'description') setEditedDescription(value);
         else if (name === 'duration') setEditedDuration(Number(value));
+        else if (name === 'studio') setEditedStudio(value);
     };
 
     const handleImageUploaded = (itemId, newImage) => {
@@ -86,6 +90,17 @@ export const DetailView = ({ item, onAddItem, onNavigate, onUpdateItem }) => {
                         <textarea name="description" value={editedDescription} onChange={handleChange} />
                     ) : (
                         <p>{item.description}</p>
+                    )}
+
+                    <span>Studio</span>
+                    {isEditing ? (
+                        <select name="studio" value={editedStudio} onChange={handleChange}>
+                            <option value="Universal">Universal</option>
+                            <option value="Warner Bros.">Warner Bros.</option>
+                            <option value="Sony">Sony</option>
+                        </select>
+                    ) : (
+                        <p>{item.studio}</p>
                     )}
 
                     {item.type === 'scene' && item.children && (
@@ -172,9 +187,43 @@ export const DetailView = ({ item, onAddItem, onNavigate, onUpdateItem }) => {
 };
 
 export const CardListView = ({ items, onItemClick }) => {
-    const getChildTypeLabel = () => {
-        if (!items || items.length === 0) return 'Items';
-        const type = items[0].type;
+    const [sortConfig, setSortConfig] = React.useState({ key: 'name', direction: 'ascending' });
+
+    const sortedItems = React.useMemo(() => {
+        let sortableItems = [...items];
+        if (sortConfig !== null) {
+            sortableItems.sort((a, b) => {
+                let aValue = a[sortConfig.key];
+                let bValue = b[sortConfig.key];
+
+                if (sortConfig.key === 'children') {
+                    aValue = a.children ? a.children.length : (a.duration || 0);
+                    bValue = b.children ? b.children.length : (b.duration || 0);
+                }
+
+                if (aValue < bValue) {
+                    return sortConfig.direction === 'ascending' ? -1 : 1;
+                }
+                if (aValue > bValue) {
+                    return sortConfig.direction === 'ascending' ? 1 : -1;
+                }
+                return 0;
+            });
+        }
+        return sortableItems;
+    }, [items, sortConfig]);
+
+    const requestSort = (key) => {
+        let direction = 'ascending';
+        if (sortConfig.key === key && sortConfig.direction === 'ascending') {
+            direction = 'descending';
+        }
+        setSortConfig({ key, direction });
+    };
+
+    const getChildTypeLabel = (item) => {
+        if (!item) return 'Items';
+        const type = item.type;
         if (type === 'project') return 'Sequences';
         if (type === 'sequence') return 'Scenes';
         if (type === 'scene') return 'Shots';
@@ -182,19 +231,27 @@ export const CardListView = ({ items, onItemClick }) => {
         return 'Items';
     }
 
+    const getSortIndicator = (key) => {
+        if (sortConfig.key === key) {
+            return sortConfig.direction === 'ascending' ? '▲' : '▼';
+        }
+        return '▲';
+    };
+
     return (
         <div className="card-list-view">
             <div className="card-header">
             </div>
             <div className="card-grid">
                 <div className="card-list-header">
-                    <div>Thumbnail</div>
-                    <div>Code</div>
-                    <div>Name</div>
-                    <div>Description</div>
-                    <div>{getChildTypeLabel()}</div>
+                    <div className="header-item">Thumbnail <button onClick={() => requestSort('image')} className="sort-button">{getSortIndicator('image')}</button></div>
+                    <div className="header-item">Code <button onClick={() => requestSort('code')} className="sort-button">{getSortIndicator('code')}</button></div>
+                    <div className="header-item">Name <button onClick={() => requestSort('name')} className="sort-button">{getSortIndicator('name')}</button></div>
+                    <div className="header-item">Description <button onClick={() => requestSort('description')} className="sort-button">{getSortIndicator('description')}</button></div>
+                    <div className="header-item">Studio <button onClick={() => requestSort('studio')} className="sort-button">{getSortIndicator('studio')}</button></div>
+                    <div className="header-item">Info <button onClick={() => requestSort('children')} className="sort-button">{getSortIndicator('children')}</button></div>
                 </div>
-                {items.map((item, index) => (
+                {sortedItems.map((item, index) => (
                     <motion.div
                         key={item.id}
                         className="card"
@@ -215,15 +272,18 @@ export const CardListView = ({ items, onItemClick }) => {
                         <div className="card-column card-column-description">
                             <p className="card-description">{item.description}</p>
                         </div>
+                        <div className="card-column card-column-studio">
+                            <p className="card-studio">{item.studio}</p>
+                        </div>
                         <div className="card-column card-column-info">
                             {item.type === 'project' && item.children && (
-                                <p>{item.children.length} Sequences</p>
+                                <p>{item.children.length} {getChildTypeLabel(item)}</p>
                             )}
                             {item.type === 'sequence' && item.children && (
-                                <p>{item.children.length} Scenes</p>
+                                <p>{item.children.length} {getChildTypeLabel(item)}</p>
                             )}
                             {item.type === 'scene' && item.children && (
-                                <p>{item.children.length} Shots</p>
+                                <p>{item.children.length} {getChildTypeLabel(item)}</p>
                             )}
                             {item.type === 'shot' && (item.duration !== undefined) && (
                                 <p className="card-duration">{item.duration} frames</p>
