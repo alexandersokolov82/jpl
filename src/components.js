@@ -15,6 +15,7 @@ export const Breadcrumbs = ({ items, onClick }) => (
 
 export const DetailView = ({ item, onAddItem, onNavigate, onUpdateItem }) => {
     const [isEditing, setIsEditing] = React.useState(false);
+    const [editedName, setEditedName] = React.useState(item.name);
     const [editedCode, setEditedCode] = React.useState(item.code || item.id);
     const [editedDescription, setEditedDescription] = React.useState(item.description);
     const [editedChildrenCount, setEditedChildrenCount] = React.useState(item.children ? item.children.length : 0);
@@ -23,6 +24,7 @@ export const DetailView = ({ item, onAddItem, onNavigate, onUpdateItem }) => {
     const [showModal, setShowModal] = React.useState(false);
 
     React.useEffect(() => {
+        setEditedName(item.name);
         setEditedCode(item.code || item.id);
         setEditedDescription(item.description);
         setEditedChildrenCount(item.children ? item.children.length : 0);
@@ -41,7 +43,7 @@ export const DetailView = ({ item, onAddItem, onNavigate, onUpdateItem }) => {
     };
 
     const handleSaveClick = () => {
-        const updatedItem = { ...item, code: editedCode, description: editedDescription, studio: editedStudio };
+        const updatedItem = { ...item, name: editedName, code: editedCode, description: editedDescription, studio: editedStudio };
         if (item.type === 'shot') {
             updatedItem.duration = editedDuration;
         }
@@ -50,6 +52,7 @@ export const DetailView = ({ item, onAddItem, onNavigate, onUpdateItem }) => {
     };
 
     const handleCancelClick = () => {
+        setEditedName(item.name);
         setEditedCode(item.code || item.id);
         setEditedDescription(item.description);
         setEditedChildrenCount(item.children ? item.children.length : 0);
@@ -60,7 +63,8 @@ export const DetailView = ({ item, onAddItem, onNavigate, onUpdateItem }) => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        if (name === 'code') setEditedCode(value);
+        if (name === 'name') setEditedName(value);
+        else if (name === 'code') setEditedCode(value);
         else if (name === 'description') setEditedDescription(value);
         else if (name === 'duration') setEditedDuration(Number(value));
         else if (name === 'studio') setEditedStudio(value);
@@ -74,7 +78,11 @@ export const DetailView = ({ item, onAddItem, onNavigate, onUpdateItem }) => {
         <div className="detail-view-container">
             <div className="detail-content">
                 <div className="detail-header">
-                    <h2>{item.name}</h2>
+                    {isEditing ? (
+                        <input type="text" name="name" value={editedName} onChange={handleChange} />
+                    ) : (
+                        <h2>{item.name}</h2>
+                    )}
                     <span className="item-type">{item.type}</span>
                 </div>
                 <div className="detail-grid">

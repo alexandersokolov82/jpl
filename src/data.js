@@ -2,7 +2,7 @@ export const projectData = {
     PROJ_001: {
         id: 'PROJ_001',
         type: 'project',
-        name: 'Untitled',
+        name: 'Deep Space 5',
         code: 'CP-2077',
         description: 'A sprawling metropolis of the future, filled with high-tech wonders and dark secrets.',
         image: 'https://picsum.photos/seed/PROJ_001/400/225',
