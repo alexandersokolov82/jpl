@@ -37,6 +37,39 @@ body {
   margin: 0 auto;
 }
 
+/* Tab Navigation */
+.tab-navigation {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 0;
+}
+
+.tab-button {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  transition: all 0.2s ease;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  position: relative;
+}
+
+.tab-button:hover {
+  color: var(--text-primary);
+  background-color: var(--bg-surface-raised);
+}
+
+.tab-button.active {
+  color: var(--accent-primary);
+  border-bottom-color: var(--accent-primary);
+}
+
 .breadcrumbs {
   margin-bottom: 1.5rem;
   font-size: 1.1rem;
@@ -389,9 +422,387 @@ body {
   color: var(--text-primary);
 }
 
+/* Input validation styles */
+.detail-grid input,
+.detail-grid textarea,
+.detail-grid select {
+  padding: 0.5rem;
+  border-radius: var(--border-radius-sm);
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+}
+
+.detail-grid input:focus,
+.detail-grid textarea:focus,
+.detail-grid select:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+}
+
+.detail-grid input.invalid,
+.detail-grid textarea.invalid,
+.detail-grid select.invalid {
+  border-color: var(--accent-danger);
+}
+
+.detail-grid textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.detail-header input {
+  padding: 0.5rem;
+  border-radius: var(--border-radius-sm);
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 2rem;
+  font-weight: 700;
+  width: 100%;
+  transition: border-color 0.2s ease;
+}
+
+.detail-header input:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+}
+
+.detail-header input.invalid {
+  border-color: var(--accent-danger);
+}
+
 .modal-footer {
   display: flex;
   justify-content: flex-end;
   gap: 0.5rem;
   margin-top: 1.5rem;
+}
+
+/* Previs Shots View */
+.previs-shots-view {
+  margin-top: 2rem;
+}
+
+.shots-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.shot-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.shot-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent-primary);
+  box-shadow: var(--shadow-lg);
+}
+
+.shot-thumbnail {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  background-color: var(--bg-surface-raised);
+}
+
+.shot-name {
+  margin: 0.75rem 0.75rem 0.25rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.shot-code {
+  margin: 0 0.75rem 0.75rem;
+  font-size: 0.8rem;
+  color: var(--text-tertiary);
+  font-weight: 500;
+}
+
+/* Placeholder View */
+.placeholder-view {
+  margin-top: 4rem;
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.placeholder-view h2 {
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+/* Previs Assets View */
+.previs-assets-view {
+  margin-top: 2rem;
+}
+
+.asset-category {
+  margin-bottom: 3rem;
+}
+
+.category-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.assets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.25rem;
+}
+
+.asset-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.asset-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent-primary);
+  box-shadow: var(--shadow-lg);
+}
+
+.asset-thumbnail {
+  width: 100%;
+  height: 110px;
+  object-fit: cover;
+  background-color: var(--bg-surface-raised);
+}
+
+.asset-name {
+  margin: 0.65rem 0.65rem 0.65rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-align: center;
+}
+
+/* Previs Budget View */
+.previs-budget-view {
+  margin-top: 2rem;
+}
+
+.budget-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.budget-header h2 {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.budget-summary {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+}
+
+.budget-summary strong {
+  color: var(--accent-primary);
+  font-size: 1.3rem;
+  margin-left: 0.5rem;
+}
+
+.budget-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--bg-surface);
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+}
+
+.budget-table thead {
+  background-color: var(--bg-surface-raised);
+}
+
+.budget-table th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.budget-table th:nth-child(3),
+.budget-table th:nth-child(4),
+.budget-table th:nth-child(5),
+.budget-table th:nth-child(6) {
+  text-align: center;
+}
+
+.budget-table tbody tr {
+  border-bottom: 1px solid var(--border-color);
+  transition: background-color 0.2s ease;
+}
+
+.budget-table tbody tr:hover {
+  background-color: var(--bg-surface-raised);
+}
+
+.budget-table td {
+  padding: 0.875rem 1rem;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+}
+
+.category-cell {
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.number-cell {
+  text-align: center;
+  font-family: 'Courier New', monospace;
+}
+
+.total-cell {
+  text-align: center;
+  font-weight: 700;
+  color: var(--accent-primary);
+  font-family: 'Courier New', monospace;
+}
+
+.budget-table tfoot {
+  background-color: var(--bg-surface-raised);
+  border-top: 2px solid var(--border-color);
+}
+
+.budget-table tfoot td {
+  padding: 1rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.total-label {
+  text-align: right;
+  color: var(--text-secondary);
+}
+
+.total-value {
+  text-align: center;
+  color: var(--accent-primary);
+  font-size: 1.3rem;
+  font-family: 'Courier New', monospace;
+}
+
+/* Editable cells */
+.editable-cell {
+  cursor: pointer;
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.editable-cell:hover {
+  background-color: var(--bg-surface-hover);
+  box-shadow: 0 0 0 2px var(--accent-primary);
+}
+
+.editable-input {
+  width: 100%;
+  padding: 0.25rem 0.5rem;
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  border: 2px solid var(--accent-primary);
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.95rem;
+  text-align: center;
+  outline: none;
+}
+
+.editable-input:focus {
+  border-color: var(--accent-primary-hover);
+}
+
+/* Budget Sections */
+.budget-section {
+  margin-bottom: 2rem;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+}
+
+.budget-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background-color: var(--bg-surface-raised);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.budget-section-header:hover {
+  background-color: var(--bg-surface-hover);
+}
+
+.budget-section-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.budget-section-info {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  font-size: 0.95rem;
+}
+
+.item-count {
+  color: var(--text-secondary);
+}
+
+.section-total {
+  color: var(--accent-primary);
+  font-weight: 700;
+  font-family: 'Courier New', monospace;
+}
+
+.collapse-icon {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  transition: transform 0.3s ease;
+}
+
+.collapse-icon.collapsed {
+  transform: rotate(-90deg);
+}
+
+.budget-section .budget-table {
+  border-radius: 0;
+  border: none;
 }

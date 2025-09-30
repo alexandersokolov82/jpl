@@ -1,829 +1,1419 @@
 export const projectData = {
-    PROJ_001: {
+    'PROJ_001': {
         id: 'PROJ_001',
         type: 'project',
-        name: 'Deep Space 5',
-        code: 'CP-2077',
-        description: 'A sprawling metropolis of the future, filled with high-tech wonders and dark secrets.',
-        image: 'https://picsum.photos/seed/PROJ_001/400/225',
-        children: ['SEQ_001', 'SEQ_002', 'SEQ_003', 'SEQ_004', 'SEQ_005'],
-        studio: 'Universal'
+        name: 'The Shining',
+        code: 'SHINING-1980',
+        description: 'A family heads to an isolated hotel for the winter where a sinister presence influences the father into violence, while his psychic son sees horrific forebodings from both past and future.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0059.jpg',
+        children: ['SEQ01', 'SEQ02', 'SEQ03', 'SEQ04', 'SEQ05', 'SEQ06', 'SEQ07', 'SEQ08', 'SEQ09'],
+        studio: 'Warner Bros.'
     },
-    SEQ_001: {
-        id: 'SEQ_001',
+    'SEQ01': {
+        id: 'SEQ01',
         type: 'sequence',
-        name: 'The Heist',
+        name: 'Opening & Interview',
         code: 'S01',
-        description: 'The introductory sequence where the crew plans and executes a high-stakes corporate theft.',
-        image: 'https://picsum.photos/seed/SEQ_001/400/225',
-        children: ['SC_001', 'SC_002', 'SC_003'],
+        description: 'Sequence 1: Opening & Interview',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0023.jpg',
+        children: ['SC_1', 'SC_2', 'SC_3', 'SC_4', 'SC_5'],
         duration: 0,
-        studio: 'Universal'
+        studio: 'Warner Bros.'
     },
-    SEQ_002: {
-        id: 'SEQ_002',
+    'SEQ02': {
+        id: 'SEQ02',
         type: 'sequence',
-        name: 'Street Chase',
+        name: 'Closing Day: arrival & tour',
         code: 'S02',
-        description: 'A fast-paced chase through the neon-lit streets of the city.',
-        image: 'https://picsum.photos/seed/SEQ_002/400/225',
-        children: ['SC_004', 'SC_005', 'SC_010'],
+        description: 'Sequence 2: Closing Day: arrival & tour',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0033.jpg',
+        children: ['SC_6', 'SC_7', 'SC_8', 'SC_9', 'SC_10', 'SC_11', 'SC_12', 'SC_13'],
         duration: 0,
-        studio: 'Universal'
+        studio: 'Warner Bros.'
     },
-    SEQ_003: {
-        id: 'SEQ_003',
+    'SEQ03': {
+        id: 'SEQ03',
         type: 'sequence',
-        name: 'Rooftop Confrontation',
+        name: 'A Month Later: routine & first symptoms',
         code: 'S03',
-        description: 'A dramatic showdown on the rain-slicked roof of a skyscraper.',
-        image: 'https://picsum.photos/seed/SEQ_003/400/225',
-        children: ['SC_006', 'SC_011', 'SC_012'],
+        description: 'Sequence 3: A Month Later: routine & first symptoms',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0046.jpg',
+        children: ['SC_14', 'SC_15', 'SC_16', 'SC_17', 'SC_18'],
         duration: 0,
-        studio: 'Universal'
+        studio: 'Warner Bros.'
     },
-    SEQ_004: {
-        id: 'SEQ_004',
+    'SEQ04': {
+        id: 'SEQ04',
         type: 'sequence',
-        name: 'The Aftermath',
+        name: 'TUESDAY: Room 237 beckons',
         code: 'S04',
-        description: 'Dealing with the consequences of the heist.',
-        image: 'https://picsum.photos/seed/SEQ_004/400/225',
-        children: ['SC_007', 'SC_013', 'SC_014'],
-        studio: 'Universal'
+        description: 'Sequence 4: TUESDAY: Room 237 beckons',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0058.jpg',
+        children: ['SC_19', 'SC_20'],
+        duration: 0,
+        studio: 'Warner Bros.'
     },
-    SEQ_005: {
-        id: 'SEQ_005',
+    'SEQ05': {
+        id: 'SEQ05',
         type: 'sequence',
-        name: 'Final Escape',
+        name: 'THURSDAY → SATURDAY: snow & comms loss',
         code: 'S05',
-        description: 'The final escape from the city.',
-        image: 'https://picsum.photos/seed/SEQ_005/400/225',
-        children: ['SC_008', 'SC_009', 'SC_015'],
-        studio: 'Universal'
-    },
-    SC_001: {
-        id: 'SC_001',
-        type: 'scene',
-        name: 'The Briefing',
-        code: 'S01-SC01',
-        description: 'The team gathers to go over the plan.',
-        image: 'https://picsum.photos/seed/SC_001/400/225',
-        children: ['SHOT_001', 'SHOT_002', 'SHOT_004', 'SHOT_005'],
+        description: 'Sequence 5: THURSDAY → SATURDAY: snow & comms loss',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0084.jpg',
+        children: ['SC_21', 'SC_22', 'SC_23'],
         duration: 0,
-        studio: 'Universal'
+        studio: 'Warner Bros.'
     },
-    SC_002: {
-        id: 'SC_002',
-        type: 'scene',
-        name: 'Infiltration',
-        code: 'S01-SC02',
-        description: 'The team bypasses security and enters the tower.',
-        image: 'https://picsum.photos/seed/SC_002/400/225',
-        children: ['SHOT_003', 'SHOT_006', 'SHOT_007', 'SHOT_008'],
+    'SEQ06': {
+        id: 'SEQ06',
+        type: 'sequence',
+        name: 'MONDAY: quiet unease',
+        code: 'S06',
+        description: 'Sequence 6: MONDAY: quiet unease',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0009.jpg',
+        children: ['SC_24', 'SC_25'],
         duration: 0,
-        studio: 'Universal'
+        studio: 'Warner Bros.'
     },
-    SC_003: {
-        id: 'SC_003',
-        type: 'scene',
-        name: 'The Vault',
-        code: 'S01-SC03',
-        description: 'The team cracks the vault and secures the package.',
-        image: 'https://picsum.photos/seed/SC_003/400/225',
-        children: ['SHOT_009', 'SHOT_010', 'SHOT_011', 'SHOT_012'],
+    'SEQ07': {
+        id: 'SEQ07',
+        type: 'sequence',
+        name: 'WEDNESDAY: the ball & 237',
+        code: 'S07',
+        description: 'Sequence 7: WEDNESDAY: the ball & 237',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0031.jpg',
+        children: ['SC_26', 'SC_27', 'SC_28'],
         duration: 0,
-        studio: 'Universal'
+        studio: 'Warner Bros.'
     },
-    SC_004: {
-        id: 'SC_004',
-        type: 'scene',
-        name: 'Market Escape',
-        code: 'S02-SC01',
-        description: 'The team flees through a crowded market.',
-        image: 'https://picsum.photos/seed/SC_004/400/225',
-        children: ['SHOT_013', 'SHOT_014', 'SHOT_015', 'SHOT_016'],
+    'SEQ08': {
+        id: 'SEQ08',
+        type: 'sequence',
+        name: 'Room 237 & denial',
+        code: 'S08',
+        description: 'Sequence 8: Room 237 & denial',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0053.jpg',
+        children: ['SC_29', 'SC_30', 'SC_31'],
         duration: 0,
-        studio: 'Universal'
+        studio: 'Warner Bros.'
     },
-    SC_005: {
-        id: 'SC_005',
-        type: 'scene',
-        name: 'Highway Battle',
-        code: 'S02-SC02',
-        description: 'A gunfight erupts on the elevated highway.',
-        image: 'https://picsum.photos/seed/SC_005/400/225',
-        children: ['SHOT_017', 'SHOT_018', 'SHOT_019', 'SHOT_020'],
+    'SEQ09': {
+        id: 'SEQ09',
+        type: 'sequence',
+        name: "Wendy's resolve & Jack's panic",
+        code: 'S09',
+        description: 'Sequence 9: Wendy\'s resolve & Jack\'s panic',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0058.jpg',
+        children: ['SC_32', 'SC_33', 'SC_34', 'SC_35', 'SC_36', 'SC_37', 'SC_38'],
         duration: 0,
-        studio: 'Universal'
+        studio: 'Warner Bros.'
     },
-    SC_006: {
-        id: 'SC_006',
+    'SC_1': {
+        id: 'SC_1',
         type: 'scene',
-        name: 'The Standoff',
-        code: 'S03-SC01',
-        description: 'The protagonist confronts the antagonist.',
-        image: 'https://picsum.photos/seed/SC_006/400/225',
-        children: ['SHOT_021', 'SHOT_022', 'SHOT_023', 'SHOT_024'],
+        name: 'EXT. MOUNTAINS – DAY',
+        code: 'S01-S01',
+        description: 'Aerial/drive-by: yellow VW climbs toward the Overlook.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0033.jpg',
+        children: ['SHOT_1', 'SHOT_2'],
         duration: 0,
-        studio: 'Universal'
+        studio: 'Warner Bros.'
     },
-    SC_007: {
-        id: 'SC_007',
+    'SC_2': {
+        id: 'SC_2',
         type: 'scene',
-        name: 'Safehouse Debrief',
-        code: 'S04-SC01',
-        description: 'The crew regroups at a hidden safehouse.',
-        image: 'https://picsum.photos/seed/SC_007/400/225',
-        children: ['SHOT_025', 'SHOT_026', 'SHOT_027', 'SHOT_028'],
+        name: 'INT. LOBBY – DAY',
+        code: 'S01-S02',
+        description: 'Jack checks in and is led to Ullman.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0062.jpg',
+        children: ['SHOT_3', 'SHOT_4'],
         duration: 0,
-        studio: 'Universal'
+        studio: 'Warner Bros.'
     },
-    SC_008: {
-        id: 'SC_008',
+    'SC_3': {
+        id: 'SC_3',
         type: 'scene',
-        name: 'Mag-Lev Station',
-        code: 'S05-SC01',
-        description: 'A tense scene at the city\'s main transport hub.',
-        image: 'https://picsum.photos/seed/SC_008/400/225',
-        children: ['SHOT_029', 'SHOT_030', 'SHOT_031', 'SHOT_032'],
+        name: "INT. ULLMAN'S OFFICE – DAY",
+        code: 'S01-S03',
+        description: 'Meet Ullman and Watson; caretaker interview.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0062.jpg',
+        children: ['SHOT_5', 'SHOT_6', 'SHOT_7'],
         duration: 0,
-        studio: 'Universal'
+        studio: 'Warner Bros.'
     },
-    SC_009: {
-        id: 'SC_009',
+    'SC_4': {
+        id: 'SC_4',
         type: 'scene',
-        name: 'Leaving the City',
-        code: 'S05-SC02',
-        description: 'The final shot of the train leaving the city limits.',
-        image: 'https://picsum.photos/seed/SC_009/400/225',
-        children: ['SHOT_033', 'SHOT_034', 'SHOT_035', 'SHOT_036'],
+        name: 'EXT/INT. BOULDER APARTMENT – DAY',
+        code: 'S01-S04',
+        description: 'Danny and Wendy talk about the move; Tony ‘speaks.’',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0048.jpg',
+        children: ['SHOT_8', 'SHOT_9'],
         duration: 0,
-        studio: 'Universal'
+        studio: 'Warner Bros.'
     },
-    SC_010: {
-        id: 'SC_010',
+    'SC_5': {
+        id: 'SC_5',
         type: 'scene',
-        name: 'Freeway Overpass',
-        code: 'S02-SC03',
-        description: 'A chase sequence on a freeway overpass.',
-        image: 'https://picsum.photos/seed/SC_010/400/225',
-        children: ['SHOT_037', 'SHOT_038', 'SHOT_039', 'SHOT_040'],
+        name: "INT. ULLMAN'S OFFICE – DAY (CONT.)",
+        code: 'S01-S05',
+        description: 'Clarify duties; agree on arrival for Closing Day.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0022.jpg',
+        children: ['SHOT_10', 'SHOT_11'],
         duration: 0,
-        studio: 'Universal'
+        studio: 'Warner Bros.'
     },
-    SC_011: {
-        id: 'SC_011',
+    'SC_6': {
+        id: 'SC_6',
         type: 'scene',
-        name: 'Helipad Escape',
-        code: 'S03-SC02',
-        description: 'The protagonist escapes in a helicopter.',
-        image: 'https://picsum.photos/seed/SC_011/400/225',
-        children: ['SHOT_041', 'SHOT_042', 'SHOT_043', 'SHOT_044'],
+        name: 'EXT. MOUNTAINS/OVERLOOK – DAY',
+        code: 'S02-S06',
+        description: 'The Torrance family arrives at the Overlook.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0088.jpg',
+        children: ['SHOT_12', 'SHOT_13'],
         duration: 0,
-        studio: 'Universal'
+        studio: 'Warner Bros.'
     },
-    SC_012: {
-        id: 'SC_012',
+    'SC_7': {
+        id: 'SC_7',
         type: 'scene',
-        name: 'Rooftop Garden',
-        code: 'S03-SC03',
-        description: 'A quiet moment in a rooftop garden.',
-        image: 'https://picsum.photos/seed/SC_012/400/225',
-        children: ['SHOT_045', 'SHOT_046', 'SHOT_047', 'SHOT_048'],
+        name: 'INT. LOBBY – DAY',
+        code: 'S02-S07',
+        description: 'Ullman/Watson prepare to close; greet the Torrances.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0037.jpg',
+        children: ['SHOT_14', 'SHOT_15', 'SHOT_16'],
         duration: 0,
-        studio: 'Universal'
+        studio: 'Warner Bros.'
     },
-    SC_013: {
-        id: 'SC_013',
+    'SC_8': {
+        id: 'SC_8',
         type: 'scene',
-        name: 'Interrogation Room',
-        code: 'S04-SC02',
-        description: 'A tense interrogation scene.',
-        image: 'https://picsum.photos/seed/SC_013/400/225',
-        children: ['SHOT_049', 'SHOT_050', 'SHOT_051', 'SHOT_052'],
+        name: 'INT. KITCHEN – DAY',
+        code: 'S02-S08',
+        description: 'Halloran gives Wendy and Danny a kitchen tour; bonds with Danny.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0039.jpg',
+        children: ['SHOT_17', 'SHOT_18', 'SHOT_19'],
         duration: 0,
-        studio: 'Universal'
+        studio: 'Warner Bros.'
     },
-    SC_014: {
-        id: 'SC_014',
+    'SC_9': {
+        id: 'SC_9',
         type: 'scene',
-        name: 'Evidence Board',
-        code: 'S04-SC03',
-        description: 'The team pieces together the clues.',
-        image: 'https://picsum.photos/seed/SC_014/400/225',
-        children: ['SHOT_053', 'SHOT_054', 'SHOT_055', 'SHOT_056'],
+        name: 'INT. WALK-IN FREEZER – DAY',
+        code: 'S02-S09',
+        description: 'Supplies for the winter; caretaker logistics.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0035.jpg',
+        children: ['SHOT_20', 'SHOT_21'],
         duration: 0,
-        studio: 'Universal'
+        studio: 'Warner Bros.'
     },
-    SC_015: {
-        id: 'SC_015',
+    'SC_10': {
+        id: 'SC_10',
         type: 'scene',
-        name: 'Border Crossing',
-        code: 'S05-SC03',
-        description: 'The final hurdle in the escape.',
-        image: 'https://picsum.photos/seed/SC_015/400/225',
-        children: ['SHOT_057', 'SHOT_058', 'SHOT_059', 'SHOT_060'],
-        studio: 'Universal'
+        name: 'INT. KITCHEN (SHINING TALK) – DAY',
+        code: 'S02-S10',
+        description: 'Halloran explains the ‘shining’ to Danny and hints at the hotel’s traces.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0013.jpg',
+        children: ['SHOT_22', 'SHOT_23'],
+        duration: 0,
+        studio: 'Warner Bros.'
     },
-    SHOT_001: {
-        id: 'SHOT_001',
-        type: 'shot',
-        name: 'CU on Datachip',
-        code: 'S01-SC01-SH01',
-        description: 'A wide establishing shot of the futuristic city skyline at dawn.',
-        image: 'https://picsum.photos/seed/SHOT_001/400/225',
-        duration: 120,
-        studio: 'Universal'
+    'SC_11': {
+        id: 'SC_11',
+        type: 'scene',
+        name: 'INT. KITCHEN/CORRIDORS – DAY',
+        code: 'S02-S11',
+        description: 'Warning about Room 237 — strictly off limits.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0039.jpg',
+        children: ['SHOT_24', 'SHOT_25'],
+        duration: 0,
+        studio: 'Warner Bros.'
     },
-    SHOT_002: {
-        id: 'SHOT_002',
-        type: 'shot',
-        name: 'Wide of Team',
-        code: 'S01-SC01-SH02',
-        description: 'A medium shot of the main character waking up in their apartment.',
-        image: 'https://picsum.photos/seed/SHOT_002/400/225',
-        duration: 180,
-        studio: 'Universal'
+    'SC_12': {
+        id: 'SC_12',
+        type: 'scene',
+        name: 'INT. GAMES ROOM – DAY',
+        code: 'S02-S12',
+        description: 'Danny sees the Grady twins — first sinister vision.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0013.jpg',
+        children: ['SHOT_26', 'SHOT_27', 'SHOT_28'],
+        duration: 0,
+        studio: 'Warner Bros.'
     },
-    SHOT_003: {
-        id: 'SHOT_003',
-        type: 'shot',
-        name: 'Tracking Shot',
-        code: 'S01-SC02-SH01',
-        description: 'A close-up on a holographic interface displaying critical information.',
-        image: 'https://picsum.photos/seed/SHOT_003/400/225',
-        duration: 90,
-        studio: 'Universal'
+    'SC_13': {
+        id: 'SC_13',
+        type: 'scene',
+        name: 'INT. CARETAKER APARTMENT – DAY',
+        code: 'S02-S13',
+        description: 'The family is shown their winter quarters.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0088.jpg',
+        children: ['SHOT_29', 'SHOT_30'],
+        duration: 0,
+        studio: 'Warner Bros.'
     },
-    SHOT_004: {
-        id: 'SHOT_004',
-        type: 'shot',
-        name: 'Overhead of map',
-        code: 'S01-SC01-SH03',
-        description: 'A tracking shot following a character through a bustling market.',
-        image: 'https://picsum.photos/seed/SHOT_004/400/225',
-        duration: 240,
-        studio: 'Universal'
+    'SC_14': {
+        id: 'SC_14',
+        type: 'scene',
+        name: 'INT. LOBBY/CORRIDORS – DAY',
+        code: 'S03-S14',
+        description: 'Wendy runs the household; chores continue.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0082.jpg',
+        children: ['SHOT_31', 'SHOT_32', 'SHOT_33'],
+        duration: 0,
+        studio: 'Warner Bros.'
     },
-    SHOT_005: {
-        id: 'SHOT_005',
-        type: 'shot',
-        name: 'Reaction shot',
-        code: 'S01-SC01-SH04',
-        description: 'An over-the-shoulder shot of the antagonist observing the city.',
-        image: 'https://picsum.photos/seed/SHOT_005/400/225',
-        duration: 150,
-        studio: 'Universal'
+    'SC_15': {
+        id: 'SC_15',
+        type: 'scene',
+        name: 'INT. CARETAKER APT – LATE MORNING',
+        code: 'S03-S15',
+        description: 'Breakfast in bed for Jack — late schedule, stalled writing.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0082.jpg',
+        children: ['SHOT_34', 'SHOT_35'],
+        duration: 0,
+        studio: 'Warner Bros.'
     },
-    SHOT_006: {
-        id: 'SHOT_006',
-        type: 'shot',
-        name: 'Security camera POV',
-        code: 'S01-SC02-SH02',
-        description: 'A shot from the perspective of a security camera.',
-        image: 'https://picsum.photos/seed/SHOT_006/400/225',
-        duration: 60,
-        studio: 'Universal'
+    'SC_16': {
+        id: 'SC_16',
+        type: 'scene',
+        name: 'INT. KITCHEN ↔ LOUNGE – DAY',
+        code: 'S03-S16',
+        description: 'Danny rides corridors; signature tracking run.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0049.jpg',
+        children: ['SHOT_36', 'SHOT_37'],
+        duration: 0,
+        studio: 'Warner Bros.'
     },
-    SHOT_007: {
-        id: 'SHOT_007',
-        type: 'shot',
-        name: 'Close up on keypad',
-        code: 'S01-SC02-SH03',
-        description: 'A close-up of the netrunner hacking a keypad.',
-        image: 'https://picsum.photos/seed/SHOT_007/400/225',
-        duration: 75,
-        studio: 'Universal'
+    'SC_17': {
+        id: 'SC_17',
+        type: 'scene',
+        name: 'EXT. HEDGE MAZE – DAY',
+        code: 'S03-S17',
+        description: 'Wendy and Danny explore the maze; foreshadowing entrapment.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0081.jpg',
+        children: ['SHOT_38', 'SHOT_39'],
+        duration: 0,
+        studio: 'Warner Bros.'
     },
-    SHOT_008: {
-        id: 'SHOT_008',
-        type: 'shot',
-        name: 'Door opening',
-        code: 'S01-SC02-SH04',
-        description: 'A shot of a heavy security door sliding open.',
-        image: 'https://picsum.photos/seed/SHOT_008/400/225',
-        duration: 100,
-        studio: 'Universal'
+    'SC_18': {
+        id: 'SC_18',
+        type: 'scene',
+        name: 'INT. COLORADO LOUNGE – DAY',
+        code: 'S03-S18',
+        description: 'Jack ‘writes,’ irritable and empty; isolation deepens.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0067.jpg',
+        children: ['SHOT_40', 'SHOT_41', 'SHOT_42'],
+        duration: 0,
+        studio: 'Warner Bros.'
     },
-    SHOT_009: {
-        id: 'SHOT_009',
-        type: 'shot',
-        name: 'Laser grid deactivates',
-        code: 'S01-SC03-SH01',
-        description: 'A shot of a laser grid deactivating.',
-        image: 'https://picsum.photos/seed/SHOT_009/400/225',
-        duration: 50,
-        studio: 'Universal'
+    'SC_19': {
+        id: 'SC_19',
+        type: 'scene',
+        name: 'INT. 2ND-FLOOR CORRIDORS – DAY',
+        code: 'S04-S19',
+        description: 'Danny reaches for the knob — locked; visions of the twins.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0012.jpg',
+        children: ['SHOT_43', 'SHOT_44'],
+        duration: 0,
+        studio: 'Warner Bros.'
     },
-    SHOT_010: {
-        id: 'SHOT_010',
-        type: 'shot',
-        name: 'Grabbing the package',
-        code: 'S01-SC03-SH02',
-        description: 'A close-up of the crew member grabbing the package.',
-        image: 'https://picsum.photos/seed/SHOT_010/400/225',
-        duration: 80,
-        studio: 'Universal'
+    'SC_20': {
+        id: 'SC_20',
+        type: 'scene',
+        name: 'INT. LOUNGE – NIGHT',
+        code: 'S04-S20',
+        description: 'Atmospheric beats imply a presence without direct contact.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0088.jpg',
+        children: ['SHOT_45', 'SHOT_46', 'SHOT_47'],
+        duration: 0,
+        studio: 'Warner Bros.'
     },
-    SHOT_011: {
-        id: 'SHOT_011',
-        type: 'shot',
-        name: 'Alarm blares',
-        code: 'S01-SC03-SH03',
-        description: 'A shot of a red alarm light flashing.',
-        image: 'https://picsum.photos/seed/SHOT_011/400/225',
-        duration: 40,
-        studio: 'Universal'
+    'SC_21': {
+        id: 'SC_21',
+        type: 'scene',
+        name: 'CARD: THURSDAY / EXT. HOTEL – DAY',
+        code: 'S05-S21',
+        description: 'Wendy and Danny play outside; Jack watches, detached.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0088.jpg',
+        children: ['SHOT_48', 'SHOT_49'],
+        duration: 0,
+        studio: 'Warner Bros.'
     },
-    SHOT_012: {
-        id: 'SHOT_012',
-        type: 'shot',
-        name: 'Running out of the vault',
-        code: 'S01-SC03-SH04',
-        description: 'A shot of the team running out of the vault.',
-        image: 'https://picsum.photos/seed/SHOT_012/400/225',
-        duration: 110,
-        studio: 'Universal'
+    'SC_22': {
+        id: 'SC_22',
+        type: 'scene',
+        name: 'CARD: SATURDAY / INT. SWITCHBOARD – DAY',
+        code: 'S05-S22',
+        description: 'Phone lines are dead; Wendy reaches park rangers on radio.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0064.jpg',
+        children: ['SHOT_50', 'SHOT_51', 'SHOT_52'],
+        duration: 0,
+        studio: 'Warner Bros.'
     },
-    SHOT_013: {
-        id: 'SHOT_013',
-        type: 'shot',
-        name: 'Knocking over a fruit stand',
-        code: 'S02-SC01-SH01',
-        description: 'A shot of the team knocking over a fruit stand.',
-        image: 'https://picsum.photos/seed/SHOT_013/400/225',
-        duration: 95,
-        studio: 'Universal'
+    'SC_23': {
+        id: 'SC_23',
+        type: 'scene',
+        name: 'INT. OFFICE (RADIO) – DAY',
+        code: 'S05-S23',
+        description: 'Ranger advises they keep the radio on — storm cuts them off.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0034.jpg',
+        children: ['SHOT_53', 'SHOT_54'],
+        duration: 0,
+        studio: 'Warner Bros.'
     },
-    SHOT_014: {
-        id: 'SHOT_014',
+    'SC_24': {
+        id: 'SC_24',
+        type: 'scene',
+        name: 'INT. APARTMENT – DAY (TV)',
+        code: 'S06-S24',
+        description: 'Domestic beat with TV; sense of prolonged lull.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0068.jpg',
+        children: ['SHOT_55', 'SHOT_56'],
+        duration: 0,
+        studio: 'Warner Bros.'
+    },
+    'SC_25': {
+        id: 'SC_25',
+        type: 'scene',
+        name: 'INT. APARTMENT (FATHER/SON) – DAY',
+        code: 'S06-S25',
+        description: 'Danny asks Jack: “You wouldn’t hurt us, would you?”',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0034.jpg',
+        children: ['SHOT_57', 'SHOT_58'],
+        duration: 0,
+        studio: 'Warner Bros.'
+    },
+    'SC_26': {
+        id: 'SC_26',
+        type: 'scene',
+        name: 'INT. 2ND-FLOOR CORRIDORS – DAY',
+        code: 'S07-S26',
+        description: 'An unseen ‘pass’ draws Danny to 237.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0078.jpg',
+        children: ['SHOT_59', 'SHOT_60', 'SHOT_61'],
+        duration: 0,
+        studio: 'Warner Bros.'
+    },
+    'SC_27': {
+        id: 'SC_27',
+        type: 'scene',
+        name: 'INT. LOUNGE (NIGHTMARE) – DAY',
+        code: 'S07-S27',
+        description: 'Jack wakes from a nightmare; Wendy rushes in; Danny appears bruised.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0081.jpg',
+        children: ['SHOT_62', 'SHOT_63'],
+        duration: 0,
+        studio: 'Warner Bros.'
+    },
+    'SC_28': {
+        id: 'SC_28',
+        type: 'scene',
+        name: 'INT. GOLD ROOM (BAR) – NIGHT',
+        code: 'S07-S28',
+        description: 'Jack ‘drinks’ with Lloyd — obsession takes hold.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0021.jpg',
+        children: ['SHOT_64', 'SHOT_65'],
+        duration: 0,
+        studio: 'Warner Bros.'
+    },
+    'SC_29': {
+        id: 'SC_29',
+        type: 'scene',
+        name: 'INT. ROOM 237 (BATH) – NIGHT',
+        code: 'S08-S29',
+        description: 'Jack enters; encounter with the ‘woman’ — transformation beat.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0069.jpg',
+        children: ['SHOT_66', 'SHOT_67'],
+        duration: 0,
+        studio: 'Warner Bros.'
+    },
+    'SC_30': {
+        id: 'SC_30',
+        type: 'scene',
+        name: 'INT. CORRIDOR OUTSIDE 237 – NIGHT',
+        code: 'S08-S30',
+        description: 'Jack retreats and locks 237.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0081.jpg',
+        children: ['SHOT_68', 'SHOT_69', 'SHOT_70'],
+        duration: 0,
+        studio: 'Warner Bros.'
+    },
+    'SC_31': {
+        id: 'SC_31',
+        type: 'scene',
+        name: 'INT. APARTMENT – NIGHT',
+        code: 'S08-S31',
+        description: 'Jack lies to Wendy: he saw ‘nothing’ in 237.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0081.jpg',
+        children: ['SHOT_71', 'SHOT_72'],
+        duration: 0,
+        studio: 'Warner Bros.'
+    },
+    'SC_32': {
+        id: 'SC_32',
+        type: 'scene',
+        name: 'INT. APARTMENT (TUCK-IN) – NIGHT',
+        code: 'S09-S32',
+        description: 'Wendy tucks in Danny/Tony and goes to find Jack.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0089.jpg',
+        children: ['SHOT_73', 'SHOT_74'],
+        duration: 0,
+        studio: 'Warner Bros.'
+    },
+    'SC_33': {
+        id: 'SC_33',
+        type: 'scene',
+        name: 'INT. COLORADO LOUNGE – NIGHT',
+        code: 'S09-S33',
+        description: 'Wendy discovers the manuscript: ‘ALL WORK AND NO PLAY…’ on hundreds of pages.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0002.jpg',
+        children: ['SHOT_75', 'SHOT_76', 'SHOT_77'],
+        duration: 0,
+        studio: 'Warner Bros.'
+    },
+    'SC_34': {
+        id: 'SC_34',
+        type: 'scene',
+        name: 'INT. GRAND STAIR – NIGHT',
+        code: 'S09-S34',
+        description: 'Showdown with Jack; she fends him off with the bat and drops him.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0030.jpg',
+        children: ['SHOT_78', 'SHOT_79'],
+        duration: 0,
+        studio: 'Warner Bros.'
+    },
+    'SC_35': {
+        id: 'SC_35',
+        type: 'scene',
+        name: 'INT. KITCHEN / FOOD STORE – NIGHT',
+        code: 'S09-S35',
+        description: 'Wendy drags Jack to the pantry and locks him in.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0041.jpg',
+        children: ['SHOT_80', 'SHOT_81'],
+        duration: 0,
+        studio: 'Warner Bros.'
+    },
+    'SC_36': {
+        id: 'SC_36',
+        type: 'scene',
+        name: 'INT. KITCHEN (OUTSIDE PANTRY) – NIGHT',
+        code: 'S09-S36',
+        description: 'Wendy grabs a knife, sobbing, realizing the stakes.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0081.jpg',
+        children: ['SHOT_82', 'SHOT_83', 'SHOT_84'],
+        duration: 0,
+        studio: 'Warner Bros.'
+    },
+    'SC_37': {
+        id: 'SC_37',
+        type: 'scene',
+        name: 'INT. FOOD STORE (JACK PLEADS) – NIGHT',
+        code: 'S09-S37',
+        description: 'Jack pleads to be released; taunts her to check the snowcat and radio.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0066.jpg',
+        children: ['SHOT_85', 'SHOT_86'],
+        duration: 0,
+        studio: 'Warner Bros.'
+    },
+    'SC_38': {
+        id: 'SC_38',
+        type: 'scene',
+        name: 'EXT. PORCH → INT. GARAGE – DAY',
+        code: 'S09-S38',
+        description: 'Wendy forces through snow; finds the sabotaged snowcat and ripped-out radio parts.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0061.jpg',
+        children: ['SHOT_87', 'SHOT_88', 'SHOT_89'],
+        duration: 0,
+        studio: 'Warner Bros.'
+    },
+    'SHOT_1': {
+        id: 'SHOT_1',
         type: 'shot',
-        name: 'Jumping over a car',
-        code: 'S02-SC01-SH02',
-        description: 'A shot of the protagonist jumping over a car.',
-        image: 'https://picsum.photos/seed/SHOT_014/400/225',
+        name: 'Shot 2',
+        code: 'S01-S01-SH1',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0035.jpg',
+        duration: 168,
+        studio: 'Warner Bros.'
+    },
+    'SHOT_2': {
+        id: 'SHOT_2',
+        type: 'shot',
+        name: 'Shot 3',
+        code: 'S01-S01-SH2',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0041.jpg',
+        duration: 133,
+        studio: 'Warner Bros.'
+    },
+    'SHOT_3': {
+        id: 'SHOT_3',
+        type: 'shot',
+        name: 'Shot 4',
+        code: 'S01-S02-SH1',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0079.jpg',
+        duration: 104,
+        studio: 'Warner Bros.'
+    },
+    'SHOT_4': {
+        id: 'SHOT_4',
+        type: 'shot',
+        name: 'Shot 5',
+        code: 'S01-S02-SH2',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0037.jpg',
+        duration: 138,
+        studio: 'Warner Bros.'
+    },
+    'SHOT_5': {
+        id: 'SHOT_5',
+        type: 'shot',
+        name: 'Shot 6',
+        code: 'S01-S03-SH1',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0031.jpg',
+        duration: 111,
+        studio: 'Warner Bros.'
+    },
+    'SHOT_6': {
+        id: 'SHOT_6',
+        type: 'shot',
+        name: 'Shot 7',
+        code: 'S01-S03-SH2',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0048.jpg',
+        duration: 141,
+        studio: 'Warner Bros.'
+    },
+    'SHOT_7': {
+        id: 'SHOT_7',
+        type: 'shot',
+        name: 'Shot 8',
+        code: 'S01-S03-SH3',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0030.jpg',
+        duration: 178,
+        studio: 'Warner Bros.'
+    },
+    'SHOT_8': {
+        id: 'SHOT_8',
+        type: 'shot',
+        name: 'Shot 9',
+        code: 'S01-S04-SH1',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0036.jpg',
+        duration: 119,
+        studio: 'Warner Bros.'
+    },
+    'SHOT_9': {
+        id: 'SHOT_9',
+        type: 'shot',
+        name: 'Shot 10',
+        code: 'S01-S04-SH2',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0019.jpg',
+        duration: 138,
+        studio: 'Warner Bros.'
+    },
+    'SHOT_10': {
+        id: 'SHOT_10',
+        type: 'shot',
+        name: 'Shot 11',
+        code: 'S01-S05-SH1',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0034.jpg',
+        duration: 123,
+        studio: 'Warner Bros.'
+    },
+    'SHOT_11': {
+        id: 'SHOT_11',
+        type: 'shot',
+        name: 'Shot 12',
+        code: 'S01-S05-SH2',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0065.jpg',
+        duration: 136,
+        studio: 'Warner Bros.'
+    },
+    'SHOT_12': {
+        id: 'SHOT_12',
+        type: 'shot',
+        name: 'Shot 13',
+        code: 'S02-S06-SH1',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0013.jpg',
+        duration: 170,
+        studio: 'Warner Bros.'
+    },
+    'SHOT_13': {
+        id: 'SHOT_13',
+        type: 'shot',
+        name: 'Shot 14',
+        code: 'S02-S06-SH2',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0013.jpg',
         duration: 130,
-        studio: 'Universal'
+        studio: 'Warner Bros.'
     },
-    SHOT_015: {
-        id: 'SHOT_015',
+    'SHOT_14': {
+        id: 'SHOT_14',
         type: 'shot',
-        name: 'Sliding under a gate',
-        code: 'S02-SC01-SH03',
-        description: 'A shot of the protagonist sliding under a closing gate.',
-        image: 'https://picsum.photos/seed/SHOT_015/400/225',
-        duration: 70,
-        studio: 'Universal'
+        name: 'Shot 15',
+        code: 'S02-S07-SH1',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0088.jpg',
+        duration: 111,
+        studio: 'Warner Bros.'
     },
-    SHOT_016: {
-        id: 'SHOT_016',
+    'SHOT_15': {
+        id: 'SHOT_15',
         type: 'shot',
-        name: 'Looking back at pursuers',
-        code: 'S02-SC01-SH04',
-        description: 'A shot of the protagonist looking back at their pursuers.',
-        image: 'https://picsum.photos/seed/SHOT_016/400/225',
-        duration: 85,
-        studio: 'Universal'
+        name: 'Shot 16',
+        code: 'S02-S07-SH2',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0083.jpg',
+        duration: 176,
+        studio: 'Warner Bros.'
     },
-    SHOT_017: {
-        id: 'SHOT_017',
+    'SHOT_16': {
+        id: 'SHOT_16',
         type: 'shot',
-        name: 'Car explosion',
-        code: 'S02-SC02-SH01',
-        description: 'A shot of a car exploding on the highway.',
-        image: 'https://picsum.photos/seed/SHOT_017/400/225',
-        duration: 160,
-        studio: 'Universal'
+        name: 'Shot 17',
+        code: 'S02-S07-SH3',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0057.jpg',
+        duration: 113,
+        studio: 'Warner Bros.'
     },
-    SHOT_018: {
-        id: 'SHOT_018',
+    'SHOT_17': {
+        id: 'SHOT_17',
         type: 'shot',
-        name: 'Shooting out a tire',
-        code: 'S02-SC02-SH02',
-        description: 'A close-up of a tire being shot out.',
-        image: 'https://picsum.photos/seed/SHOT_018/400/225',
-        duration: 55,
-        studio: 'Universal'
+        name: 'Shot 18',
+        code: 'S02-S08-SH1',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0018.jpg',
+        duration: 113,
+        studio: 'Warner Bros.'
     },
-    SHOT_019: {
-        id: 'SHOT_019',
+    'SHOT_18': {
+        id: 'SHOT_18',
         type: 'shot',
-        name: 'Jumping to another car',
-        code: 'S02-SC02-SH03',
-        description: 'A shot of the protagonist jumping from one car to another.',
-        image: 'https://picsum.photos/seed/SHOT_019/400/225',
-        duration: 140,
-        studio: 'Universal'
+        name: 'Shot 19',
+        code: 'S02-S08-SH2',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0013.jpg',
+        duration: 135,
+        studio: 'Warner Bros.'
     },
-    SHOT_020: {
-        id: 'SHOT_020',
+    'SHOT_19': {
+        id: 'SHOT_19',
         type: 'shot',
-        name: 'Helicopter flying overhead',
-        code: 'S02-SC02-SH04',
-        description: 'A shot of a helicopter flying overhead.',
-        image: 'https://picsum.photos/seed/SHOT_020/400/225',
-        duration: 115,
-        studio: 'Universal'
+        name: 'Shot 20',
+        code: 'S02-S08-SH3',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0088.jpg',
+        duration: 141,
+        studio: 'Warner Bros.'
     },
-    SHOT_021: {
-        id: 'SHOT_021',
+    'SHOT_20': {
+        id: 'SHOT_20',
         type: 'shot',
-        name: 'Drawing weapons',
-        code: 'S03-SC01-SH01',
-        description: 'A close-up of the protagonist and antagonist drawing their weapons.',
-        image: 'https://picsum.photos/seed/SHOT_021/400/225',
-        duration: 90,
-        studio: 'Universal'
+        name: 'Shot 21',
+        code: 'S02-S09-SH1',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0081.jpg',
+        duration: 118,
+        studio: 'Warner Bros.'
     },
-    SHOT_022: {
-        id: 'SHOT_022',
+    'SHOT_21': {
+        id: 'SHOT_21',
         type: 'shot',
-        name: 'Intense staredown',
-        code: 'S03-SC01-SH02',
-        description: 'A shot of an intense staredown between the two characters.',
-        image: 'https://picsum.photos/seed/SHOT_022/400/225',
-        duration: 105,
-        studio: 'Universal'
+        name: 'Shot 22',
+        code: 'S02-S09-SH2',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0064.jpg',
+        duration: 103,
+        studio: 'Warner Bros.'
     },
-    SHOT_023: {
-        id: 'SHOT_023',
+    'SHOT_22': {
+        id: 'SHOT_22',
         type: 'shot',
-        name: 'Rain pouring down',
-        code: 'S03-SC01-SH03',
-        description: 'A shot of rain pouring down on the rooftop.',
-        image: 'https://picsum.photos/seed/SHOT_023/400/225',
-        duration: 70,
-        studio: 'Universal'
+        name: 'Shot 23',
+        code: 'S02-S10-SH1',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0078.jpg',
+        duration: 178,
+        studio: 'Warner Bros.'
     },
-    SHOT_024: {
-        id: 'SHOT_024',
+    'SHOT_23': {
+        id: 'SHOT_23',
         type: 'shot',
-        name: 'First shot fired',
-        code: 'S03-SC01-SH04',
-        description: 'A shot of the first shot being fired.',
-        image: 'https://picsum.photos/seed/SHOT_024/400/225',
-        duration: 65,
-        studio: 'Universal'
+        name: 'Shot 24',
+        code: 'S02-S10-SH2',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0068.jpg',
+        duration: 116,
+        studio: 'Warner Bros.'
     },
-    SHOT_025: {
-        id: 'SHOT_025',
+    'SHOT_24': {
+        id: 'SHOT_24',
         type: 'shot',
-        name: 'Cleaning weapons',
-        code: 'S04-SC01-SH01',
-        description: 'A shot of the crew cleaning their weapons.',
-        image: 'https://picsum.photos/seed/SHOT_025/400/225',
-        duration: 80,
-        studio: 'Universal'
+        name: 'Shot 25',
+        code: 'S02-S11-SH1',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0081.jpg',
+        duration: 108,
+        studio: 'Warner Bros.'
     },
-    SHOT_026: {
-        id: 'SHOT_026',
+    'SHOT_25': {
+        id: 'SHOT_25',
         type: 'shot',
-        name: 'Tending to wounds',
-        code: 'S04-SC01-SH02',
-        description: 'A shot of a crew member tending to their wounds.',
-        image: 'https://picsum.photos/seed/SHOT_026/400/225',
-        duration: 95,
-        studio: 'Universal'
+        name: 'Shot 26',
+        code: 'S02-S11-SH2',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0089.jpg',
+        duration: 113,
+        studio: 'Warner Bros.'
     },
-    SHOT_027: {
-        id: 'SHOT_027',
+    'SHOT_26': {
+        id: 'SHOT_26',
         type: 'shot',
-        name: 'Looking at the score',
-        code: 'S04-SC01-SH03',
-        description: 'A shot of the crew looking at their score.',
-        image: 'https://picsum.photos/seed/SHOT_027/400/225',
-        duration: 110,
-        studio: 'Universal'
+        name: 'Shot 27',
+        code: 'S02-S12-SH1',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0081.jpg',
+        duration: 175,
+        studio: 'Warner Bros.'
     },
-    SHOT_028: {
-        id: 'SHOT_028',
+    'SHOT_27': {
+        id: 'SHOT_27',
         type: 'shot',
-        name: 'Planning the next move',
-        code: 'S04-SC01-SH04',
-        description: 'A shot of the crew planning their next move.',
-        image: 'https://picsum.photos/seed/SHOT_028/400/225',
-        duration: 125,
-        studio: 'Universal'
+        name: 'Shot 28',
+        code: 'S02-S12-SH2',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0088.jpg',
+        duration: 156,
+        studio: 'Warner Bros.'
     },
-    SHOT_029: {
-        id: 'SHOT_029',
+    'SHOT_28': {
+        id: 'SHOT_28',
         type: 'shot',
-        name: 'Buying tickets',
-        code: 'S05-SC01-SH01',
-        description: 'A shot of the protagonist buying tickets at the mag-lev station.',
-        image: 'https://picsum.photos/seed/SHOT_029/400/225',
-        duration: 70,
-        studio: 'Universal'
+        name: 'Shot 29',
+        code: 'S02-S12-SH3',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0081.jpg',
+        duration: 107,
+        studio: 'Warner Bros.'
     },
-    SHOT_030: {
-        id: 'SHOT_030',
+    'SHOT_29': {
+        id: 'SHOT_29',
         type: 'shot',
-        name: 'Spotting an enemy',
-        code: 'S05-SC01-SH02',
-        description: 'A shot of the protagonist spotting an enemy in the crowd.',
-        image: 'https://picsum.photos/seed/SHOT_030/400/225',
-        duration: 85,
-        studio: 'Universal'
+        name: 'Shot 30',
+        code: 'S02-S13-SH1',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0081.jpg',
+        duration: 170,
+        studio: 'Warner Bros.'
     },
-    SHOT_031: {
-        id: 'SHOT_031',
+    'SHOT_30': {
+        id: 'SHOT_30',
         type: 'shot',
-        name: 'Boarding the train',
-        code: 'S05-SC01-SH03',
-        description: 'A shot of the protagonist boarding the train.',
-        image: 'https://picsum.photos/seed/SHOT_031/400/225',
-        duration: 100,
-        studio: 'Universal'
+        name: 'Shot 31',
+        code: 'S02-S13-SH2',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0081.jpg',
+        duration: 151,
+        studio: 'Warner Bros.'
     },
-    SHOT_032: {
-        id: 'SHOT_032',
+    'SHOT_31': {
+        id: 'SHOT_31',
         type: 'shot',
-        name: 'Train doors closing',
-        code: 'S05-SC01-SH04',
-        description: 'A shot of the train doors closing.',
-        image: 'https://picsum.photos/seed/SHOT_032/400/225',
-        duration: 60,
-        studio: 'Universal'
+        name: 'Shot 32',
+        code: 'S03-S14-SH1',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0081.jpg',
+        duration: 170,
+        studio: 'Warner Bros.'
     },
-    SHOT_033: {
-        id: 'SHOT_033',
+    'SHOT_32': {
+        id: 'SHOT_32',
         type: 'shot',
-        name: 'Looking out the window',
-        code: 'S05-SC02-SH01',
-        description: 'A shot of the protagonist looking out the window as the train leaves the city.',
-        image: 'https://picsum.photos/seed/SHOT_033/400/225',
-        duration: 120,
-        studio: 'Universal'
+        name: 'Shot 33',
+        code: 'S03-S14-SH2',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0081.jpg',
+        duration: 151,
+        studio: 'Warner Bros.'
     },
-    SHOT_034: {
-        id: 'SHOT_034',
+    'SHOT_33': {
+        id: 'SHOT_33',
         type: 'shot',
-        name: 'City skyline receding',
-        code: 'S05-SC02-SH02',
-        description: 'A shot of the city skyline receding in the distance.',
-        image: 'https://picsum.photos/seed/SHOT_034/400/225',
-        duration: 150,
-        studio: 'Universal'
+        name: 'Shot 34',
+        code: 'S03-S14-SH3',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0081.jpg',
+        duration: 107,
+        studio: 'Warner Bros.'
     },
-    SHOT_035: {
-        id: 'SHOT_035',
+    'SHOT_34': {
+        id: 'SHOT_34',
         type: 'shot',
-        name: 'A sense of relief',
-        code: 'S05-SC02-SH03',
-        description: 'A close-up of the protagonist showing a sense of relief.',
-        image: 'https://picsum.photos/seed/SHOT_035/400/225',
-        duration: 90,
-        studio: 'Universal'
+        name: 'Shot 35',
+        code: 'S03-S15-SH1',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0081.jpg',
+        duration: 170,
+        studio: 'Warner Bros.'
     },
-    SHOT_036: {
-        id: 'SHOT_036',
+    'SHOT_35': {
+        id: 'SHOT_35',
         type: 'shot',
-        name: 'Fade to black',
-        code: 'S05-SC02-SH04',
-        description: 'The screen fades to black.',
-        image: 'https://picsum.photos/seed/SHOT_036/400/225',
-        duration: 30,
-        studio: 'Universal'
+        name: 'Shot 36',
+        code: 'S03-S15-SH2',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0081.jpg',
+        duration: 151,
+        studio: 'Warner Bros.'
     },
-    SHOT_037: {
-        id: 'SHOT_037',
+    'SHOT_36': {
+        id: 'SHOT_36',
         type: 'shot',
-        name: 'Dodging traffic',
-        code: 'S02-SC03-SH01',
-        description: 'A shot of the protagonist dodging traffic on the freeway overpass.',
-        image: 'https://picsum.photos/seed/SHOT_037/400/225',
-        duration: 110,
-        studio: 'Universal'
+        name: 'Shot 37',
+        code: 'S03-S16-SH1',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0081.jpg',
+        duration: 170,
+        studio: 'Warner Bros.'
     },
-    SHOT_038: {
-        id: 'SHOT_038',
+    'SHOT_37': {
+        id: 'SHOT_37',
         type: 'shot',
-        name: 'Jumping to a lower level',
-        code: 'S02-SC03-SH02',
-        description: 'A shot of the protagonist jumping to a lower level of the freeway.',
-        image: 'https://picsum.photos/seed/SHOT_038/400/225',
-        duration: 80,
-        studio: 'Universal'
+        name: 'Shot 38',
+        code: 'S03-S16-SH2',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0081.jpg',
+        duration: 151,
+        studio: 'Warner Bros.'
     },
-    SHOT_039: {
-        id: 'SHOT_039',
+    'SHOT_38': {
+        id: 'SHOT_38',
         type: 'shot',
-        name: 'Causing a pile-up',
-        code: 'S02-SC03-SH03',
-        description: 'A shot of a massive car pile-up.',
-        image: 'https://picsum.photos/seed/SHOT_039/400/225',
-        duration: 130,
-        studio: 'Universal'
+        name: 'Shot 39',
+        code: 'S03-S17-SH1',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0081.jpg',
+        duration: 170,
+        studio: 'Warner Bros.'
     },
-    SHOT_040: {
-        id: 'SHOT_040',
+    'SHOT_39': {
+        id: 'SHOT_39',
         type: 'shot',
-        name: 'Escaping into the city',
-        code: 'S02-SC03-SH04',
-        description: 'A shot of the protagonist escaping into the city streets below.',
-        image: 'https://picsum.photos/seed/SHOT_040/400/225',
-        duration: 95,
-        studio: 'Universal'
+        name: 'Shot 40',
+        code: 'S03-S17-SH2',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0081.jpg',
+        duration: 151,
+        studio: 'Warner Bros.'
     },
-    SHOT_041: {
-        id: 'SHOT_041',
+    'SHOT_40': {
+        id: 'SHOT_40',
         type: 'shot',
-        name: 'Running to the helipad',
-        code: 'S03-SC02-SH01',
-        description: 'A shot of the protagonist running towards the helipad.',
-        image: 'https://picsum.photos/seed/SHOT_041/400/225',
-        duration: 70,
-        studio: 'Universal'
+        name: 'Shot 41',
+        code: 'S03-S18-SH1',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0081.jpg',
+        duration: 170,
+        studio: 'Warner Bros.'
     },
-    SHOT_042: {
-        id: 'SHOT_042',
+    'SHOT_41': {
+        id: 'SHOT_41',
         type: 'shot',
-        name: 'Jumping into the helicopter',
-        code: 'S03-SC02-SH02',
-        description: 'A shot of the protagonist jumping into the helicopter.',
-        image: 'https://picsum.photos/seed/SHOT_042/400/22.5',
-        duration: 85,
-        studio: 'Universal'
+        name: 'Shot 42',
+        code: 'S03-S18-SH2',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0081.jpg',
+        duration: 151,
+        studio: 'Warner Bros.'
     },
-    SHOT_043: {
-        id: 'SHOT_043',
+    'SHOT_42': {
+        id: 'SHOT_42',
         type: 'shot',
-        name: 'Helicopter taking off',
-        code: 'S03-SC02-SH03',
-        description: 'A shot of the helicopter taking off from the helipad.',
-        image: 'https://picsum.photos/seed/SHOT_043/400/225',
-        duration: 100,
-        studio: 'Universal'
+        name: 'Shot 43',
+        code: 'S03-S18-SH3',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0081.jpg',
+        duration: 107,
+        studio: 'Warner Bros.'
     },
-    SHOT_044: {
-        id: 'SHOT_044',
+    'SHOT_43': {
+        id: 'SHOT_43',
         type: 'shot',
-        name: 'Looking down at the city',
-        code: 'S03-SC02-SH04',
-        description: 'A shot of the protagonist looking down at the city from the helicopter.',
-        image: 'https://picsum.photos/seed/SHOT_044/400/225',
-        duration: 115,
-        studio: 'Universal'
+        name: 'Shot 44',
+        code: 'S04-S19-SH1',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0043.jpg',
+        duration: 170,
+        studio: 'Warner Bros.'
     },
-    SHOT_045: {
-        id: 'SHOT_045',
+    'SHOT_44': {
+        id: 'SHOT_44',
         type: 'shot',
-        name: 'Walking through the garden',
-        code: 'S03-SC03-SH01',
-        description: 'A shot of the protagonist walking through the rooftop garden.',
-        image: 'https://picsum.photos/seed/SHOT_045/400/225',
-        duration: 90,
-        studio: 'Universal'
+        name: 'Shot 45',
+        code: 'S04-S19-SH2',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0044.jpg',
+        duration: 151,
+        studio: 'Warner Bros.'
     },
-    SHOT_046: {
-        id: 'SHOT_046',
+    'SHOT_45': {
+        id: 'SHOT_45',
         type: 'shot',
-        name: 'Looking at the city lights',
-        code: 'S03-SC03-SH02',
-        description: 'A shot of the protagonist looking at the city lights.',
-        image: 'https://picsum.photos/seed/SHOT_046/400/225',
-        duration: 105,
-        studio: 'Universal'
+        name: 'Shot 46',
+        code: 'S04-S20-SH1',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0045.jpg',
+        duration: 170,
+        studio: 'Warner Bros.'
     },
-    SHOT_047: {
-        id: 'SHOT_047',
+    'SHOT_46': {
+        id: 'SHOT_46',
         type: 'shot',
-        name: 'A moment of peace',
-        code: 'S03-SC03-SH03',
-        description: 'A shot of the protagonist having a moment of peace.',
-        image: 'https://picsum.photos/seed/SHOT_047/400/225',
-        duration: 70,
-        studio: 'Universal'
+        name: 'Shot 47',
+        code: 'S04-S20-SH2',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0046.jpg',
+        duration: 151,
+        studio: 'Warner Bros.'
     },
-    SHOT_048: {
-        id: 'SHOT_048',
+    'SHOT_47': {
+        id: 'SHOT_47',
         type: 'shot',
-        name: 'Leaving the garden',
-        code: 'S03-SC03-SH04',
-        description: 'A shot of the protagonist leaving the garden.',
-        image: 'https://picsum.photos/seed/SHOT_048/400/225',
-        duration: 65,
-        studio: 'Universal'
+        name: 'Shot 48',
+        code: 'S04-S20-SH3',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0047.jpg',
+        duration: 107,
+        studio: 'Warner Bros.'
     },
-    SHOT_049: {
-        id: 'SHOT_049',
+    'SHOT_48': {
+        id: 'SHOT_48',
         type: 'shot',
-        name: 'Sitting at the table',
-        code: 'S04-SC02-SH01',
-        description: 'A shot of the protagonist sitting at the interrogation table.',
-        image: 'https://picsum.photos/seed/SHOT_049/400/225',
-        duration: 80,
-        studio: 'Universal'
+        name: 'Shot 49',
+        code: 'S05-S21-SH1',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0050.jpg',
+        duration: 170,
+        studio: 'Warner Bros.'
     },
-    SHOT_050: {
-        id: 'SHOT_050',
+    'SHOT_49': {
+        id: 'SHOT_49',
         type: 'shot',
-        name: 'Intense questioning',
-        code: 'S04-SC02-SH02',
-        description: 'A shot of the protagonist being intensely questioned.',
-        image: 'https://picsum.photos/seed/SHOT_050/400/225',
-        duration: 95,
-        studio: 'Universal'
+        name: 'Shot 50',
+        code: 'S05-S21-SH2',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0051.jpg',
+        duration: 151,
+        studio: 'Warner Bros.'
     },
-    SHOT_051: {
-        id: 'SHOT_051',
+    'SHOT_50': {
+        id: 'SHOT_50',
         type: 'shot',
-        name: 'A moment of defiance',
-        code: 'S04-SC02-SH03',
-        description: 'A shot of the protagonist showing a moment of defiance.',
-        image: 'https://picsum.photos/seed/SHOT_051/400/225',
-        duration: 110,
-        studio: 'Universal'
+        name: 'Shot 51',
+        code: 'S05-S22-SH1',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0052.jpg',
+        duration: 170,
+        studio: 'Warner Bros.'
     },
-    SHOT_052: {
-        id: 'SHOT_052',
+    'SHOT_51': {
+        id: 'SHOT_51',
         type: 'shot',
-        name: 'Leaving the room',
-        code: 'S04-SC02-SH04',
-        description: 'A shot of the protagonist leaving the interrogation room.',
-        image: 'https://picsum.photos/seed/SHOT_052/400/225',
-        duration: 125,
-        studio: 'Universal'
+        name: 'Shot 52',
+        code: 'S05-S22-SH2',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0054.jpg',
+        duration: 151,
+        studio: 'Warner Bros.'
     },
-    SHOT_053: {
-        id: 'SHOT_053',
+    'SHOT_52': {
+        id: 'SHOT_52',
         type: 'shot',
-        name: 'Looking at the board',
-        code: 'S04-SC03-SH01',
-        description: 'A shot of the team looking at the evidence board.',
-        image: 'https://picsum.photos/seed/SHOT_053/400/225',
-        duration: 70,
-        studio: 'Universal'
+        name: 'Shot 53',
+        code: 'S05-S22-SH3',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0055.jpg',
+        duration: 107,
+        studio: 'Warner Bros.'
     },
-    SHOT_054: {
-        id: 'SHOT_054',
+    'SHOT_53': {
+        id: 'SHOT_53',
         type: 'shot',
-        name: 'Connecting the dots',
-        code: 'S04-SC03-SH02',
-        description: 'A shot of a crew member connecting the dots on the board.',
-        image: 'https://picsum.photos/seed/SHOT_054/400/225',
-        duration: 85,
-        studio: 'Universal'
+        name: 'Shot 54',
+        code: 'S05-S23-SH1',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0056.jpg',
+        duration: 170,
+        studio: 'Warner Bros.'
     },
-    SHOT_055: {
-        id: 'SHOT_055',
+    'SHOT_54': {
+        id: 'SHOT_54',
         type: 'shot',
-        name: 'A moment of realization',
-        code: 'S04-SC03-SH03',
-        description: 'A shot of a crew member having a moment of realization.',
-        image: 'https://picsum.photos/seed/SHOT_055/400/225',
-        duration: 100,
-        studio: 'Universal'
+        name: 'Shot 55',
+        code: 'S05-S23-SH2',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0059.jpg',
+        duration: 151,
+        studio: 'Warner Bros.'
     },
-    SHOT_056: {
-        id: 'SHOT_056',
+    'SHOT_55': {
+        id: 'SHOT_55',
         type: 'shot',
-        name: 'Getting ready to leave',
-        code: 'S04-SC03-SH04',
-        description: 'A shot of the team getting ready to leave.',
-        image: 'https://picsum.photos/seed/SHOT_056/400/225',
-        duration: 60,
-        studio: 'Universal'
+        name: 'Shot 56',
+        code: 'S06-S24-SH1',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0060.jpg',
+        duration: 170,
+        studio: 'Warner Bros.'
     },
-    SHOT_057: {
-        id: 'SHOT_057',
+    'SHOT_56': {
+        id: 'SHOT_56',
         type: 'shot',
-        name: 'Showing fake passports',
-        code: 'S05-SC03-SH01',
-        description: 'A shot of the protagonist showing fake passports to the border guard.',
-        image: 'https://picsum.photos/seed/SHOT_057/400/225',
-        duration: 120,
-        studio: 'Universal'
+        name: 'Shot 57',
+        code: 'S06-S24-SH2',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0063.jpg',
+        duration: 151,
+        studio: 'Warner Bros.'
     },
-    SHOT_058: {
-        id: 'SHOT_058',
+    'SHOT_57': {
+        id: 'SHOT_57',
         type: 'shot',
-        name: 'Tense moment',
-        code: 'S05-SC03-SH02',
-        description: 'A tense moment as the guard inspects the passports.',
-        image: 'https://picsum.photos/seed/SHOT_058/400/225',
-        duration: 150,
-        studio: 'Universal'
+        name: 'Shot 58',
+        code: 'S06-S25-SH1',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0070.jpg',
+        duration: 170,
+        studio: 'Warner Bros.'
     },
-    SHOT_059: {
-        id: 'SHOT_059',
+    'SHOT_58': {
+        id: 'SHOT_58',
         type: 'shot',
-        name: 'Guard waves them through',
-        code: 'S05-SC03-SH03',
-        description: 'A shot of the guard waving them through.',
-        image: 'https://picsum.photos/seed/SHOT_059/400/225',
-        duration: 90,
-        studio: 'Universal'
+        name: 'Shot 59',
+        code: 'S06-S25-SH2',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0071.jpg',
+        duration: 151,
+        studio: 'Warner Bros.'
     },
-    SHOT_060: {
-        id: 'SHOT_060',
+    'SHOT_59': {
+        id: 'SHOT_59',
         type: 'shot',
-        name: 'Driving away',
-        code: 'S05-SC03-SH04',
-        description: 'A shot of the car driving away from the border.',
-        image: 'https://picsum.photos/seed/SHOT_060/400/225',
-        duration: 30,
-        studio: 'Universal'
+        name: 'Shot 60',
+        code: 'S07-S26-SH1',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0072.jpg',
+        duration: 170,
+        studio: 'Warner Bros.'
     },
+    'SHOT_60': {
+        id: 'SHOT_60',
+        type: 'shot',
+        name: 'Shot 61',
+        code: 'S07-S26-SH2',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0073.jpg',
+        duration: 151,
+        studio: 'Warner Bros.'
+    },
+    'SHOT_61': {
+        id: 'SHOT_61',
+        type: 'shot',
+        name: 'Shot 62',
+        code: 'S07-S26-SH3',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0074.jpg',
+        duration: 107,
+        studio: 'Warner Bros.'
+    },
+    'SHOT_62': {
+        id: 'SHOT_62',
+        type: 'shot',
+        name: 'Shot 63',
+        code: 'S07-S27-SH1',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0075.jpg',
+        duration: 170,
+        studio: 'Warner Bros.'
+    },
+    'SHOT_63': {
+        id: 'SHOT_63',
+        type: 'shot',
+        name: 'Shot 64',
+        code: 'S07-S27-SH2',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0076.jpg',
+        duration: 151,
+        studio: 'Warner Bros.'
+    },
+    'SHOT_64': {
+        id: 'SHOT_64',
+        type: 'shot',
+        name: 'Shot 65',
+        code: 'S07-S28-SH1',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0077.jpg',
+        duration: 170,
+        studio: 'Warner Bros.'
+    },
+    'SHOT_65': {
+        id: 'SHOT_65',
+        type: 'shot',
+        name: 'Shot 66',
+        code: 'S07-S28-SH2',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0080.jpg',
+        duration: 151,
+        studio: 'Warner Bros.'
+    },
+    'SHOT_66': {
+        id: 'SHOT_66',
+        type: 'shot',
+        name: 'Shot 67',
+        code: 'S08-S29-SH1',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0001.jpg',
+        duration: 170,
+        studio: 'Warner Bros.'
+    },
+    'SHOT_67': {
+        id: 'SHOT_67',
+        type: 'shot',
+        name: 'Shot 68',
+        code: 'S08-S29-SH2',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0003.jpg',
+        duration: 151,
+        studio: 'Warner Bros.'
+    },
+    'SHOT_68': {
+        id: 'SHOT_68',
+        type: 'shot',
+        name: 'Shot 69',
+        code: 'S08-S30-SH1',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0004.jpg',
+        duration: 170,
+        studio: 'Warner Bros.'
+    },
+    'SHOT_69': {
+        id: 'SHOT_69',
+        type: 'shot',
+        name: 'Shot 70',
+        code: 'S08-S30-SH2',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0005.jpg',
+        duration: 151,
+        studio: 'Warner Bros.'
+    },
+    'SHOT_70': {
+        id: 'SHOT_70',
+        type: 'shot',
+        name: 'Shot 71',
+        code: 'S08-S30-SH3',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0006.jpg',
+        duration: 107,
+        studio: 'Warner Bros.'
+    },
+    'SHOT_71': {
+        id: 'SHOT_71',
+        type: 'shot',
+        name: 'Shot 72',
+        code: 'S08-S31-SH1',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0007.jpg',
+        duration: 170,
+        studio: 'Warner Bros.'
+    },
+    'SHOT_72': {
+        id: 'SHOT_72',
+        type: 'shot',
+        name: 'Shot 73',
+        code: 'S08-S31-SH2',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0008.jpg',
+        duration: 151,
+        studio: 'Warner Bros.'
+    },
+    'SHOT_73': {
+        id: 'SHOT_73',
+        type: 'shot',
+        name: 'Shot 74',
+        code: 'S09-S32-SH1',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0010.jpg',
+        duration: 170,
+        studio: 'Warner Bros.'
+    },
+    'SHOT_74': {
+        id: 'SHOT_74',
+        type: 'shot',
+        name: 'Shot 75',
+        code: 'S09-S32-SH2',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0011.jpg',
+        duration: 151,
+        studio: 'Warner Bros.'
+    },
+    'SHOT_75': {
+        id: 'SHOT_75',
+        type: 'shot',
+        name: 'Shot 76',
+        code: 'S09-S33-SH1',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0014.jpg',
+        duration: 170,
+        studio: 'Warner Bros.'
+    },
+    'SHOT_76': {
+        id: 'SHOT_76',
+        type: 'shot',
+        name: 'Shot 77',
+        code: 'S09-S33-SH2',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0015.jpg',
+        duration: 151,
+        studio: 'Warner Bros.'
+    },
+    'SHOT_77': {
+        id: 'SHOT_77',
+        type: 'shot',
+        name: 'Shot 78',
+        code: 'S09-S33-SH3',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0016.jpg',
+        duration: 107,
+        studio: 'Warner Bros.'
+    },
+    'SHOT_78': {
+        id: 'SHOT_78',
+        type: 'shot',
+        name: 'Shot 79',
+        code: 'S09-S34-SH1',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0017.jpg',
+        duration: 170,
+        studio: 'Warner Bros.'
+    },
+    'SHOT_79': {
+        id: 'SHOT_79',
+        type: 'shot',
+        name: 'Shot 80',
+        code: 'S09-S34-SH2',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0020.jpg',
+        duration: 151,
+        studio: 'Warner Bros.'
+    },
+    'SHOT_80': {
+        id: 'SHOT_80',
+        type: 'shot',
+        name: 'Shot 81',
+        code: 'S09-S35-SH1',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0024.jpg',
+        duration: 170,
+        studio: 'Warner Bros.'
+    },
+    'SHOT_81': {
+        id: 'SHOT_81',
+        type: 'shot',
+        name: 'Shot 82',
+        code: 'S09-S35-SH2',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0025.jpg',
+        duration: 151,
+        studio: 'Warner Bros.'
+    },
+    'SHOT_82': {
+        id: 'SHOT_82',
+        type: 'shot',
+        name: 'Shot 83',
+        code: 'S09-S36-SH1',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0026.jpg',
+        duration: 170,
+        studio: 'Warner Bros.'
+    },
+    'SHOT_83': {
+        id: 'SHOT_83',
+        type: 'shot',
+        name: 'Shot 84',
+        code: 'S09-S36-SH2',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0027.jpg',
+        duration: 151,
+        studio: 'Warner Bros.'
+    },
+    'SHOT_84': {
+        id: 'SHOT_84',
+        type: 'shot',
+        name: 'Shot 85',
+        code: 'S09-S36-SH3',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0028.jpg',
+        duration: 107,
+        studio: 'Warner Bros.'
+    },
+    'SHOT_85': {
+        id: 'SHOT_85',
+        type: 'shot',
+        name: 'Shot 86',
+        code: 'S09-S37-SH1',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0029.jpg',
+        duration: 170,
+        studio: 'Warner Bros.'
+    },
+    'SHOT_86': {
+        id: 'SHOT_86',
+        type: 'shot',
+        name: 'Shot 87',
+        code: 'S09-S37-SH2',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0032.jpg',
+        duration: 151,
+        studio: 'Warner Bros.'
+    },
+    'SHOT_87': {
+        id: 'SHOT_87',
+        type: 'shot',
+        name: 'Shot 88',
+        code: 'S09-S38-SH1',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0038.jpg',
+        duration: 170,
+        studio: 'Warner Bros.'
+    },
+    'SHOT_88': {
+        id: 'SHOT_88',
+        type: 'shot',
+        name: 'Shot 89',
+        code: 'S09-S38-SH2',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0040.jpg',
+        duration: 151,
+        studio: 'Warner Bros.'
+    },
+    'SHOT_89': {
+        id: 'SHOT_89',
+        type: 'shot',
+        name: 'Shot 90',
+        code: 'S09-S38-SH3',
+        description: 'A shot description.',
+        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0042.jpg',
+        duration: 107,
+        studio: 'Warner Bros.'
+    }
 };
