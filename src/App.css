@@ -716,32 +716,38 @@ body {
 /* Editable cells */
 .editable-cell {
   cursor: pointer;
-  display: inline-block;
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
-  transition: background-color 0.2s ease;
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-surface);
+  text-align: left;
 }
 
 .editable-cell:hover {
   background-color: var(--bg-surface-hover);
-  box-shadow: 0 0 0 2px var(--accent-primary);
+  border-color: var(--accent-primary);
 }
 
 .editable-input {
   width: 100%;
-  padding: 0.25rem 0.5rem;
-  background-color: var(--bg-main);
+  padding: 0.5rem 0.75rem;
+  background-color: var(--bg-surface);
   color: var(--text-primary);
-  border: 2px solid var(--accent-primary);
-  border-radius: 4px;
-  font-family: 'Courier New', monospace;
+  border: 1px solid var(--accent-primary);
+  border-radius: 8px;
+  font-family: inherit;
   font-size: 0.95rem;
-  text-align: center;
+  text-align: left;
   outline: none;
+  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
 }
 
 .editable-input:focus {
   border-color: var(--accent-primary-hover);
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.3);
 }
 
 /* Budget Sections */

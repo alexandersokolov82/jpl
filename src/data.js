@@ -529,7 +529,7 @@ export const projectData = {
     'SHOT_1': {
         id: 'SHOT_1',
         type: 'shot',
-        name: 'Shot 2',
+        name: 'TSH_1000',
         code: 'S01-S01-SH1',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0035.jpg',
@@ -539,7 +539,7 @@ export const projectData = {
     'SHOT_2': {
         id: 'SHOT_2',
         type: 'shot',
-        name: 'Shot 3',
+        name: 'TSH_1020',
         code: 'S01-S01-SH2',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0041.jpg',
@@ -549,7 +549,7 @@ export const projectData = {
     'SHOT_3': {
         id: 'SHOT_3',
         type: 'shot',
-        name: 'Shot 4',
+        name: 'TSH_1040',
         code: 'S01-S02-SH1',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0079.jpg',
@@ -559,7 +559,7 @@ export const projectData = {
     'SHOT_4': {
         id: 'SHOT_4',
         type: 'shot',
-        name: 'Shot 5',
+        name: 'TSH_1060',
         code: 'S01-S02-SH2',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0037.jpg',
@@ -569,7 +569,7 @@ export const projectData = {
     'SHOT_5': {
         id: 'SHOT_5',
         type: 'shot',
-        name: 'Shot 6',
+        name: 'TSH_1080',
         code: 'S01-S03-SH1',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0031.jpg',
@@ -579,7 +579,7 @@ export const projectData = {
     'SHOT_6': {
         id: 'SHOT_6',
         type: 'shot',
-        name: 'Shot 7',
+        name: 'TSH_1100',
         code: 'S01-S03-SH2',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0048.jpg',
@@ -589,7 +589,7 @@ export const projectData = {
     'SHOT_7': {
         id: 'SHOT_7',
         type: 'shot',
-        name: 'Shot 8',
+        name: 'TSH_1120',
         code: 'S01-S03-SH3',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0030.jpg',
@@ -599,7 +599,7 @@ export const projectData = {
     'SHOT_8': {
         id: 'SHOT_8',
         type: 'shot',
-        name: 'Shot 9',
+        name: 'TSH_1140',
         code: 'S01-S04-SH1',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0036.jpg',
@@ -609,7 +609,7 @@ export const projectData = {
     'SHOT_9': {
         id: 'SHOT_9',
         type: 'shot',
-        name: 'Shot 10',
+        name: 'TSH_1160',
         code: 'S01-S04-SH2',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0019.jpg',
@@ -619,7 +619,7 @@ export const projectData = {
     'SHOT_10': {
         id: 'SHOT_10',
         type: 'shot',
-        name: 'Shot 11',
+        name: 'TSH_1180',
         code: 'S01-S05-SH1',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0034.jpg',
@@ -629,7 +629,7 @@ export const projectData = {
     'SHOT_11': {
         id: 'SHOT_11',
         type: 'shot',
-        name: 'Shot 12',
+        name: 'TSH_1200',
         code: 'S01-S05-SH2',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0065.jpg',
@@ -639,7 +639,7 @@ export const projectData = {
     'SHOT_12': {
         id: 'SHOT_12',
         type: 'shot',
-        name: 'Shot 13',
+        name: 'TSH_1220',
         code: 'S02-S06-SH1',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0013.jpg',
@@ -649,7 +649,7 @@ export const projectData = {
     'SHOT_13': {
         id: 'SHOT_13',
         type: 'shot',
-        name: 'Shot 14',
+        name: 'TSH_1240',
         code: 'S02-S06-SH2',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0013.jpg',
@@ -659,7 +659,7 @@ export const projectData = {
     'SHOT_14': {
         id: 'SHOT_14',
         type: 'shot',
-        name: 'Shot 15',
+        name: 'TSH_1260',
         code: 'S02-S07-SH1',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0088.jpg',
@@ -669,7 +669,7 @@ export const projectData = {
     'SHOT_15': {
         id: 'SHOT_15',
         type: 'shot',
-        name: 'Shot 16',
+        name: 'TSH_1280',
         code: 'S02-S07-SH2',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0083.jpg',
@@ -679,7 +679,7 @@ export const projectData = {
     'SHOT_16': {
         id: 'SHOT_16',
         type: 'shot',
-        name: 'Shot 17',
+        name: 'TSH_1300',
         code: 'S02-S07-SH3',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0057.jpg',
@@ -689,7 +689,7 @@ export const projectData = {
     'SHOT_17': {
         id: 'SHOT_17',
         type: 'shot',
-        name: 'Shot 18',
+        name: 'TSH_1320',
         code: 'S02-S08-SH1',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0018.jpg',
@@ -699,7 +699,7 @@ export const projectData = {
     'SHOT_18': {
         id: 'SHOT_18',
         type: 'shot',
-        name: 'Shot 19',
+        name: 'TSH_1340',
         code: 'S02-S08-SH2',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0013.jpg',
@@ -709,7 +709,7 @@ export const projectData = {
     'SHOT_19': {
         id: 'SHOT_19',
         type: 'shot',
-        name: 'Shot 20',
+        name: 'TSH_1360',
         code: 'S02-S08-SH3',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0088.jpg',
@@ -719,7 +719,7 @@ export const projectData = {
     'SHOT_20': {
         id: 'SHOT_20',
         type: 'shot',
-        name: 'Shot 21',
+        name: 'TSH_1380',
         code: 'S02-S09-SH1',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0081.jpg',
@@ -729,7 +729,7 @@ export const projectData = {
     'SHOT_21': {
         id: 'SHOT_21',
         type: 'shot',
-        name: 'Shot 22',
+        name: 'TSH_1400',
         code: 'S02-S09-SH2',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0064.jpg',
@@ -739,7 +739,7 @@ export const projectData = {
     'SHOT_22': {
         id: 'SHOT_22',
         type: 'shot',
-        name: 'Shot 23',
+        name: 'TSH_1420',
         code: 'S02-S10-SH1',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0078.jpg',
@@ -749,7 +749,7 @@ export const projectData = {
     'SHOT_23': {
         id: 'SHOT_23',
         type: 'shot',
-        name: 'Shot 24',
+        name: 'TSH_1440',
         code: 'S02-S10-SH2',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0068.jpg',
@@ -759,7 +759,7 @@ export const projectData = {
     'SHOT_24': {
         id: 'SHOT_24',
         type: 'shot',
-        name: 'Shot 25',
+        name: 'TSH_1460',
         code: 'S02-S11-SH1',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0081.jpg',
@@ -769,7 +769,7 @@ export const projectData = {
     'SHOT_25': {
         id: 'SHOT_25',
         type: 'shot',
-        name: 'Shot 26',
+        name: 'TSH_1480',
         code: 'S02-S11-SH2',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0089.jpg',
@@ -779,7 +779,7 @@ export const projectData = {
     'SHOT_26': {
         id: 'SHOT_26',
         type: 'shot',
-        name: 'Shot 27',
+        name: 'TSH_1500',
         code: 'S02-S12-SH1',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0081.jpg',
@@ -789,7 +789,7 @@ export const projectData = {
     'SHOT_27': {
         id: 'SHOT_27',
         type: 'shot',
-        name: 'Shot 28',
+        name: 'TSH_1520',
         code: 'S02-S12-SH2',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0088.jpg',
@@ -799,7 +799,7 @@ export const projectData = {
     'SHOT_28': {
         id: 'SHOT_28',
         type: 'shot',
-        name: 'Shot 29',
+        name: 'TSH_1540',
         code: 'S02-S12-SH3',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0081.jpg',
@@ -809,7 +809,7 @@ export const projectData = {
     'SHOT_29': {
         id: 'SHOT_29',
         type: 'shot',
-        name: 'Shot 30',
+        name: 'TSH_1560',
         code: 'S02-S13-SH1',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0081.jpg',
@@ -819,7 +819,7 @@ export const projectData = {
     'SHOT_30': {
         id: 'SHOT_30',
         type: 'shot',
-        name: 'Shot 31',
+        name: 'TSH_1580',
         code: 'S02-S13-SH2',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0081.jpg',
@@ -829,7 +829,7 @@ export const projectData = {
     'SHOT_31': {
         id: 'SHOT_31',
         type: 'shot',
-        name: 'Shot 32',
+        name: 'TSH_1600',
         code: 'S03-S14-SH1',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0081.jpg',
@@ -839,7 +839,7 @@ export const projectData = {
     'SHOT_32': {
         id: 'SHOT_32',
         type: 'shot',
-        name: 'Shot 33',
+        name: 'TSH_1620',
         code: 'S03-S14-SH2',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0081.jpg',
@@ -849,7 +849,7 @@ export const projectData = {
     'SHOT_33': {
         id: 'SHOT_33',
         type: 'shot',
-        name: 'Shot 34',
+        name: 'TSH_1640',
         code: 'S03-S14-SH3',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0081.jpg',
@@ -859,7 +859,7 @@ export const projectData = {
     'SHOT_34': {
         id: 'SHOT_34',
         type: 'shot',
-        name: 'Shot 35',
+        name: 'TSH_1660',
         code: 'S03-S15-SH1',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0081.jpg',
@@ -869,7 +869,7 @@ export const projectData = {
     'SHOT_35': {
         id: 'SHOT_35',
         type: 'shot',
-        name: 'Shot 36',
+        name: 'TSH_1680',
         code: 'S03-S15-SH2',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0081.jpg',
@@ -879,7 +879,7 @@ export const projectData = {
     'SHOT_36': {
         id: 'SHOT_36',
         type: 'shot',
-        name: 'Shot 37',
+        name: 'TSH_1700',
         code: 'S03-S16-SH1',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0081.jpg',
@@ -889,7 +889,7 @@ export const projectData = {
     'SHOT_37': {
         id: 'SHOT_37',
         type: 'shot',
-        name: 'Shot 38',
+        name: 'TSH_1720',
         code: 'S03-S16-SH2',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0081.jpg',
@@ -899,7 +899,7 @@ export const projectData = {
     'SHOT_38': {
         id: 'SHOT_38',
         type: 'shot',
-        name: 'Shot 39',
+        name: 'TSH_1740',
         code: 'S03-S17-SH1',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0081.jpg',
@@ -909,7 +909,7 @@ export const projectData = {
     'SHOT_39': {
         id: 'SHOT_39',
         type: 'shot',
-        name: 'Shot 40',
+        name: 'TSH_1760',
         code: 'S03-S17-SH2',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0081.jpg',
@@ -919,7 +919,7 @@ export const projectData = {
     'SHOT_40': {
         id: 'SHOT_40',
         type: 'shot',
-        name: 'Shot 41',
+        name: 'TSH_1780',
         code: 'S03-S18-SH1',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0081.jpg',
@@ -929,7 +929,7 @@ export const projectData = {
     'SHOT_41': {
         id: 'SHOT_41',
         type: 'shot',
-        name: 'Shot 42',
+        name: 'TSH_1800',
         code: 'S03-S18-SH2',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0081.jpg',
@@ -939,7 +939,7 @@ export const projectData = {
     'SHOT_42': {
         id: 'SHOT_42',
         type: 'shot',
-        name: 'Shot 43',
+        name: 'TSH_1820',
         code: 'S03-S18-SH3',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0081.jpg',
@@ -949,7 +949,7 @@ export const projectData = {
     'SHOT_43': {
         id: 'SHOT_43',
         type: 'shot',
-        name: 'Shot 44',
+        name: 'TSH_1840',
         code: 'S04-S19-SH1',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0043.jpg',
@@ -959,7 +959,7 @@ export const projectData = {
     'SHOT_44': {
         id: 'SHOT_44',
         type: 'shot',
-        name: 'Shot 45',
+        name: 'TSH_1860',
         code: 'S04-S19-SH2',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0044.jpg',
@@ -969,7 +969,7 @@ export const projectData = {
     'SHOT_45': {
         id: 'SHOT_45',
         type: 'shot',
-        name: 'Shot 46',
+        name: 'TSH_1880',
         code: 'S04-S20-SH1',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0045.jpg',
@@ -979,7 +979,7 @@ export const projectData = {
     'SHOT_46': {
         id: 'SHOT_46',
         type: 'shot',
-        name: 'Shot 47',
+        name: 'TSH_1900',
         code: 'S04-S20-SH2',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0046.jpg',
@@ -989,7 +989,7 @@ export const projectData = {
     'SHOT_47': {
         id: 'SHOT_47',
         type: 'shot',
-        name: 'Shot 48',
+        name: 'TSH_1920',
         code: 'S04-S20-SH3',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0047.jpg',
@@ -999,7 +999,7 @@ export const projectData = {
     'SHOT_48': {
         id: 'SHOT_48',
         type: 'shot',
-        name: 'Shot 49',
+        name: 'TSH_1940',
         code: 'S05-S21-SH1',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0050.jpg',
@@ -1009,7 +1009,7 @@ export const projectData = {
     'SHOT_49': {
         id: 'SHOT_49',
         type: 'shot',
-        name: 'Shot 50',
+        name: 'TSH_1960',
         code: 'S05-S21-SH2',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0051.jpg',
@@ -1019,7 +1019,7 @@ export const projectData = {
     'SHOT_50': {
         id: 'SHOT_50',
         type: 'shot',
-        name: 'Shot 51',
+        name: 'TSH_1980',
         code: 'S05-S22-SH1',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0052.jpg',
@@ -1029,7 +1029,7 @@ export const projectData = {
     'SHOT_51': {
         id: 'SHOT_51',
         type: 'shot',
-        name: 'Shot 52',
+        name: 'TSH_2000',
         code: 'S05-S22-SH2',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0054.jpg',
@@ -1039,7 +1039,7 @@ export const projectData = {
     'SHOT_52': {
         id: 'SHOT_52',
         type: 'shot',
-        name: 'Shot 53',
+        name: 'TSH_2020',
         code: 'S05-S22-SH3',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0055.jpg',
@@ -1049,7 +1049,7 @@ export const projectData = {
     'SHOT_53': {
         id: 'SHOT_53',
         type: 'shot',
-        name: 'Shot 54',
+        name: 'TSH_2040',
         code: 'S05-S23-SH1',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0056.jpg',
@@ -1059,7 +1059,7 @@ export const projectData = {
     'SHOT_54': {
         id: 'SHOT_54',
         type: 'shot',
-        name: 'Shot 55',
+        name: 'TSH_2060',
         code: 'S05-S23-SH2',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0059.jpg',
@@ -1069,7 +1069,7 @@ export const projectData = {
     'SHOT_55': {
         id: 'SHOT_55',
         type: 'shot',
-        name: 'Shot 56',
+        name: 'TSH_2080',
         code: 'S06-S24-SH1',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0060.jpg',
@@ -1079,7 +1079,7 @@ export const projectData = {
     'SHOT_56': {
         id: 'SHOT_56',
         type: 'shot',
-        name: 'Shot 57',
+        name: 'TSH_2100',
         code: 'S06-S24-SH2',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0063.jpg',
@@ -1089,7 +1089,7 @@ export const projectData = {
     'SHOT_57': {
         id: 'SHOT_57',
         type: 'shot',
-        name: 'Shot 58',
+        name: 'TSH_2120',
         code: 'S06-S25-SH1',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0070.jpg',
@@ -1099,7 +1099,7 @@ export const projectData = {
     'SHOT_58': {
         id: 'SHOT_58',
         type: 'shot',
-        name: 'Shot 59',
+        name: 'TSH_2140',
         code: 'S06-S25-SH2',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0071.jpg',
@@ -1109,7 +1109,7 @@ export const projectData = {
     'SHOT_59': {
         id: 'SHOT_59',
         type: 'shot',
-        name: 'Shot 60',
+        name: 'TSH_2160',
         code: 'S07-S26-SH1',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0072.jpg',
@@ -1119,7 +1119,7 @@ export const projectData = {
     'SHOT_60': {
         id: 'SHOT_60',
         type: 'shot',
-        name: 'Shot 61',
+        name: 'TSH_2180',
         code: 'S07-S26-SH2',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0073.jpg',
@@ -1129,7 +1129,7 @@ export const projectData = {
     'SHOT_61': {
         id: 'SHOT_61',
         type: 'shot',
-        name: 'Shot 62',
+        name: 'TSH_2200',
         code: 'S07-S26-SH3',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0074.jpg',
@@ -1139,7 +1139,7 @@ export const projectData = {
     'SHOT_62': {
         id: 'SHOT_62',
         type: 'shot',
-        name: 'Shot 63',
+        name: 'TSH_2220',
         code: 'S07-S27-SH1',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0075.jpg',
@@ -1149,7 +1149,7 @@ export const projectData = {
     'SHOT_63': {
         id: 'SHOT_63',
         type: 'shot',
-        name: 'Shot 64',
+        name: 'TSH_2240',
         code: 'S07-S27-SH2',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0076.jpg',
@@ -1159,7 +1159,7 @@ export const projectData = {
     'SHOT_64': {
         id: 'SHOT_64',
         type: 'shot',
-        name: 'Shot 65',
+        name: 'TSH_2260',
         code: 'S07-S28-SH1',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0077.jpg',
@@ -1169,7 +1169,7 @@ export const projectData = {
     'SHOT_65': {
         id: 'SHOT_65',
         type: 'shot',
-        name: 'Shot 66',
+        name: 'TSH_2280',
         code: 'S07-S28-SH2',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0080.jpg',
@@ -1179,7 +1179,7 @@ export const projectData = {
     'SHOT_66': {
         id: 'SHOT_66',
         type: 'shot',
-        name: 'Shot 67',
+        name: 'TSH_2300',
         code: 'S08-S29-SH1',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0001.jpg',
@@ -1189,7 +1189,7 @@ export const projectData = {
     'SHOT_67': {
         id: 'SHOT_67',
         type: 'shot',
-        name: 'Shot 68',
+        name: 'TSH_2320',
         code: 'S08-S29-SH2',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0003.jpg',
@@ -1199,7 +1199,7 @@ export const projectData = {
     'SHOT_68': {
         id: 'SHOT_68',
         type: 'shot',
-        name: 'Shot 69',
+        name: 'TSH_2340',
         code: 'S08-S30-SH1',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0004.jpg',
@@ -1209,7 +1209,7 @@ export const projectData = {
     'SHOT_69': {
         id: 'SHOT_69',
         type: 'shot',
-        name: 'Shot 70',
+        name: 'TSH_2360',
         code: 'S08-S30-SH2',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0005.jpg',
@@ -1219,7 +1219,7 @@ export const projectData = {
     'SHOT_70': {
         id: 'SHOT_70',
         type: 'shot',
-        name: 'Shot 71',
+        name: 'TSH_2380',
         code: 'S08-S30-SH3',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0006.jpg',
@@ -1229,7 +1229,7 @@ export const projectData = {
     'SHOT_71': {
         id: 'SHOT_71',
         type: 'shot',
-        name: 'Shot 72',
+        name: 'TSH_2400',
         code: 'S08-S31-SH1',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0007.jpg',
@@ -1239,7 +1239,7 @@ export const projectData = {
     'SHOT_72': {
         id: 'SHOT_72',
         type: 'shot',
-        name: 'Shot 73',
+        name: 'TSH_2420',
         code: 'S08-S31-SH2',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0008.jpg',
@@ -1249,7 +1249,7 @@ export const projectData = {
     'SHOT_73': {
         id: 'SHOT_73',
         type: 'shot',
-        name: 'Shot 74',
+        name: 'TSH_2440',
         code: 'S09-S32-SH1',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0010.jpg',
@@ -1259,7 +1259,7 @@ export const projectData = {
     'SHOT_74': {
         id: 'SHOT_74',
         type: 'shot',
-        name: 'Shot 75',
+        name: 'TSH_2460',
         code: 'S09-S32-SH2',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0011.jpg',
@@ -1269,7 +1269,7 @@ export const projectData = {
     'SHOT_75': {
         id: 'SHOT_75',
         type: 'shot',
-        name: 'Shot 76',
+        name: 'TSH_2480',
         code: 'S09-S33-SH1',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0014.jpg',
@@ -1279,7 +1279,7 @@ export const projectData = {
     'SHOT_76': {
         id: 'SHOT_76',
         type: 'shot',
-        name: 'Shot 77',
+        name: 'TSH_2500',
         code: 'S09-S33-SH2',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0015.jpg',
@@ -1289,7 +1289,7 @@ export const projectData = {
     'SHOT_77': {
         id: 'SHOT_77',
         type: 'shot',
-        name: 'Shot 78',
+        name: 'TSH_2520',
         code: 'S09-S33-SH3',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0016.jpg',
@@ -1299,7 +1299,7 @@ export const projectData = {
     'SHOT_78': {
         id: 'SHOT_78',
         type: 'shot',
-        name: 'Shot 79',
+        name: 'TSH_2540',
         code: 'S09-S34-SH1',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0017.jpg',
@@ -1309,7 +1309,7 @@ export const projectData = {
     'SHOT_79': {
         id: 'SHOT_79',
         type: 'shot',
-        name: 'Shot 80',
+        name: 'TSH_2560',
         code: 'S09-S34-SH2',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0020.jpg',
@@ -1319,7 +1319,7 @@ export const projectData = {
     'SHOT_80': {
         id: 'SHOT_80',
         type: 'shot',
-        name: 'Shot 81',
+        name: 'TSH_2580',
         code: 'S09-S35-SH1',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0024.jpg',
@@ -1329,7 +1329,7 @@ export const projectData = {
     'SHOT_81': {
         id: 'SHOT_81',
         type: 'shot',
-        name: 'Shot 82',
+        name: 'TSH_2600',
         code: 'S09-S35-SH2',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0025.jpg',
@@ -1339,7 +1339,7 @@ export const projectData = {
     'SHOT_82': {
         id: 'SHOT_82',
         type: 'shot',
-        name: 'Shot 83',
+        name: 'TSH_2620',
         code: 'S09-S36-SH1',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0026.jpg',
@@ -1349,7 +1349,7 @@ export const projectData = {
     'SHOT_83': {
         id: 'SHOT_83',
         type: 'shot',
-        name: 'Shot 84',
+        name: 'TSH_2640',
         code: 'S09-S36-SH2',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0027.jpg',
@@ -1359,7 +1359,7 @@ export const projectData = {
     'SHOT_84': {
         id: 'SHOT_84',
         type: 'shot',
-        name: 'Shot 85',
+        name: 'TSH_2660',
         code: 'S09-S36-SH3',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0028.jpg',
@@ -1369,7 +1369,7 @@ export const projectData = {
     'SHOT_85': {
         id: 'SHOT_85',
         type: 'shot',
-        name: 'Shot 86',
+        name: 'TSH_2680',
         code: 'S09-S37-SH1',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0029.jpg',
@@ -1379,7 +1379,7 @@ export const projectData = {
     'SHOT_86': {
         id: 'SHOT_86',
         type: 'shot',
-        name: 'Shot 87',
+        name: 'TSH_2700',
         code: 'S09-S37-SH2',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0032.jpg',
@@ -1389,7 +1389,7 @@ export const projectData = {
     'SHOT_87': {
         id: 'SHOT_87',
         type: 'shot',
-        name: 'Shot 88',
+        name: 'TSH_2720',
         code: 'S09-S38-SH1',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0038.jpg',
@@ -1399,7 +1399,7 @@ export const projectData = {
     'SHOT_88': {
         id: 'SHOT_88',
         type: 'shot',
-        name: 'Shot 89',
+        name: 'TSH_2740',
         code: 'S09-S38-SH2',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0040.jpg',
@@ -1409,7 +1409,7 @@ export const projectData = {
     'SHOT_89': {
         id: 'SHOT_89',
         type: 'shot',
-        name: 'Shot 90',
+        name: 'TSH_2760',
         code: 'S09-S38-SH3',
         description: 'A shot description.',
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0042.jpg',

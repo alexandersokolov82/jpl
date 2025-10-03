@@ -6,13 +6,28 @@ import { projectData } from './data';
 import './App.css';
 
 function App() {
+    // Clear old budget data to force reload with new shot names
+    useEffect(() => {
+        const currentVersion = 'v8_tsh_naming';
+        const storedVersion = localStorage.getItem('budgetDataVersion');
+        if (storedVersion !== currentVersion) {
+            // Clear ALL old data
+            localStorage.clear();
+            localStorage.setItem('budgetDataVersion', currentVersion);
+            // Force reload
+            window.location.reload();
+        }
+    }, []);
+
     // Load data from localStorage or use default projectData
     const [data, setData] = useState(() => {
-        const savedData = localStorage.getItem('continuityData');
-        return savedData ? JSON.parse(savedData) : projectData;
+        // TEMPORARY: Always use projectData to get new shot names
+        return projectData;
+        // const savedData = localStorage.getItem('continuityData');
+        // return savedData ? JSON.parse(savedData) : projectData;
     });
     const [viewStack, setViewStack] = useState(['PROJ_001']);
-    const [activeTab, setActiveTab] = useState('Main');
+    const [activeTab, setActiveTab] = useState('Previs Budget');
 
     // Save data to localStorage whenever it changes
     useEffect(() => {
@@ -150,6 +165,12 @@ function App() {
         }
     };
 
+    const handleAssetClick = (assetName) => {
+        // For assets, we don't have a hierarchy in data, so we just switch to Previs Assets tab
+        // In the future, this could navigate to a specific asset detail view
+        setActiveTab('Previs Assets');
+    };
+
     const currentItem = data[viewStack[viewStack.length - 1]];
     const breadcrumbItems = viewStack.map(itemId => data[itemId]);
     const childItems = currentItem.children?.map(childId => data[childId]) || [];
@@ -183,7 +204,7 @@ function App() {
             ) : activeTab === 'Previs Assets' ? (
                 <PrevisAssetsView />
             ) : activeTab === 'Previs Budget' ? (
-                <PrevisBudgetView data={data} />
+                <PrevisBudgetView data={data} onShotClick={handleShotClick} onAssetClick={handleAssetClick} />
             ) : (
                 <div className="placeholder-view">
                     <h2>{activeTab}</h2>
