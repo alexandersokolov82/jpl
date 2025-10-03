@@ -27,7 +27,26 @@ function App() {
         // return savedData ? JSON.parse(savedData) : projectData;
     });
     const [viewStack, setViewStack] = useState(['PROJ_001']);
-    const [activeTab, setActiveTab] = useState('Previs Budget');
+    const [activeTab, setActiveTab] = useState(null);
+
+    // Budget tabs management
+    const [budgetTabs, setBudgetTabs] = useState(() => {
+        const saved = localStorage.getItem('budgetTabs');
+        return saved ? JSON.parse(saved) : [{ id: 'budget_1', name: 'Previs Budget' }];
+    });
+
+    const [activeBudgetTab, setActiveBudgetTab] = useState(() => {
+        const saved = localStorage.getItem('activeBudgetTab');
+        return saved || 'budget_1';
+    });
+
+    React.useEffect(() => {
+        localStorage.setItem('budgetTabs', JSON.stringify(budgetTabs));
+    }, [budgetTabs]);
+
+    React.useEffect(() => {
+        localStorage.setItem('activeBudgetTab', activeBudgetTab);
+    }, [activeBudgetTab]);
 
     // Save data to localStorage whenever it changes
     useEffect(() => {
@@ -165,19 +184,122 @@ function App() {
         }
     };
 
-    const handleAssetClick = (assetName) => {
-        // For assets, we don't have a hierarchy in data, so we just switch to Previs Assets tab
-        // In the future, this could navigate to a specific asset detail view
-        setActiveTab('Previs Assets');
+    const handleAssetClick = (assetId) => {
+        const asset = data[assetId];
+        if (!asset) return;
+
+        // Find parent category and root for the asset
+        let categoryId = null;
+        Object.values(data).forEach(item => {
+            if (item.type === 'asset_category' && item.children?.includes(assetId)) {
+                categoryId = item.id;
+            }
+        });
+
+        // Build view stack: project -> assets_root -> category -> asset
+        if (categoryId) {
+            setViewStack(['PROJ_001', 'ASSETS_ROOT', categoryId, assetId]);
+        } else {
+            // Fallback for assets without a category
+            setViewStack(['PROJ_001', 'ASSETS_ROOT', assetId]);
+        }
+        setActiveTab('Main');
+    };
+
+    const handleBudgetTitleChange = (newTitle) => {
+        setBudgetTabs(tabs => tabs.map(tab =>
+            tab.id === activeBudgetTab ? { ...tab, name: newTitle } : tab
+        ));
+    };
+
+    const handleDuplicateBudget = () => {
+        const currentTab = budgetTabs.find(tab => tab.id === activeBudgetTab);
+        if (!currentTab) return;
+
+        // Find next available number
+        const existingNumbers = budgetTabs
+            .map(tab => {
+                const match = tab.name.match(/\s(\d+)$/);
+                return match ? parseInt(match[1]) : 0;
+            });
+        const nextNumber = Math.max(...existingNumbers, 1) + 1;
+
+        const newBudgetId = `budget_${Date.now()}`;
+        const newBudgetName = `${currentTab.name.replace(/\s\d+$/, '')} ${nextNumber}`;
+
+        // Copy all budget data from current tab to new tab
+        const budgetDataKeys = [
+            'previsBudgetProduction_v2',
+            'previsBudgetTeamRoles_v5',
+            'previsBudgetDataAssets_v4',
+            'previsBudgetDataShots_v6'
+        ];
+
+        budgetDataKeys.forEach(key => {
+            const sourceKey = `${key}_${activeBudgetTab}`;
+            const targetKey = `${key}_${newBudgetId}`;
+            const data = localStorage.getItem(sourceKey);
+            if (data) {
+                localStorage.setItem(targetKey, data);
+            }
+        });
+
+        // Add new tab
+        setBudgetTabs(tabs => [...tabs, { id: newBudgetId, name: newBudgetName }]);
+        setActiveBudgetTab(newBudgetId);
+    };
+
+    const handleNewBudget = () => {
+        const newBudgetId = `budget_${Date.now()}`;
+        const newBudgetName = 'New Budget';
+
+        setBudgetTabs(tabs => [...tabs, { id: newBudgetId, name: newBudgetName }]);
+        setActiveBudgetTab(newBudgetId);
+    };
+
+    const handleDeleteBudget = () => {
+        if (budgetTabs.length === 1) {
+            alert('Cannot delete the last budget tab.');
+            return;
+        }
+
+        if (!window.confirm('Delete this budget? This action cannot be undone.')) {
+            return;
+        }
+
+        // Delete all data for this budget
+        const budgetDataKeys = [
+            'previsBudgetProduction_v2',
+            'previsBudgetTeamRoles_v5',
+            'previsBudgetDataAssets_v4',
+            'previsBudgetDataShots_v6'
+        ];
+
+        budgetDataKeys.forEach(key => {
+            localStorage.removeItem(`${key}_${activeBudgetTab}`);
+        });
+
+        // Remove tab and switch to first remaining tab
+        const remainingTabs = budgetTabs.filter(tab => tab.id !== activeBudgetTab);
+        setBudgetTabs(remainingTabs);
+        setActiveBudgetTab(remainingTabs[0].id);
     };
 
     const currentItem = data[viewStack[viewStack.length - 1]];
     const breadcrumbItems = viewStack.map(itemId => data[itemId]);
     const childItems = currentItem.children?.map(childId => data[childId]) || [];
 
+    const currentBudgetTab = budgetTabs.find(tab => tab.id === activeBudgetTab);
+
     return (
         <div className="app-container">
-            <TabNavigation activeTab={activeTab} onTabChange={setActiveTab} />
+            <TabNavigation
+                activeTab={activeTab}
+                onTabChange={setActiveTab}
+                budgetTabs={budgetTabs}
+                activeBudgetTab={activeBudgetTab}
+                onBudgetTabChange={setActiveBudgetTab}
+            />
 
             {activeTab === 'Main' ? (
                 <>
@@ -202,14 +324,19 @@ function App() {
             ) : activeTab === 'Previs Shots' ? (
                 <PrevisShotsView data={data} onShotClick={handleShotClick} />
             ) : activeTab === 'Previs Assets' ? (
-                <PrevisAssetsView />
-            ) : activeTab === 'Previs Budget' ? (
-                <PrevisBudgetView data={data} onShotClick={handleShotClick} onAssetClick={handleAssetClick} />
+                <PrevisAssetsView data={data} onAssetClick={handleAssetClick} />
             ) : (
-                <div className="placeholder-view">
-                    <h2>{activeTab}</h2>
-                    <p>Content for this tab will be implemented soon.</p>
-                </div>
+                <PrevisBudgetView
+                    data={data}
+                    onShotClick={handleShotClick}
+                    onAssetClick={handleAssetClick}
+                    budgetId={activeBudgetTab}
+                    budgetTitle={currentBudgetTab?.name || 'Previs Budget'}
+                    onBudgetTitleChange={handleBudgetTitleChange}
+                    onDuplicateBudget={handleDuplicateBudget}
+                    onNewBudget={handleNewBudget}
+                    onDeleteBudget={handleDeleteBudget}
+                />
             )}
         </div>
     );

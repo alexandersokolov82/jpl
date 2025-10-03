@@ -2,12 +2,21 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import ImageUploadModal from './ImageUploadModal';
 
-export const TabNavigation = ({ activeTab, onTabChange }) => {
-    const tabs = ['Previs Budget', 'Previs Shots', 'Previs Assets'];
+export const TabNavigation = ({ activeTab, onTabChange, budgetTabs, activeBudgetTab, onBudgetTabChange }) => {
+    const mainTabs = ['Previs Shots', 'Previs Assets'];
 
     return (
         <nav className="tab-navigation">
-            {tabs.map((tab) => (
+            {budgetTabs && budgetTabs.map((budgetTab) => (
+                <button
+                    key={budgetTab.id}
+                    className={`tab-button ${activeBudgetTab === budgetTab.id ? 'active' : ''}`}
+                    onClick={() => onBudgetTabChange(budgetTab.id)}
+                >
+                    {budgetTab.name}
+                </button>
+            ))}
+            {mainTabs.map((tab) => (
                 <button
                     key={tab}
                     className={`tab-button ${activeTab === tab ? 'active' : ''}`}
@@ -251,49 +260,11 @@ export const PrevisShotsView = ({ data, onShotClick }) => {
     );
 };
 
-export const PrevisAssetsView = () => {
-    const assetCategories = [
-        {
-            id: 'characters',
-            name: 'Characters',
-            items: [
-                { id: 'char_01', name: 'Jack Torrance', image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0067.jpg' },
-                { id: 'char_02', name: 'Wendy Torrance', image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0082.jpg' },
-            ]
-        },
-        {
-            id: 'environments',
-            name: 'Environments',
-            items: [
-                { id: 'env_01', name: 'Overlook Hotel Exterior', image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0088.jpg' },
-                { id: 'env_02', name: 'Hedge Maze', image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0081.jpg' },
-            ]
-        },
-        {
-            id: 'props',
-            name: 'Props',
-            items: [
-                { id: 'prop_01', name: 'Typewriter', image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0002.jpg' },
-                { id: 'prop_02', name: 'Axe', image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0030.jpg' },
-            ]
-        },
-        {
-            id: 'vehicles',
-            name: 'Vehicles',
-            items: [
-                { id: 'veh_01', name: 'Yellow Volkswagen Beetle', image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0033.jpg' },
-                { id: 'veh_02', name: 'Snowcat', image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0061.jpg' },
-            ]
-        },
-        {
-            id: 'efx',
-            name: 'EFX',
-            items: [
-                { id: 'efx_01', name: 'Gunshots', image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0066.jpg' },
-                { id: 'efx_02', name: 'Wood Splinters', image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0030.jpg' },
-            ]
-        }
-    ];
+export const PrevisAssetsView = ({ data, onAssetClick }) => {
+    const assetRoot = Object.values(data).find(item => item.type === 'asset_root');
+    if (!assetRoot) return <div>No assets found.</div>;
+
+    const assetCategories = assetRoot.children.map(catId => data[catId]);
 
     return (
         <div className="previs-assets-view">
@@ -301,12 +272,15 @@ export const PrevisAssetsView = () => {
                 <div key={category.id} className="asset-category">
                     <h2 className="category-title">{category.name}</h2>
                     <div className="assets-grid">
-                        {category.items.map((asset) => (
-                            <div key={asset.id} className="asset-card">
-                                <img src={asset.image} alt={asset.name} className="asset-thumbnail" />
-                                <h3 className="asset-name">{asset.name}</h3>
-                            </div>
-                        ))}
+                        {category.children.map(assetId => {
+                            const asset = data[assetId];
+                            return (
+                                <div key={asset.id} className="asset-card" onClick={() => onAssetClick(asset.id)}>
+                                    <img src={asset.image} alt={asset.name} className="asset-thumbnail" />
+                                    <h3 className="asset-name">{asset.name}</h3>
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
             ))}
@@ -314,11 +288,12 @@ export const PrevisAssetsView = () => {
     );
 };
 
-export const PrevisBudgetView = ({ data, onShotClick, onAssetClick }) => {
+export const PrevisBudgetView = ({ data, onShotClick, onAssetClick, budgetId, budgetTitle, onBudgetTitleChange, onDuplicateBudget, onNewBudget, onDeleteBudget }) => {
     const [assetsCollapsed, setAssetsCollapsed] = React.useState(false);
     const [shotsCollapsed, setShotsCollapsed] = React.useState(false);
     const [teamCollapsed, setTeamCollapsed] = React.useState(false);
     const [productionCollapsed, setProductionCollapsed] = React.useState(false);
+    const [isEditingTitle, setIsEditingTitle] = React.useState(false);
 
     const initialProductionData = [
         { id: 0, name: 'Supervisor', days: 20, prodMultiplier: 0.7, cost: 0 },
@@ -327,13 +302,27 @@ export const PrevisBudgetView = ({ data, onShotClick, onAssetClick }) => {
     ];
 
     const [productionData, setProductionData] = React.useState(() => {
-        const saved = localStorage.getItem('previsBudgetProduction_v2');
-        return saved ? JSON.parse(saved) : initialProductionData;
+        const saved = localStorage.getItem(`previsBudgetProduction_v2_${budgetId}`);
+        if (saved) {
+            return JSON.parse(saved);
+        }
+        // For new budgets, return empty array or initial data only for budget_1
+        return budgetId === 'budget_1' ? initialProductionData : [];
     });
 
+    // Reload production data when budgetId changes
     React.useEffect(() => {
-        localStorage.setItem('previsBudgetProduction_v2', JSON.stringify(productionData));
-    }, [productionData]);
+        const saved = localStorage.getItem(`previsBudgetProduction_v2_${budgetId}`);
+        if (saved) {
+            setProductionData(JSON.parse(saved));
+        } else {
+            setProductionData(budgetId === 'budget_1' ? initialProductionData : []);
+        }
+    }, [budgetId]);
+
+    React.useEffect(() => {
+        localStorage.setItem(`previsBudgetProduction_v2_${budgetId}`, JSON.stringify(productionData));
+    }, [productionData, budgetId]);
 
     const defaultRoles = [
         { id: 0, role: 'Supervisor', headcount: 1, rateUnit: 'day', rate: 900, productivity: 1.0 },
@@ -344,13 +333,27 @@ export const PrevisBudgetView = ({ data, onShotClick, onAssetClick }) => {
     ];
 
     const [teamRoles, setTeamRoles] = React.useState(() => {
-        const saved = localStorage.getItem('previsBudgetTeamRoles_v5');
-        return saved ? JSON.parse(saved) : defaultRoles;
+        const saved = localStorage.getItem(`previsBudgetTeamRoles_v5_${budgetId}`);
+        if (saved) {
+            return JSON.parse(saved);
+        }
+        // For new budgets, return empty array or default roles only for budget_1
+        return budgetId === 'budget_1' ? defaultRoles : [];
     });
 
+    // Reload team roles when budgetId changes
     React.useEffect(() => {
-        localStorage.setItem('previsBudgetTeamRoles_v5', JSON.stringify(teamRoles));
-    }, [teamRoles]);
+        const saved = localStorage.getItem(`previsBudgetTeamRoles_v5_${budgetId}`);
+        if (saved) {
+            setTeamRoles(JSON.parse(saved));
+        } else {
+            setTeamRoles(budgetId === 'budget_1' ? defaultRoles : []);
+        }
+    }, [budgetId]);
+
+    React.useEffect(() => {
+        localStorage.setItem(`previsBudgetTeamRoles_v5_${budgetId}`, JSON.stringify(teamRoles));
+    }, [teamRoles, budgetId]);
 
     const initialAssetsBudgetData = [
         // Characters
@@ -371,9 +374,23 @@ export const PrevisBudgetView = ({ data, onShotClick, onAssetClick }) => {
     ];
 
     const [assetsBudgetData, setAssetsBudgetData] = React.useState(() => {
-        const saved = localStorage.getItem('previsBudgetDataAssets_v4');
-        return saved ? JSON.parse(saved) : initialAssetsBudgetData;
+        const saved = localStorage.getItem(`previsBudgetDataAssets_v4_${budgetId}`);
+        if (saved) {
+            return JSON.parse(saved);
+        }
+        // For new budgets, return empty array or initial data
+        return budgetId === 'budget_1' ? initialAssetsBudgetData : [];
     });
+
+    // Reload assets data when budgetId changes
+    React.useEffect(() => {
+        const saved = localStorage.getItem(`previsBudgetDataAssets_v4_${budgetId}`);
+        if (saved) {
+            setAssetsBudgetData(JSON.parse(saved));
+        } else {
+            setAssetsBudgetData(budgetId === 'budget_1' ? initialAssetsBudgetData : []);
+        }
+    }, [budgetId]);
 
     // Generate shots budget data from all shots in data
     const initialShotsBudgetData = React.useMemo(() => {
@@ -395,34 +412,40 @@ export const PrevisBudgetView = ({ data, onShotClick, onAssetClick }) => {
     }, [data]);
 
     const [shotsBudgetData, setShotsBudgetData] = React.useState(() => {
-        const saved = localStorage.getItem('previsBudgetDataShots_v6');
+        const saved = localStorage.getItem(`previsBudgetDataShots_v6_${budgetId}`);
         if (saved) {
-            const savedData = JSON.parse(saved);
-            // If saved data exists but is empty or outdated, regenerate
-            if (savedData.length === 0 && initialShotsBudgetData.length > 0) {
-                return initialShotsBudgetData;
-            }
-            return savedData;
+            return JSON.parse(saved);
         }
-        return initialShotsBudgetData;
+        // For new budgets, return empty array or initial data only for budget_1
+        return budgetId === 'budget_1' ? initialShotsBudgetData : [];
     });
 
-    // Update shots budget data when data changes
+    // Reload shots data when budgetId changes
     React.useEffect(() => {
-        if (initialShotsBudgetData.length > 0 && shotsBudgetData.length === 0) {
+        const saved = localStorage.getItem(`previsBudgetDataShots_v6_${budgetId}`);
+        if (saved) {
+            setShotsBudgetData(JSON.parse(saved));
+        } else {
+            setShotsBudgetData(budgetId === 'budget_1' ? initialShotsBudgetData : []);
+        }
+    }, [budgetId]);
+
+    // Update shots budget data when data changes - only for budget_1
+    React.useEffect(() => {
+        if (budgetId === 'budget_1' && initialShotsBudgetData.length > 0 && shotsBudgetData.length === 0) {
             setShotsBudgetData(initialShotsBudgetData);
         }
-    }, [initialShotsBudgetData, shotsBudgetData.length]);
+    }, [initialShotsBudgetData, shotsBudgetData.length, budgetId]);
 
     const [editingCell, setEditingCell] = React.useState(null);
 
     React.useEffect(() => {
-        localStorage.setItem('previsBudgetDataAssets_v4', JSON.stringify(assetsBudgetData));
-    }, [assetsBudgetData]);
+        localStorage.setItem(`previsBudgetDataAssets_v4_${budgetId}`, JSON.stringify(assetsBudgetData));
+    }, [assetsBudgetData, budgetId]);
 
     React.useEffect(() => {
-        localStorage.setItem('previsBudgetDataShots_v6', JSON.stringify(shotsBudgetData));
-    }, [shotsBudgetData]);
+        localStorage.setItem(`previsBudgetDataShots_v6_${budgetId}`, JSON.stringify(shotsBudgetData));
+    }, [shotsBudgetData, budgetId]);
 
     const calculateTotal = (item) => {
         return (item.artistDays + item.revisions) * item.teamSize * (item.complexity || 1);
@@ -451,8 +474,31 @@ export const PrevisBudgetView = ({ data, onShotClick, onAssetClick }) => {
 
     const calculateLocalProjectDays = (item) => {
         const totalArtistDays = calculateTotalArtistDays(item);
-        const avgTeamSize = item.teamSize || 1;
-        return totalArtistDays / avgTeamSize;
+        const artists = Array.isArray(item.assignedArtists) ? item.assignedArtists : [];
+
+        // If no artists assigned, use team size as fallback
+        if (artists.length === 0) {
+            const avgTeamSize = item.teamSize || 1;
+            return totalArtistDays / avgTeamSize;
+        }
+
+        // Calculate combined productivity of all assigned artists
+        let totalProductivity = 0;
+        artists.forEach(artistRole => {
+            const role = teamRoles.find(r => r.role === artistRole);
+            if (role) {
+                totalProductivity += (role.productivity || 1.0);
+            }
+        });
+
+        // If no productivity found, fall back to team size
+        if (totalProductivity === 0) {
+            const avgTeamSize = item.teamSize || 1;
+            return totalArtistDays / avgTeamSize;
+        }
+
+        // Calculate local project days considering productivity
+        return totalArtistDays / totalProductivity;
     };
 
     const assetsTotalDays = assetsBudgetData.reduce((sum, item) => sum + calculateTotal(item), 0);
@@ -709,7 +755,10 @@ export const PrevisBudgetView = ({ data, onShotClick, onAssetClick }) => {
                                         style={{ cursor: 'pointer', color: '#4a9eff' }}
                                         onClick={() => {
                                             if (tableType === 'assets' && onAssetClick) {
-                                                onAssetClick(item.name);
+                                                const asset = Object.values(data).find(d => d.type === 'asset' && d.name === item.name);
+                                                if (asset) {
+                                                    onAssetClick(asset.id);
+                                                }
                                             } else if (tableType === 'shots' && onShotClick) {
                                                 onShotClick(item.id);
                                             }
@@ -1294,6 +1343,7 @@ export const PrevisBudgetView = ({ data, onShotClick, onAssetClick }) => {
 
     const renderProductionTable = () => {
         const productionTotal = productionData.reduce((sum, item) => sum + calculateProductionCost(item), 0);
+        const productionTotalDays = productionData.reduce((sum, item) => sum + item.days, 0);
 
         return (
             <div className="budget-section">
@@ -1301,7 +1351,7 @@ export const PrevisBudgetView = ({ data, onShotClick, onAssetClick }) => {
                     <h3>Production</h3>
                     <div className="budget-section-info">
                         <span className="item-count">{productionData.length} items</span>
-                        <span className="section-total">${productionTotal.toLocaleString()}</span>
+                        <span className="section-total">{productionTotalDays} days</span>
                         <span className={`collapse-icon ${productionCollapsed ? 'collapsed' : ''}`}>▼</span>
                     </div>
                 </div>
@@ -1432,10 +1482,84 @@ export const PrevisBudgetView = ({ data, onShotClick, onAssetClick }) => {
         );
     };
 
+
     return (
         <div className="previs-budget-view">
-            <div className="budget-header">
-                <h2>Previs Budget</h2>
+            <div className="budget-header" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '2rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                    {isEditingTitle ? (
+                        <input
+                            type="text"
+                            value={budgetTitle}
+                            onChange={(e) => onBudgetTitleChange(e.target.value)}
+                            onBlur={() => setIsEditingTitle(false)}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter') setIsEditingTitle(false);
+                            }}
+                            autoFocus
+                            style={{
+                                fontSize: '2rem',
+                                fontWeight: 'bold',
+                                background: 'var(--bg-surface)',
+                                border: '2px solid var(--accent-primary)',
+                                borderRadius: '4px',
+                                padding: '0.25rem 0.5rem',
+                                color: 'var(--text-primary)'
+                            }}
+                        />
+                    ) : (
+                        <h2
+                            onClick={() => setIsEditingTitle(true)}
+                            style={{ cursor: 'pointer', margin: 0 }}
+                        >
+                            {budgetTitle}
+                        </h2>
+                    )}
+                    <div style={{ display: 'flex', gap: '0.5rem' }}>
+                        <button
+                            onClick={onDuplicateBudget}
+                            style={{
+                                padding: '0.5rem 1rem',
+                                cursor: 'pointer',
+                                background: 'var(--bg-surface)',
+                                color: 'var(--text-primary)',
+                                border: '1px solid var(--border-color)',
+                                borderRadius: '8px',
+                                fontSize: '14px'
+                            }}
+                        >
+                            Duplicate
+                        </button>
+                        <button
+                            onClick={onNewBudget}
+                            style={{
+                                padding: '0.5rem 1rem',
+                                cursor: 'pointer',
+                                background: 'var(--bg-surface)',
+                                color: 'var(--text-primary)',
+                                border: '1px solid var(--border-color)',
+                                borderRadius: '8px',
+                                fontSize: '14px'
+                            }}
+                        >
+                            New
+                        </button>
+                        <button
+                            onClick={onDeleteBudget}
+                            style={{
+                                padding: '0.5rem 1rem',
+                                cursor: 'pointer',
+                                background: 'var(--bg-surface)',
+                                color: '#ff4444',
+                                border: '1px solid var(--border-color)',
+                                borderRadius: '8px',
+                                fontSize: '14px'
+                            }}
+                        >
+                            Delete
+                        </button>
+                    </div>
+                </div>
                 <div className="budget-summary">
                     <span>Grand Total: <strong>{grandTotal}</strong> days</span>
                 </div>
