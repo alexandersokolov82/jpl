@@ -1,23 +1,42 @@
-# Continuity 🎬
+# JPL - Pre-visualization & Budgeting Tool 🎬
 
-A simple and intuitive project management tool for film and video production, built with React. This application helps filmmakers structure their projects by organizing them into a clear hierarchy of sequences, scenes, and shots.
-
-![App Screenshot](https://alexandersokolov.com/continuity/continuity_thumb1.jpg)
----
+An advanced tool for film pre-visualization and budget management, built with React. This application helps filmmakers and production managers to structure their projects, visualize assets and shots, and create detailed budgets.
 
 ## About The Project
 
-This web application provides a clear, hierarchical way to organize film projects. In the world of filmmaking, "continuity" is key, and that starts with good organization. This tool allows users to drill down from a high-level project overview into specific sequences, then into scenes, and finally down to individual shots.
+This web application provides a comprehensive solution for managing the pre-production phase of a film project. It combines hierarchical project organization with powerful budgeting features.
 
-The main features include:
-* **Hierarchical Structure:** A logical breakdown of Project → Sequence → Scene → Shot.
-* **Focused View:** Each screen displays details of a parent item (like a scene) and a list of its children (its shots).
-* **Dynamic Navigation:** Easily navigate through the project using breadcrumbs and next/previous buttons.
-* **Add on the Fly:** Quickly add new sequences, scenes, or shots right where you are in the hierarchy.
+### Core Features:
+
+*   **Hierarchical Structure:** Organize your project in a logical hierarchy:
+    *   Project
+        *   Sequence
+            *   Scene
+                *   Shot
+
+*   **Pre-visualization Views:**
+    *   **Previs Shots:** A gallery of all shots for a quick visual overview.
+    *   **Previs Assets:** Browse assets categorized by type (Characters, Environments, Props, etc.).
+
+*   **Detailed Budgeting (`Previs Budget`):**
+    *   **Assets & Shots Budget:** Create detailed budget tables for assets and shots with fields for artist days, revisions, team size, and complexity.
+    *   **Team & Rate Management:** Define team roles, headcount, rates (per day/week), and productivity multipliers.
+    *   **Production Costs:** Add and manage production-related costs.
+    *   **Scenario Summary:** Get a comprehensive summary of your budget, including:
+        *   Total artist days.
+        *   Project duration based on team capacity.
+        *   Cost breakdown for assets, shots, and production.
+        *   A cost distribution pie chart for a clear visual summary.
+
+*   **Interactive & Dynamic:**
+    *   Drill-down navigation to move through the project hierarchy.
+    *   Editable tables for on-the-fly budget adjustments.
+    *   Data persistence using the browser's `localStorage`.
 
 ## Built With
 
-* [React.js](https://reactjs.org/)
+*   [React.js](https://reactjs.org/)
+*   [Framer Motion](https://www.framer.com/motion/) for animations.
 
 ## Getting Started
 
@@ -26,7 +45,7 @@ To get a local copy up and running, follow these simple steps.
 ### Prerequisites
 
 You need to have Node.js and npm installed on your machine.
-* You can check if you have npm installed by running:
+*   You can check if you have npm installed by running:
     ```sh
     npm -v
     ```
@@ -35,11 +54,11 @@ You need to have Node.js and npm installed on your machine.
 
 1.  Clone the repo
     ```sh
-    git clone [https://github.com/your_username/continuity.git](https://github.com/your_username/continuity.git)
+    git clone <your-repo-url>
     ```
 2.  Navigate to the project directory
     ```sh
-    cd continuity
+    cd jpl
     ```
 3.  Install NPM packages
     ```sh
@@ -50,22 +69,3 @@ You need to have Node.js and npm installed on your machine.
     npm start
     ```
     Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-## Usage
-
-Once the application is running, you can:
-* Start at the project dashboard, which lists all the sequences.
-* Click on any sequence to see its details and the list of scenes within it.
-* Click on a scene to see its details and the list of shots it contains.
-* Use the breadcrumbs at the top to navigate back up the hierarchy.
-* Use the "New", "Previous", and "Next" buttons to manage and navigate through the items at any level.
-
-## License
-
-Distributed under the MIT License. See `LICENSE.txt` for more information.
-
-## Contact
-
-Your Name - [@your_twitter_handle](https://twitter.com/your_twitter_handle) - email@example.com
-
-Project Link: [https://github.com/your_username/continuity](https://github.com/your_username/continuity)
