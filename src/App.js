@@ -8,15 +8,11 @@ import './App.css';
 function App() {
     // Clear old budget data to force reload with new shot names
     useEffect(() => {
-        const currentVersion = 'v10_extra_artists_zero';
+        const currentVersion = 'v11_budget_scenarios';
         const storedVersion = localStorage.getItem('budgetDataVersion');
         if (storedVersion !== currentVersion) {
-            // Reset Extra Artists to 0 for all budgets
-            Object.keys(localStorage).forEach(key => {
-                if (key.includes('ExtraArtists')) {
-                    localStorage.setItem(key, '0');
-                }
-            });
+            // Clear ALL localStorage to reset to defaults
+            localStorage.clear();
             localStorage.setItem('budgetDataVersion', currentVersion);
             // Force reload
             window.location.reload();
