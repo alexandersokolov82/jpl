@@ -232,7 +232,10 @@ function App() {
             'previsBudgetProduction_v2',
             'previsBudgetTeamRoles_v5',
             'previsBudgetDataAssets_v4',
-            'previsBudgetDataShots_v6'
+            'previsBudgetDataShots_v6',
+            'assetsEstimateMultiplier',
+            'shotsEstimateMultiplier',
+            'contingencyPercent'
         ];
 
         budgetDataKeys.forEach(key => {
@@ -272,7 +275,10 @@ function App() {
             'previsBudgetProduction_v2',
             'previsBudgetTeamRoles_v5',
             'previsBudgetDataAssets_v4',
-            'previsBudgetDataShots_v6'
+            'previsBudgetDataShots_v6',
+            'assetsEstimateMultiplier',
+            'shotsEstimateMultiplier',
+            'contingencyPercent'
         ];
 
         budgetDataKeys.forEach(key => {
@@ -291,14 +297,24 @@ function App() {
 
     const currentBudgetTab = budgetTabs.find(tab => tab.id === activeBudgetTab);
 
+    const handleBudgetTabChange = (budgetId) => {
+        setActiveBudgetTab(budgetId);
+        setActiveTab(null); // Reset activeTab when switching to budget tab
+    };
+
+    const handleMainTabChange = (tab) => {
+        setActiveTab(tab);
+        setActiveBudgetTab(null); // Reset activeBudgetTab when switching to main tabs
+    };
+
     return (
         <div className="app-container">
             <TabNavigation
                 activeTab={activeTab}
-                onTabChange={setActiveTab}
+                onTabChange={handleMainTabChange}
                 budgetTabs={budgetTabs}
                 activeBudgetTab={activeBudgetTab}
-                onBudgetTabChange={setActiveBudgetTab}
+                onBudgetTabChange={handleBudgetTabChange}
             />
 
             {activeTab === 'Main' ? (

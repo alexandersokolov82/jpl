@@ -295,6 +295,46 @@ export const PrevisBudgetView = ({ data, onShotClick, onAssetClick, budgetId, bu
     const [productionCollapsed, setProductionCollapsed] = React.useState(false);
     const [isEditingTitle, setIsEditingTitle] = React.useState(false);
 
+    // Global multipliers
+    const [assetsEstimateMultiplier, setAssetsEstimateMultiplier] = React.useState(() => {
+        const saved = localStorage.getItem(`assetsEstimateMultiplier_${budgetId}`);
+        return saved ? parseFloat(saved) : 1.0;
+    });
+
+    const [shotsEstimateMultiplier, setShotsEstimateMultiplier] = React.useState(() => {
+        const saved = localStorage.getItem(`shotsEstimateMultiplier_${budgetId}`);
+        return saved ? parseFloat(saved) : 1.0;
+    });
+
+    const [contingencyPercent, setContingencyPercent] = React.useState(() => {
+        const saved = localStorage.getItem(`contingencyPercent_${budgetId}`);
+        return saved ? parseFloat(saved) : 15.0;
+    });
+
+    // Reload multipliers when budgetId changes
+    React.useEffect(() => {
+        const savedAssets = localStorage.getItem(`assetsEstimateMultiplier_${budgetId}`);
+        const savedShots = localStorage.getItem(`shotsEstimateMultiplier_${budgetId}`);
+        const savedContingency = localStorage.getItem(`contingencyPercent_${budgetId}`);
+
+        setAssetsEstimateMultiplier(savedAssets ? parseFloat(savedAssets) : 1.0);
+        setShotsEstimateMultiplier(savedShots ? parseFloat(savedShots) : 1.0);
+        setContingencyPercent(savedContingency ? parseFloat(savedContingency) : 15.0);
+    }, [budgetId]);
+
+    // Save multipliers
+    React.useEffect(() => {
+        localStorage.setItem(`assetsEstimateMultiplier_${budgetId}`, assetsEstimateMultiplier.toString());
+    }, [assetsEstimateMultiplier, budgetId]);
+
+    React.useEffect(() => {
+        localStorage.setItem(`shotsEstimateMultiplier_${budgetId}`, shotsEstimateMultiplier.toString());
+    }, [shotsEstimateMultiplier, budgetId]);
+
+    React.useEffect(() => {
+        localStorage.setItem(`contingencyPercent_${budgetId}`, contingencyPercent.toString());
+    }, [contingencyPercent, budgetId]);
+
     const initialProductionData = [
         { id: 0, name: 'Supervisor', days: 20, prodMultiplier: 0.7, cost: 0 },
         { id: 1, name: 'Coordinator', days: 20, prodMultiplier: 1.0, cost: 0 },
@@ -719,16 +759,64 @@ export const PrevisBudgetView = ({ data, onShotClick, onAssetClick, budgetId, bu
         );
     };
 
-    const renderBudgetTable = (budgetData, tableType, title, isCollapsed, toggleCollapsed, onAdd, onRemove) => (
-        <div className="budget-section">
-            <div className="budget-section-header" onClick={toggleCollapsed}>
-                <h3>{title}</h3>
-                <div className="budget-section-info">
-                    <span className="item-count">{budgetData.length} items</span>
-                    <span className="section-total">{budgetData.reduce((sum, item) => sum + calculateTotal(item), 0)} days</span>
-                    <span className={`collapse-icon ${isCollapsed ? 'collapsed' : ''}`}>▼</span>
+    const handleEstimateMultiplierChange = (tableType, newMultiplier) => {
+        const currentMultiplier = tableType === 'assets' ? assetsEstimateMultiplier : shotsEstimateMultiplier;
+        const setter = tableType === 'assets' ? setAssetsBudgetData : setShotsBudgetData;
+        const setMultiplier = tableType === 'assets' ? setAssetsEstimateMultiplier : setShotsEstimateMultiplier;
+
+        // Calculate the ratio to apply
+        const ratio = newMultiplier / currentMultiplier;
+
+        // Apply the ratio to all artistDays in the table
+        setter(prevData =>
+            prevData.map(item => ({
+                ...item,
+                artistDays: Math.round(item.artistDays * ratio * 10) / 10 // Round to 1 decimal
+            }))
+        );
+
+        // Update the multiplier
+        setMultiplier(newMultiplier);
+    };
+
+    const renderBudgetTable = (budgetData, tableType, title, isCollapsed, toggleCollapsed, onAdd, onRemove) => {
+        const estimateMultiplier = tableType === 'assets' ? assetsEstimateMultiplier : shotsEstimateMultiplier;
+        const baseDays = budgetData.reduce((sum, item) => sum + calculateTotal(item), 0);
+
+        return (
+            <div className="budget-section">
+                <div className="budget-section-header" onClick={(e) => {
+                    // Don't collapse when clicking on the input
+                    if (e.target.tagName !== 'INPUT') {
+                        toggleCollapsed();
+                    }
+                }}>
+                    <h3>{title}</h3>
+                    <div className="budget-section-info">
+                        <span className="item-count">{budgetData.length} items</span>
+                        <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                            <span style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>Est×</span>
+                            <input
+                                type="number"
+                                step="0.1"
+                                value={estimateMultiplier}
+                                onChange={(e) => handleEstimateMultiplierChange(tableType, parseFloat(e.target.value) || 1.0)}
+                                onClick={(e) => e.stopPropagation()}
+                                style={{
+                                    width: '60px',
+                                    padding: '0.25rem 0.5rem',
+                                    background: 'var(--bg-surface)',
+                                    border: '1px solid var(--border-color)',
+                                    borderRadius: '4px',
+                                    color: 'var(--text-primary)',
+                                    fontSize: '0.875rem'
+                                }}
+                            />
+                        </span>
+                        <span className="section-total">{baseDays.toFixed(1)} days</span>
+                        <span className={`collapse-icon ${isCollapsed ? 'collapsed' : ''}`}>▼</span>
+                    </div>
                 </div>
-            </div>
             {!isCollapsed && (
                 <>
                     <table className="budget-table">
@@ -847,7 +935,8 @@ export const PrevisBudgetView = ({ data, onShotClick, onAssetClick, budgetId, bu
                 </>
             )}
         </div>
-    );
+        );
+    };
 
     const renderTeamTable = () => (
         <div className="budget-section">
@@ -1081,14 +1170,21 @@ export const PrevisBudgetView = ({ data, onShotClick, onAssetClick, budgetId, bu
         // Calculate Production Cost
         const productionCost = productionData.reduce((sum, item) => sum + calculateProductionCost(item), 0);
 
-        // Grand Total
-        const grandTotal = laborCost + productionCost;
+        // Subtotal before contingency
+        const subtotal = laborCost + productionCost;
+
+        // Contingency calculation
+        const contingencyAmount = subtotal * (contingencyPercent / 100);
+
+        // Grand Total with contingency
+        const grandTotal = subtotal + contingencyAmount;
 
         // Pie chart data
         const chartData = [
             { label: 'Assets', value: assetsCost, color: '#9E9E9E' },
             { label: 'Shots', value: shotsCost, color: '#616161' },
-            { label: 'Production', value: productionCost, color: '#BDBDBD' }
+            { label: 'Production', value: productionCost, color: '#BDBDBD' },
+            { label: 'Contingency', value: contingencyAmount, color: '#E0E0E0' }
         ];
 
         const total = chartData.reduce((sum, item) => sum + item.value, 0);
@@ -1099,8 +1195,15 @@ export const PrevisBudgetView = ({ data, onShotClick, onAssetClick, budgetId, bu
                 <div className="budget-section-header">
                     <h3>Scenario Summary</h3>
                 </div>
-                <div style={{ display: 'flex', gap: '2rem', alignItems: 'flex-start' }}>
-                    <table className="budget-table" style={{ flex: '0 0 550px' }}>
+                <div style={{ display: 'flex', gap: '1rem', alignItems: 'stretch', padding: '1.5rem' }}>
+                    <div style={{
+                        flex: '1',
+                        background: 'var(--bg-surface)',
+                        border: '1px solid var(--border-color)',
+                        borderRadius: '8px',
+                        padding: '1rem'
+                    }}>
+                        <table className="budget-table" style={{ width: '100%', background: 'transparent', border: 'none' }}>
                         <tbody>
                             <tr>
                                 <td style={{ textAlign: 'left', width: '200px' }}>Assets Count</td>
@@ -1142,29 +1245,53 @@ export const PrevisBudgetView = ({ data, onShotClick, onAssetClick, budgetId, bu
                                 <td style={{ textAlign: 'left' }}>Production Cost</td>
                                 <td style={{ textAlign: 'right', fontFamily: "'Courier New', monospace" }}>${productionCost.toLocaleString()}</td>
                             </tr>
+                            <tr style={{ borderTop: '1px solid var(--border-color)' }}>
+                                <td style={{ textAlign: 'left', fontWeight: 'bold' }}>Subtotal</td>
+                                <td style={{ textAlign: 'right', fontFamily: "'Courier New', monospace", fontWeight: 'bold' }}>${subtotal.toLocaleString()}</td>
+                            </tr>
+                            <tr>
+                                <td style={{ textAlign: 'left', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                    <span>Contingency</span>
+                                    <input
+                                        type="number"
+                                        step="1"
+                                        value={contingencyPercent}
+                                        onChange={(e) => setContingencyPercent(parseFloat(e.target.value) || 0)}
+                                        style={{
+                                            width: '60px',
+                                            padding: '0.25rem 0.5rem',
+                                            background: 'var(--bg-surface)',
+                                            border: '1px solid var(--border-color)',
+                                            borderRadius: '4px',
+                                            color: 'var(--text-primary)',
+                                            fontSize: '0.875rem'
+                                        }}
+                                    />
+                                    <span>%</span>
+                                </td>
+                                <td style={{ textAlign: 'right', fontFamily: "'Courier New', monospace" }}>${contingencyAmount.toLocaleString()}</td>
+                            </tr>
                             <tr style={{ borderTop: '2px solid var(--border-color)' }}>
                                 <td style={{ textAlign: 'left', fontWeight: 'bold', fontSize: '16px' }}>Grand Total</td>
                                 <td style={{ textAlign: 'right', fontFamily: "'Courier New', monospace", fontWeight: 'bold', fontSize: '16px' }}>${grandTotal.toLocaleString()} USD</td>
                             </tr>
                         </tbody>
                     </table>
+                    </div>
 
-                    <div style={{ flex: '1', display: 'flex', justifyContent: 'flex-end' }}>
-                        <div style={{
-                            width: '455px',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                            gap: '1rem',
-                            padding: '1.5rem',
-                            marginTop: '12px',
-                            marginRight: '1rem',
-                            backgroundColor: 'var(--bg-surface)',
-                            borderRadius: '12px',
-                            border: '1px solid var(--border-color)'
-                        }}>
+                    <div style={{
+                        flex: '1',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        gap: '1rem',
+                        padding: '1rem',
+                        background: 'var(--bg-surface)',
+                        border: '1px solid var(--border-color)',
+                        borderRadius: '8px'
+                    }}>
                         <h4 style={{ margin: '0 0 0.5rem 0', color: 'var(--text-primary)' }}>Cost Distribution</h4>
-                        <svg width="250" height="250" viewBox="0 0 250 250">
+                        <svg width="100%" height="auto" viewBox="0 0 250 250" style={{ maxWidth: '350px' }}>
                             {chartData.map((item, index) => {
                                 const percentage = total > 0 ? (item.value / total) * 100 : 0;
                                 const angle = (percentage / 100) * 360;
@@ -1197,19 +1324,26 @@ export const PrevisBudgetView = ({ data, onShotClick, onAssetClick, budgetId, bu
                                 );
                             })}
                         </svg>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', width: '100%' }}>
-                            {chartData.map((item, index) => {
-                                const percentage = total > 0 ? ((item.value / total) * 100).toFixed(1) : 0;
-                                return (
-                                    <div key={index} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                                        <div style={{ width: '16px', height: '16px', backgroundColor: item.color, borderRadius: '3px' }}></div>
-                                        <span style={{ color: 'var(--text-primary)', fontSize: '14px' }}>
-                                            {item.label}: ${item.value.toLocaleString()} ({percentage}%)
-                                        </span>
-                                    </div>
-                                );
-                            })}
-                        </div>
+                        <div style={{
+                            width: '100%',
+                            maxWidth: '350px',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            padding: '0 1rem'
+                        }}>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                                {chartData.map((item, index) => {
+                                    const percentage = total > 0 ? ((item.value / total) * 100).toFixed(1) : 0;
+                                    return (
+                                        <div key={index} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                            <div style={{ width: '16px', height: '16px', backgroundColor: item.color, borderRadius: '3px' }}></div>
+                                            <span style={{ color: 'var(--text-primary)', fontSize: '14px' }}>
+                                                {item.label}: ${item.value.toLocaleString()} ({percentage}%)
+                                            </span>
+                                        </div>
+                                    );
+                                })}
+                            </div>
                         </div>
                     </div>
                 </div>
