@@ -180,7 +180,8 @@ function App() {
         // Build view stack: project -> sequence -> scene -> shot
         if (sequenceId && sceneId) {
             setViewStack(['PROJ_001', sequenceId, sceneId, shotId]);
-            setActiveTab('Main');
+            setActiveTab('Previs Shots'); // Make Previs Shots tab active
+            setActiveBudgetTab(null);
         }
     };
 
@@ -203,7 +204,8 @@ function App() {
             // Fallback for assets without a category
             setViewStack(['PROJ_001', 'ASSETS_ROOT', assetId]);
         }
-        setActiveTab('Main');
+        setActiveTab('Previs Assets'); // Make Previs Assets tab active
+        setActiveBudgetTab(null);
     };
 
     const handleBudgetTitleChange = (newTitle) => {
@@ -305,6 +307,11 @@ function App() {
     const handleMainTabChange = (tab) => {
         setActiveTab(tab);
         setActiveBudgetTab(null); // Reset activeBudgetTab when switching to main tabs
+
+        // Reset viewStack when switching to list views
+        if (tab === 'Previs Shots' || tab === 'Previs Assets') {
+            setViewStack(['PROJ_001']);
+        }
     };
 
     return (
@@ -317,7 +324,7 @@ function App() {
                 onBudgetTabChange={handleBudgetTabChange}
             />
 
-            {activeTab === 'Main' ? (
+            {activeTab === 'Previs Shots' && viewStack.length > 1 ? (
                 <>
                     <Breadcrumbs items={breadcrumbItems} onClick={handleBreadcrumbClick} />
                     <div className="main-content">
@@ -339,8 +346,48 @@ function App() {
                 </>
             ) : activeTab === 'Previs Shots' ? (
                 <PrevisShotsView data={data} onShotClick={handleShotClick} />
+            ) : activeTab === 'Previs Assets' && viewStack.length > 1 ? (
+                <>
+                    <Breadcrumbs items={breadcrumbItems} onClick={handleBreadcrumbClick} />
+                    <div className="main-content">
+                        <AnimatePresence mode="wait">
+                            <motion.div
+                                key={currentItem.id}
+                                initial={{ opacity: 0, x: -50 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                exit={{ opacity: 0, x: 50 }}
+                                transition={{ duration: 0.3 }}
+                            >
+                                <DetailView item={currentItem} onAddItem={() => handleAddItem(currentItem.id)} onNavigate={handleNavigateSibling} onUpdateItem={handleUpdateItem} onDeleteItem={handleDeleteItem} />
+                            </motion.div>
+                        </AnimatePresence>
+                        <AnimatePresence>
+                            <CardListView items={childItems} onItemClick={handleDrillDown} />
+                        </AnimatePresence>
+                    </div>
+                </>
             ) : activeTab === 'Previs Assets' ? (
                 <PrevisAssetsView data={data} onAssetClick={handleAssetClick} />
+            ) : activeTab === 'Main' ? (
+                <>
+                    <Breadcrumbs items={breadcrumbItems} onClick={handleBreadcrumbClick} />
+                    <div className="main-content">
+                        <AnimatePresence mode="wait">
+                            <motion.div
+                                key={currentItem.id}
+                                initial={{ opacity: 0, x: -50 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                exit={{ opacity: 0, x: 50 }}
+                                transition={{ duration: 0.3 }}
+                            >
+                                <DetailView item={currentItem} onAddItem={() => handleAddItem(currentItem.id)} onNavigate={handleNavigateSibling} onUpdateItem={handleUpdateItem} onDeleteItem={handleDeleteItem} />
+                            </motion.div>
+                        </AnimatePresence>
+                        <AnimatePresence>
+                            <CardListView items={childItems} onItemClick={handleDrillDown} />
+                        </AnimatePresence>
+                    </div>
+                </>
             ) : (
                 <PrevisBudgetView
                     data={data}

@@ -543,7 +543,7 @@ export const PrevisBudgetView = ({ data, onShotClick, onAssetClick, budgetId, bu
 
     const assetsTotalDays = assetsBudgetData.reduce((sum, item) => sum + calculateTotal(item), 0);
     const shotsTotalDays = shotsBudgetData.reduce((sum, item) => sum + calculateTotal(item), 0);
-    const grandTotal = assetsTotalDays + shotsTotalDays;
+    const grandTotal = Math.round(assetsTotalDays + shotsTotalDays);
 
     const handleCellClick = (itemId, field, tableType) => {
         setEditingCell({ itemId, field, tableType });
