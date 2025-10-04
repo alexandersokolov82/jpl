@@ -1,18 +1,22 @@
 // src/App.js
 import React, { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { TabNavigation, Breadcrumbs, DetailView, CardListView, PrevisShotsView, PrevisAssetsView, PrevisBudgetView } from './components';
+import { TabNavigation, Breadcrumbs, DetailView, CardListView, PrevisShotsView, PrevisAssetsView, PrevisBudgetView, PrevisSummaryView } from './components';
 import { projectData } from './data';
 import './App.css';
 
 function App() {
     // Clear old budget data to force reload with new shot names
     useEffect(() => {
-        const currentVersion = 'v8_tsh_naming';
+        const currentVersion = 'v10_extra_artists_zero';
         const storedVersion = localStorage.getItem('budgetDataVersion');
         if (storedVersion !== currentVersion) {
-            // Clear ALL old data
-            localStorage.clear();
+            // Reset Extra Artists to 0 for all budgets
+            Object.keys(localStorage).forEach(key => {
+                if (key.includes('ExtraArtists')) {
+                    localStorage.setItem(key, '0');
+                }
+            });
             localStorage.setItem('budgetDataVersion', currentVersion);
             // Force reload
             window.location.reload();
@@ -306,7 +310,13 @@ function App() {
 
     const handleMainTabChange = (tab) => {
         setActiveTab(tab);
-        setActiveBudgetTab(null); // Reset activeBudgetTab when switching to main tabs
+
+        // For Summary tab, keep the last active budget ID but clear the active state
+        if (tab === 'Previs Summary') {
+            // Keep activeBudgetTab value but visually it won't be highlighted
+        } else {
+            setActiveBudgetTab(null);
+        }
 
         // Reset viewStack when switching to list views
         if (tab === 'Previs Shots' || tab === 'Previs Assets') {
@@ -368,6 +378,8 @@ function App() {
                 </>
             ) : activeTab === 'Previs Assets' ? (
                 <PrevisAssetsView data={data} onAssetClick={handleAssetClick} />
+            ) : activeTab === 'Previs Summary' ? (
+                <PrevisSummaryView budgetId={activeBudgetTab || budgetTabs[0]?.id || 'budget_1'} />
             ) : activeTab === 'Main' ? (
                 <>
                     <Breadcrumbs items={breadcrumbItems} onClick={handleBreadcrumbClick} />

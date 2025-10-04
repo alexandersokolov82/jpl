@@ -7,15 +7,6 @@ export const TabNavigation = ({ activeTab, onTabChange, budgetTabs, activeBudget
 
     return (
         <nav className="tab-navigation">
-            {budgetTabs && budgetTabs.map((budgetTab) => (
-                <button
-                    key={budgetTab.id}
-                    className={`tab-button ${activeBudgetTab === budgetTab.id ? 'active' : ''}`}
-                    onClick={() => onBudgetTabChange(budgetTab.id)}
-                >
-                    {budgetTab.name}
-                </button>
-            ))}
             {mainTabs.map((tab) => (
                 <button
                     key={tab}
@@ -25,6 +16,21 @@ export const TabNavigation = ({ activeTab, onTabChange, budgetTabs, activeBudget
                     {tab}
                 </button>
             ))}
+            {budgetTabs && budgetTabs.map((budgetTab) => (
+                <button
+                    key={budgetTab.id}
+                    className={`tab-button ${activeBudgetTab === budgetTab.id && activeTab !== 'Previs Summary' ? 'active' : ''}`}
+                    onClick={() => onBudgetTabChange(budgetTab.id)}
+                >
+                    {budgetTab.name}
+                </button>
+            ))}
+            <button
+                className={`tab-button ${activeTab === 'Previs Summary' ? 'active' : ''}`}
+                onClick={() => onTabChange('Previs Summary')}
+            >
+                Previs Summary
+            </button>
         </nav>
     );
 };
@@ -288,7 +294,7 @@ export const PrevisAssetsView = ({ data, onAssetClick }) => {
     );
 };
 
-export const PrevisBudgetView = ({ data, onShotClick, onAssetClick, budgetId, budgetTitle, onBudgetTitleChange, onDuplicateBudget, onNewBudget, onDeleteBudget }) => {
+export const PrevisBudgetView = ({ data, onShotClick, onAssetClick, budgetId, budgetTitle, onBudgetTitleChange, onDuplicateBudget, onNewBudget, onDeleteBudget, readOnly = false }) => {
     const [assetsCollapsed, setAssetsCollapsed] = React.useState(false);
     const [shotsCollapsed, setShotsCollapsed] = React.useState(false);
     const [teamCollapsed, setTeamCollapsed] = React.useState(false);
@@ -395,6 +401,37 @@ export const PrevisBudgetView = ({ data, onShotClick, onAssetClick, budgetId, bu
         localStorage.setItem(`previsBudgetTeamRoles_v5_${budgetId}`, JSON.stringify(teamRoles));
     }, [teamRoles, budgetId]);
 
+    // Extra Artists multipliers
+    const [assetsExtraArtists, setAssetsExtraArtists] = React.useState(() => {
+        const saved = localStorage.getItem(`assetsExtraArtists_${budgetId}`);
+        const value = saved ? parseFloat(saved) : 0;
+        return isNaN(value) ? 0 : value;
+    });
+
+    const [shotsExtraArtists, setShotsExtraArtists] = React.useState(() => {
+        const saved = localStorage.getItem(`shotsExtraArtists_${budgetId}`);
+        const value = saved ? parseFloat(saved) : 0;
+        return isNaN(value) ? 0 : value;
+    });
+
+    React.useEffect(() => {
+        localStorage.setItem(`assetsExtraArtists_${budgetId}`, assetsExtraArtists.toString());
+    }, [assetsExtraArtists, budgetId]);
+
+    React.useEffect(() => {
+        localStorage.setItem(`shotsExtraArtists_${budgetId}`, shotsExtraArtists.toString());
+    }, [shotsExtraArtists, budgetId]);
+
+    // Reload extra artists when budgetId changes
+    React.useEffect(() => {
+        const savedAssetsExtraArtists = localStorage.getItem(`assetsExtraArtists_${budgetId}`);
+        const savedShotsExtraArtists = localStorage.getItem(`shotsExtraArtists_${budgetId}`);
+        const assetsValue = savedAssetsExtraArtists ? parseFloat(savedAssetsExtraArtists) : 0;
+        const shotsValue = savedShotsExtraArtists ? parseFloat(savedShotsExtraArtists) : 0;
+        setAssetsExtraArtists(isNaN(assetsValue) ? 0 : assetsValue);
+        setShotsExtraArtists(isNaN(shotsValue) ? 0 : shotsValue);
+    }, [budgetId]);
+
     const initialAssetsBudgetData = [
         // Characters
         { id: 0, category: 'chr', name: 'Jack Torrance', artistDays: 8, revisions: 2, teamSize: 1, complexity: 1.0, assignedArtists: ['Modeler'] },
@@ -477,6 +514,44 @@ export const PrevisBudgetView = ({ data, onShotClick, onAssetClick, budgetId, bu
         }
     }, [initialShotsBudgetData, shotsBudgetData.length, budgetId]);
 
+    // Clean up invalid assigned artists and auto-assign "Animator" to shots
+    React.useEffect(() => {
+        const validRoleNames = teamRoles.map(r => r.role);
+
+        setShotsBudgetData(prevData =>
+            prevData.map(shot => {
+                // Filter out invalid roles
+                const validArtists = (shot.assignedArtists || []).filter(artist =>
+                    validRoleNames.includes(artist)
+                );
+
+                // If no valid artists remain, assign "Animator" (if it exists)
+                const finalArtists = validArtists.length > 0
+                    ? validArtists
+                    : (validRoleNames.includes('Animator') ? ['Animator'] : []);
+
+                return {
+                    ...shot,
+                    assignedArtists: finalArtists
+                };
+            })
+        );
+
+        setAssetsBudgetData(prevData =>
+            prevData.map(asset => {
+                // Filter out invalid roles
+                const validArtists = (asset.assignedArtists || []).filter(artist =>
+                    validRoleNames.includes(artist)
+                );
+
+                return {
+                    ...asset,
+                    assignedArtists: validArtists
+                };
+            })
+        );
+    }, [teamRoles]);
+
     const [editingCell, setEditingCell] = React.useState(null);
 
     React.useEffect(() => {
@@ -492,20 +567,37 @@ export const PrevisBudgetView = ({ data, onShotClick, onAssetClick, budgetId, bu
     };
 
     const calculateTotalArtistDays = (item) => {
-        return (item.artistDays + item.revisions) * item.teamSize * (item.complexity || 1);
+        // Total Artist Days = (artistDays + revisions) * complexity (NOT multiplied by teamSize)
+        return (item.artistDays + item.revisions) * (item.complexity || 1);
     };
 
     const calculateScenarioCost = (item, allItems) => {
         const totalArtistDays = calculateTotalArtistDays(item);
+        const teamSize = parseFloat(item.teamSize) || 1;
         const artists = Array.isArray(item.assignedArtists) ? item.assignedArtists : [];
 
-        // Calculate total cost based on assigned artists' rates
+        if (artists.length === 0) {
+            return 0;
+        }
+
+        // Cost = Total Artist Days * rate * teamSize
+        // Total Artist Days - это сколько человеко-дней работы
+        // Умножаем на teamSize потому что больше людей = больше зарплат
         let totalCost = 0;
+        const numArtistTypes = artists.length;
+
         artists.forEach(artistRole => {
             const role = teamRoles.find(r => r.role === artistRole);
             if (role) {
-                const ratePerDay = role.rateUnit === 'week' ? role.rate / 5 : role.rate;
-                totalCost += totalArtistDays * ratePerDay;
+                const rate = parseFloat(role.rate) || 0;
+                const ratePerDay = role.rateUnit === 'week' ? rate / 5 : rate;
+                const productivity = parseFloat(role.productivity) || 1.0;
+
+                // Cost = (Total Artist Days / productivity) * rate * teamSize
+                // productivity уменьшает стоимость (эффективнее = дешевле)
+                // teamSize увеличивает стоимость (больше людей = дороже)
+                const artistDaysForThisRole = totalArtistDays / (numArtistTypes * productivity);
+                totalCost += artistDaysForThisRole * ratePerDay * teamSize;
             }
         });
 
@@ -514,12 +606,12 @@ export const PrevisBudgetView = ({ data, onShotClick, onAssetClick, budgetId, bu
 
     const calculateLocalProjectDays = (item) => {
         const totalArtistDays = calculateTotalArtistDays(item);
+        const teamSize = parseFloat(item.teamSize) || 1;
         const artists = Array.isArray(item.assignedArtists) ? item.assignedArtists : [];
 
-        // If no artists assigned, use team size as fallback
+        // If no artists assigned, use team size
         if (artists.length === 0) {
-            const avgTeamSize = item.teamSize || 1;
-            return totalArtistDays / avgTeamSize;
+            return totalArtistDays / teamSize;
         }
 
         // Calculate combined productivity of all assigned artists
@@ -531,18 +623,22 @@ export const PrevisBudgetView = ({ data, onShotClick, onAssetClick, budgetId, bu
             }
         });
 
-        // If no productivity found, fall back to team size
+        // If no productivity found, use team size only
         if (totalProductivity === 0) {
-            const avgTeamSize = item.teamSize || 1;
-            return totalArtistDays / avgTeamSize;
+            return totalArtistDays / teamSize;
         }
 
-        // Calculate local project days considering productivity
-        return totalArtistDays / totalProductivity;
+        // Real Days = Total Artist Days / (Team Size * productivity)
+        // More people or higher productivity = fewer days
+        return totalArtistDays / (teamSize * totalProductivity);
     };
 
-    const assetsTotalDays = assetsBudgetData.reduce((sum, item) => sum + calculateTotal(item), 0);
-    const shotsTotalDays = shotsBudgetData.reduce((sum, item) => sum + calculateTotal(item), 0);
+    const assetsTotalDays = assetsBudgetData
+        .filter(item => item.billable !== false)
+        .reduce((sum, item) => sum + calculateTotal(item), 0);
+    const shotsTotalDays = shotsBudgetData
+        .filter(item => item.billable !== false)
+        .reduce((sum, item) => sum + calculateTotal(item), 0);
     const grandTotal = Math.round(assetsTotalDays + shotsTotalDays);
 
     const handleCellClick = (itemId, field, tableType) => {
@@ -550,7 +646,7 @@ export const PrevisBudgetView = ({ data, onShotClick, onAssetClick, budgetId, bu
     };
 
     const handleCellChange = (itemId, field, value, tableType) => {
-        const numValue = field === 'complexity' ? parseFloat(value) || 0 : parseInt(value) || 0;
+        const numValue = (field === 'complexity' || field === 'teamSize') ? parseFloat(value) || 0 : parseInt(value) || 0;
         const setter = tableType === 'assets' ? setAssetsBudgetData : setShotsBudgetData;
         setter(prevData =>
             prevData.map(item =>
@@ -569,11 +665,49 @@ export const PrevisBudgetView = ({ data, onShotClick, onAssetClick, budgetId, bu
     };
 
     const handleTeamRoleChange = (roleId, value) => {
+        // Find the old role name before changing
+        const oldRole = teamRoles.find(r => r.id === roleId);
+        const oldRoleName = oldRole ? oldRole.role : null;
+
+        // Update the role name
         setTeamRoles(prevRoles =>
             prevRoles.map(role =>
                 role.id === roleId ? { ...role, role: value } : role
             )
         );
+
+        // Update all assigned artists in Assets and Shots that reference the old role name
+        if (oldRoleName && oldRoleName !== value) {
+            // Update Assets
+            setAssetsBudgetData(prevData =>
+                prevData.map(item => {
+                    if (Array.isArray(item.assignedArtists) && item.assignedArtists.includes(oldRoleName)) {
+                        return {
+                            ...item,
+                            assignedArtists: item.assignedArtists.map(artist =>
+                                artist === oldRoleName ? value : artist
+                            )
+                        };
+                    }
+                    return item;
+                })
+            );
+
+            // Update Shots
+            setShotsBudgetData(prevData =>
+                prevData.map(item => {
+                    if (Array.isArray(item.assignedArtists) && item.assignedArtists.includes(oldRoleName)) {
+                        return {
+                            ...item,
+                            assignedArtists: item.assignedArtists.map(artist =>
+                                artist === oldRoleName ? value : artist
+                            )
+                        };
+                    }
+                    return item;
+                })
+            );
+        }
     };
 
     const handleTeamRateUnitChange = (roleId, value) => {
@@ -607,44 +741,6 @@ export const PrevisBudgetView = ({ data, onShotClick, onAssetClick, budgetId, bu
 
     const removeTeamRole = (roleId) => {
         setTeamRoles(prevRoles => prevRoles.filter(role => role.id !== roleId));
-    };
-
-    const addAsset = () => {
-        const newId = assetsBudgetData.length > 0 ? Math.max(...assetsBudgetData.map(a => a.id)) + 1 : 0;
-        setAssetsBudgetData([...assetsBudgetData, {
-            id: newId,
-            category: 'prp',
-            name: 'New Asset',
-            artistDays: 2,
-            revisions: 1,
-            teamSize: 1,
-            complexity: 1.0,
-            assignedArtists: ['Modeler']
-        }]);
-    };
-
-    const removeAsset = (assetId) => {
-        setAssetsBudgetData(prevAssets => prevAssets.filter(asset => asset.id !== assetId));
-    };
-
-    const addShot = () => {
-        const newId = shotsBudgetData.length > 0 ? Math.max(...shotsBudgetData.map(s => parseInt(s.id.split('_')[1]) || 0)) + 1 : 0;
-        const shotNumber = 1000 + shotsBudgetData.length * 20;
-        setShotsBudgetData([...shotsBudgetData, {
-            id: `shot_${newId}`,
-            category: 'Shot',
-            name: `TSH_${shotNumber}`,
-            code: `TSH_${shotNumber}`,
-            artistDays: 2,
-            revisions: 1,
-            teamSize: 1,
-            complexity: 1.0,
-            assignedArtists: ['Animator 1']
-        }]);
-    };
-
-    const removeShot = (shotId) => {
-        setShotsBudgetData(prevShots => prevShots.filter(shot => shot.id !== shotId));
     };
 
     const handleCellBlur = () => {
@@ -779,9 +875,11 @@ export const PrevisBudgetView = ({ data, onShotClick, onAssetClick, budgetId, bu
         setMultiplier(newMultiplier);
     };
 
-    const renderBudgetTable = (budgetData, tableType, title, isCollapsed, toggleCollapsed, onAdd, onRemove) => {
+    const renderBudgetTable = (budgetData, tableType, title, isCollapsed, toggleCollapsed) => {
         const estimateMultiplier = tableType === 'assets' ? assetsEstimateMultiplier : shotsEstimateMultiplier;
-        const baseDays = budgetData.reduce((sum, item) => sum + calculateTotal(item), 0);
+        const baseDays = budgetData
+            .filter(item => item.billable !== false)
+            .reduce((sum, item) => sum + calculateTotalArtistDays(item), 0);
 
         return (
             <div className="budget-section">
@@ -794,50 +892,31 @@ export const PrevisBudgetView = ({ data, onShotClick, onAssetClick, budgetId, bu
                     <h3>{title}</h3>
                     <div className="budget-section-info">
                         <span className="item-count">{budgetData.length} items</span>
-                        <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                            <span style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>Est×</span>
-                            <input
-                                type="number"
-                                step="0.1"
-                                value={estimateMultiplier}
-                                onChange={(e) => handleEstimateMultiplierChange(tableType, parseFloat(e.target.value) || 1.0)}
-                                onClick={(e) => e.stopPropagation()}
-                                style={{
-                                    width: '60px',
-                                    padding: '0.25rem 0.5rem',
-                                    background: 'var(--bg-surface)',
-                                    border: '1px solid var(--border-color)',
-                                    borderRadius: '4px',
-                                    color: 'var(--text-primary)',
-                                    fontSize: '0.875rem'
-                                }}
-                            />
-                        </span>
                         <span className="section-total">{baseDays.toFixed(1)} days</span>
                         <span className={`collapse-icon ${isCollapsed ? 'collapsed' : ''}`}>▼</span>
                     </div>
                 </div>
-            {!isCollapsed && (
-                <>
-                    <table className="budget-table">
+            <table className="budget-table">
+                {!isCollapsed && (
+                    <>
                         <thead>
                             <tr>
                                 <th style={{ width: '60px' }}>Cat</th>
                                 <th style={{ width: '250px' }}>Name</th>
+                                <th style={{ width: '80px', textAlign: 'center' }}>Billable</th>
                                 <th>Artist's Days</th>
                                 <th>Revisions</th>
-                                <th>Team Size</th>
                                 <th>Complexity ×</th>
-                                <th>Total Artist Days</th>
                                 <th>Assigned Artists</th>
+                                <th>Team Size</th>
+                                <th>Total Artist Days</th>
+                                <th>Real Days</th>
                                 <th>Cost (USD)</th>
-                                <th>Local Project Days</th>
-                                <th style={{ textAlign: 'center', width: '80px' }}>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             {budgetData.map((item) => (
-                                <tr key={item.id}>
+                                <tr key={item.id} style={{ opacity: item.billable === false ? 0.5 : 1 }}>
                                     <td className="category-cell">{item.category}</td>
                                     <td
                                         style={{ cursor: 'pointer', color: '#4a9eff' }}
@@ -854,6 +933,26 @@ export const PrevisBudgetView = ({ data, onShotClick, onAssetClick, budgetId, bu
                                     >
                                         {item.name}
                                     </td>
+                                    <td style={{ textAlign: 'center' }}>
+                                        <input
+                                            type="checkbox"
+                                            checked={item.billable !== false}
+                                            onChange={(e) => {
+                                                const setter = tableType === 'assets' ? setAssetsBudgetData : setShotsBudgetData;
+                                                setter(prevData =>
+                                                    prevData.map(i =>
+                                                        i.id === item.id ? { ...i, billable: e.target.checked } : i
+                                                    )
+                                                );
+                                            }}
+                                            style={{
+                                                cursor: 'pointer',
+                                                width: '18px',
+                                                height: '18px',
+                                                accentColor: '#444444'
+                                            }}
+                                        />
+                                    </td>
                                     <td className="number-cell">
                                         {renderEditableCell(item, 'artistDays', 'number-cell', tableType)}
                                     </td>
@@ -861,79 +960,32 @@ export const PrevisBudgetView = ({ data, onShotClick, onAssetClick, budgetId, bu
                                         {renderEditableCell(item, 'revisions', 'number-cell', tableType)}
                                     </td>
                                     <td className="number-cell">
-                                        {renderEditableCell(item, 'teamSize', 'number-cell', tableType)}
-                                    </td>
-                                    <td className="number-cell">
                                         {renderEditableCell(item, 'complexity', 'number-cell', tableType)}
                                     </td>
-                                    <td className="total-cell">{calculateTotalArtistDays(item).toFixed(1)}</td>
                                     <td>
                                         {renderAssignedArtistsCell(item, tableType)}
                                     </td>
-                                    <td className="total-cell">${calculateScenarioCost(item, budgetData).toLocaleString()}</td>
-                                    <td className="total-cell">{calculateLocalProjectDays(item).toFixed(1)}</td>
-                                    <td style={{ textAlign: 'center' }}>
-                                        <button
-                                            onClick={() => onRemove(item.id)}
-                                            style={{
-                                                padding: '6px',
-                                                cursor: 'pointer',
-                                                background: 'transparent',
-                                                color: '#ff4444',
-                                                border: 'none',
-                                                fontSize: '18px'
-                                            }}
-                                            title="Remove item"
-                                        >
-                                            🗑️
-                                        </button>
+                                    <td className="number-cell">
+                                        {renderEditableCell(item, 'teamSize', 'number-cell', tableType)}
                                     </td>
+                                    <td className="total-cell">{calculateTotalArtistDays(item).toFixed(1)}</td>
+                                    <td className="total-cell">{calculateLocalProjectDays(item).toFixed(1)}</td>
+                                    <td className="total-cell">${item.billable !== false ? calculateScenarioCost(item, budgetData).toLocaleString() : '0'}</td>
                                 </tr>
                             ))}
-                            <tr>
-                                <td colSpan="10" style={{ padding: '12px 0 12px 1rem', border: 'none' }}>
-                                    <button
-                                        onClick={onAdd}
-                                        style={{
-                                            padding: '8px 16px',
-                                            cursor: 'pointer',
-                                            background: 'var(--bg-surface)',
-                                            color: 'var(--text-primary)',
-                                            border: '1px solid var(--border-color)',
-                                            borderRadius: '8px',
-                                            fontSize: '14px',
-                                            transition: 'all 0.2s ease'
-                                        }}
-                                        onMouseEnter={(e) => {
-                                            e.target.style.background = 'var(--bg-surface-hover)';
-                                            e.target.style.borderColor = 'var(--accent-primary)';
-                                        }}
-                                        onMouseLeave={(e) => {
-                                            e.target.style.background = 'var(--bg-surface)';
-                                            e.target.style.borderColor = 'var(--border-color)';
-                                        }}
-                                    >
-                                        + Add {tableType === 'assets' ? 'Asset' : 'Shot'}
-                                    </button>
-                                </td>
-                            </tr>
                         </tbody>
-                        <tfoot>
-                            <tr>
-                                <td colSpan="6" className="total-label">Subtotal</td>
-                                <td className="total-value">{budgetData.reduce((sum, item) => sum + calculateTotalArtistDays(item), 0).toFixed(1)}</td>
-                                <td className="total-value">{budgetData.reduce((sum, item) => {
-                                    const artists = Array.isArray(item.assignedArtists) ? item.assignedArtists : [];
-                                    return sum + artists.length;
-                                }, 0)}</td>
-                                <td className="total-value">${budgetData.reduce((sum, item) => sum + calculateScenarioCost(item, budgetData), 0).toLocaleString()}</td>
-                                <td className="total-value">{budgetData.reduce((sum, item) => sum + calculateLocalProjectDays(item), 0).toFixed(1)}</td>
-                                <td></td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </>
-            )}
+                    </>
+                )}
+                <tfoot>
+                    <tr>
+                        <td colSpan="7" className="total-label">Subtotal</td>
+                        <td className="total-value">{budgetData.filter(item => item.billable !== false).reduce((sum, item) => sum + item.teamSize, 0)}</td>
+                        <td className="total-value">{budgetData.filter(item => item.billable !== false).reduce((sum, item) => sum + calculateTotalArtistDays(item), 0).toFixed(1)}</td>
+                        <td className="total-value">{budgetData.filter(item => item.billable !== false).reduce((sum, item) => sum + calculateLocalProjectDays(item), 0).toFixed(1)}</td>
+                        <td className="total-value">${budgetData.filter(item => item.billable !== false).reduce((sum, item) => sum + calculateScenarioCost(item, budgetData), 0).toLocaleString()}</td>
+                    </tr>
+                </tfoot>
+            </table>
         </div>
         );
     };
@@ -1145,15 +1197,17 @@ export const PrevisBudgetView = ({ data, onShotClick, onAssetClick, budgetId, bu
     };
 
     const renderScenarioSummary = () => {
-        // Calculate Assets metrics
-        const assetsCount = assetsBudgetData.length;
-        const assetsArtistDays = assetsBudgetData.reduce((sum, item) => sum + calculateTotalArtistDays(item), 0);
-        const assetsCost = assetsBudgetData.reduce((sum, item) => sum + calculateScenarioCost(item, assetsBudgetData), 0);
+        // Calculate Assets metrics (only billable)
+        const billableAssets = assetsBudgetData.filter(item => item.billable !== false);
+        const assetsCount = billableAssets.length;
+        const assetsArtistDays = billableAssets.reduce((sum, item) => sum + calculateTotalArtistDays(item), 0);
+        const assetsCost = billableAssets.reduce((sum, item) => sum + calculateScenarioCost(item, assetsBudgetData), 0);
 
-        // Calculate Shots metrics
-        const shotsCount = shotsBudgetData.length;
-        const shotsArtistDays = shotsBudgetData.reduce((sum, item) => sum + calculateTotalArtistDays(item), 0);
-        const shotsCost = shotsBudgetData.reduce((sum, item) => sum + calculateScenarioCost(item, shotsBudgetData), 0);
+        // Calculate Shots metrics (only billable)
+        const billableShots = shotsBudgetData.filter(item => item.billable !== false);
+        const shotsCount = billableShots.length;
+        const shotsArtistDays = billableShots.reduce((sum, item) => sum + calculateTotalArtistDays(item), 0);
+        const shotsCost = billableShots.reduce((sum, item) => sum + calculateScenarioCost(item, shotsBudgetData), 0);
 
         // Calculate Total Artist Days
         const totalArtistDays = assetsArtistDays + shotsArtistDays;
@@ -1167,8 +1221,9 @@ export const PrevisBudgetView = ({ data, onShotClick, onAssetClick, budgetId, bu
         // Calculate Labor Cost
         const laborCost = assetsCost + shotsCost;
 
-        // Calculate Production Cost
-        const productionCost = productionData.reduce((sum, item) => sum + calculateProductionCost(item), 0);
+        // Calculate Production Cost (only billable)
+        const billableProductionData = productionData.filter(item => item.billable !== false);
+        const productionCost = billableProductionData.reduce((sum, item) => sum + calculateProductionCost(item), 0);
 
         // Subtotal before contingency
         const subtotal = laborCost + productionCost;
@@ -1250,25 +1305,7 @@ export const PrevisBudgetView = ({ data, onShotClick, onAssetClick, budgetId, bu
                                 <td style={{ textAlign: 'right', fontFamily: "'Courier New', monospace", fontWeight: 'bold' }}>${subtotal.toLocaleString()}</td>
                             </tr>
                             <tr>
-                                <td style={{ textAlign: 'left', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                                    <span>Contingency</span>
-                                    <input
-                                        type="number"
-                                        step="1"
-                                        value={contingencyPercent}
-                                        onChange={(e) => setContingencyPercent(parseFloat(e.target.value) || 0)}
-                                        style={{
-                                            width: '60px',
-                                            padding: '0.25rem 0.5rem',
-                                            background: 'var(--bg-surface)',
-                                            border: '1px solid var(--border-color)',
-                                            borderRadius: '4px',
-                                            color: 'var(--text-primary)',
-                                            fontSize: '0.875rem'
-                                        }}
-                                    />
-                                    <span>%</span>
-                                </td>
+                                <td style={{ textAlign: 'left' }}>Contingency ({contingencyPercent}%)</td>
                                 <td style={{ textAlign: 'right', fontFamily: "'Courier New', monospace" }}>${contingencyAmount.toLocaleString()}</td>
                             </tr>
                             <tr style={{ borderTop: '2px solid var(--border-color)' }}>
@@ -1476,8 +1513,9 @@ export const PrevisBudgetView = ({ data, onShotClick, onAssetClick, budgetId, bu
     };
 
     const renderProductionTable = () => {
-        const productionTotal = productionData.reduce((sum, item) => sum + calculateProductionCost(item), 0);
-        const productionTotalDays = productionData.reduce((sum, item) => sum + item.days, 0);
+        const billableProduction = productionData.filter(item => item.billable !== false);
+        const productionTotal = billableProduction.reduce((sum, item) => sum + calculateProductionCost(item), 0);
+        const productionTotalDays = billableProduction.reduce((sum, item) => sum + item.days, 0);
 
         return (
             <div className="budget-section">
@@ -1489,15 +1527,17 @@ export const PrevisBudgetView = ({ data, onShotClick, onAssetClick, budgetId, bu
                         <span className={`collapse-icon ${productionCollapsed ? 'collapsed' : ''}`}>▼</span>
                     </div>
                 </div>
-                {!productionCollapsed && (
-                    <>
-                        <table className="budget-table">
+                <table className="budget-table">
+                    {!productionCollapsed && (
+                        <>
                             <thead>
                                 <tr>
+                                    <th style={{ width: '60px' }}>Cat</th>
                                     <th style={{ textAlign: 'left', width: '250px' }}>Item</th>
-                                    <th>Prod×</th>
-                                    <th>Days</th>
-                                    <th>Cost (USD)</th>
+                                    <th style={{ width: '80px', textAlign: 'center' }}>Billable</th>
+                                    <th style={{ width: '100px' }}>Prod×</th>
+                                    <th style={{ width: '100px' }}>Days</th>
+                                    <th style={{ textAlign: 'right' }}>Cost (USD)</th>
                                     <th style={{ textAlign: 'center', width: '80px' }}>Actions</th>
                                 </tr>
                             </thead>
@@ -1508,8 +1548,28 @@ export const PrevisBudgetView = ({ data, onShotClick, onAssetClick, budgetId, bu
                                     const calculatedCost = calculateProductionCost(item);
 
                                     return (
-                                        <tr key={item.id}>
+                                        <tr key={item.id} style={{ opacity: item.billable === false ? 0.5 : 1 }}>
+                                            <td className="category-cell">{item.category || 'prod'}</td>
                                             <td>{item.name}</td>
+                                            <td style={{ textAlign: 'center' }}>
+                                                <input
+                                                    type="checkbox"
+                                                    checked={item.billable !== false}
+                                                    onChange={(e) => {
+                                                        setProductionData(prevData =>
+                                                            prevData.map(i =>
+                                                                i.id === item.id ? { ...i, billable: e.target.checked } : i
+                                                            )
+                                                        );
+                                                    }}
+                                                    style={{
+                                                        cursor: 'pointer',
+                                                        width: '18px',
+                                                        height: '18px',
+                                                        accentColor: '#444444'
+                                                    }}
+                                                />
+                                            </td>
                                             <td className="number-cell">
                                                 {isEditingProdMultiplier ? (
                                                     <input
@@ -1551,8 +1611,8 @@ export const PrevisBudgetView = ({ data, onShotClick, onAssetClick, budgetId, bu
                                                     </span>
                                                 )}
                                             </td>
-                                            <td className="total-cell">
-                                                ${calculatedCost.toLocaleString()}
+                                            <td className="total-cell" style={{ textAlign: 'right' }}>
+                                                ${item.billable !== false ? calculatedCost.toLocaleString() : '0'}
                                             </td>
                                             <td style={{ textAlign: 'center' }}>
                                                 <button
@@ -1601,17 +1661,17 @@ export const PrevisBudgetView = ({ data, onShotClick, onAssetClick, budgetId, bu
                                     </td>
                                 </tr>
                             </tbody>
-                            <tfoot>
-                                <tr>
-                                    <td colSpan="2" className="total-label">Subtotal</td>
-                                    <td className="total-value">{productionData.reduce((sum, item) => sum + item.days, 0)}</td>
-                                    <td className="total-value">${productionTotal.toLocaleString()}</td>
-                                    <td></td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </>
-                )}
+                        </>
+                    )}
+                    <tfoot>
+                        <tr>
+                            <td colSpan="4" className="total-label">Subtotal</td>
+                            <td className="total-value" style={{ textAlign: 'center' }}>{productionData.reduce((sum, item) => sum + item.days, 0)}</td>
+                            <td className="total-value" style={{ textAlign: 'right' }}>${productionTotal.toLocaleString()}</td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
             </div>
         );
     };
@@ -1619,85 +1679,87 @@ export const PrevisBudgetView = ({ data, onShotClick, onAssetClick, budgetId, bu
 
     return (
         <div className="previs-budget-view">
-            <div className="budget-header" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '2rem' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                    {isEditingTitle ? (
-                        <input
-                            type="text"
-                            value={budgetTitle}
-                            onChange={(e) => onBudgetTitleChange(e.target.value)}
-                            onBlur={() => setIsEditingTitle(false)}
-                            onKeyDown={(e) => {
-                                if (e.key === 'Enter') setIsEditingTitle(false);
-                            }}
-                            autoFocus
-                            style={{
-                                fontSize: '2rem',
-                                fontWeight: 'bold',
-                                background: 'var(--bg-surface)',
-                                border: '2px solid var(--accent-primary)',
-                                borderRadius: '4px',
-                                padding: '0.25rem 0.5rem',
-                                color: 'var(--text-primary)'
-                            }}
-                        />
-                    ) : (
-                        <h2
-                            onClick={() => setIsEditingTitle(true)}
-                            style={{ cursor: 'pointer', margin: 0 }}
-                        >
-                            {budgetTitle}
-                        </h2>
-                    )}
-                    <div style={{ display: 'flex', gap: '0.5rem' }}>
-                        <button
-                            onClick={onDuplicateBudget}
-                            style={{
-                                padding: '0.5rem 1rem',
-                                cursor: 'pointer',
-                                background: 'var(--bg-surface)',
-                                color: 'var(--text-primary)',
-                                border: '1px solid var(--border-color)',
-                                borderRadius: '8px',
-                                fontSize: '14px'
-                            }}
-                        >
-                            Duplicate
-                        </button>
-                        <button
-                            onClick={onNewBudget}
-                            style={{
-                                padding: '0.5rem 1rem',
-                                cursor: 'pointer',
-                                background: 'var(--bg-surface)',
-                                color: 'var(--text-primary)',
-                                border: '1px solid var(--border-color)',
-                                borderRadius: '8px',
-                                fontSize: '14px'
-                            }}
-                        >
-                            New
-                        </button>
-                        <button
-                            onClick={onDeleteBudget}
-                            style={{
-                                padding: '0.5rem 1rem',
-                                cursor: 'pointer',
-                                background: 'var(--bg-surface)',
-                                color: '#ff4444',
-                                border: '1px solid var(--border-color)',
-                                borderRadius: '8px',
-                                fontSize: '14px'
-                            }}
-                        >
-                            Delete
-                        </button>
+            {!readOnly && (
+                <div className="budget-header" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '2rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                        {isEditingTitle ? (
+                            <input
+                                type="text"
+                                value={budgetTitle}
+                                onChange={(e) => onBudgetTitleChange(e.target.value)}
+                                onBlur={() => setIsEditingTitle(false)}
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter') setIsEditingTitle(false);
+                                }}
+                                autoFocus
+                                style={{
+                                    fontSize: '2rem',
+                                    fontWeight: 'bold',
+                                    background: 'var(--bg-surface)',
+                                    border: '2px solid var(--accent-primary)',
+                                    borderRadius: '4px',
+                                    padding: '0.25rem 0.5rem',
+                                    color: 'var(--text-primary)'
+                                }}
+                            />
+                        ) : (
+                            <h2
+                                onClick={() => setIsEditingTitle(true)}
+                                style={{ cursor: 'pointer', margin: 0 }}
+                            >
+                                {budgetTitle}
+                            </h2>
+                        )}
+                        <div style={{ display: 'flex', gap: '0.5rem' }}>
+                            <button
+                                onClick={onDuplicateBudget}
+                                style={{
+                                    padding: '0.5rem 1rem',
+                                    cursor: 'pointer',
+                                    background: 'var(--bg-surface)',
+                                    color: 'var(--text-primary)',
+                                    border: '1px solid var(--border-color)',
+                                    borderRadius: '8px',
+                                    fontSize: '14px'
+                                }}
+                            >
+                                Duplicate
+                            </button>
+                            <button
+                                onClick={onNewBudget}
+                                style={{
+                                    padding: '0.5rem 1rem',
+                                    cursor: 'pointer',
+                                    background: 'var(--bg-surface)',
+                                    color: 'var(--text-primary)',
+                                    border: '1px solid var(--border-color)',
+                                    borderRadius: '8px',
+                                    fontSize: '14px'
+                                }}
+                            >
+                                New
+                            </button>
+                            <button
+                                onClick={onDeleteBudget}
+                                style={{
+                                    padding: '0.5rem 1rem',
+                                    cursor: 'pointer',
+                                    background: 'var(--bg-surface)',
+                                    color: '#ff4444',
+                                    border: '1px solid var(--border-color)',
+                                    borderRadius: '8px',
+                                    fontSize: '14px'
+                                }}
+                            >
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                    <div className="budget-summary">
+                        <span>Grand Total: <strong>{grandTotal}</strong> days</span>
                     </div>
                 </div>
-                <div className="budget-summary">
-                    <span>Grand Total: <strong>{grandTotal}</strong> days</span>
-                </div>
-            </div>
+            )}
 
             {renderTeamTable()}
 
@@ -1706,9 +1768,7 @@ export const PrevisBudgetView = ({ data, onShotClick, onAssetClick, budgetId, bu
                 'assets',
                 'Assets',
                 assetsCollapsed,
-                () => setAssetsCollapsed(!assetsCollapsed),
-                addAsset,
-                removeAsset
+                () => setAssetsCollapsed(!assetsCollapsed)
             )}
 
             {renderBudgetTable(
@@ -1716,14 +1776,765 @@ export const PrevisBudgetView = ({ data, onShotClick, onAssetClick, budgetId, bu
                 'shots',
                 'Shots',
                 shotsCollapsed,
-                () => setShotsCollapsed(!shotsCollapsed),
-                addShot,
-                removeShot
+                () => setShotsCollapsed(!shotsCollapsed)
             )}
 
             {renderProductionTable()}
 
-            {renderScenarioSummary()}
+            {readOnly && renderScenarioSummary()}
+        </div>
+    );
+};
+
+export const PrevisSummaryView = ({ budgetId }) => {
+    // Load all budget data
+    const [assetsBudgetData, setAssetsBudgetData] = React.useState(() => {
+        const saved = localStorage.getItem(`previsBudgetDataAssets_v4_${budgetId}`);
+        return saved ? JSON.parse(saved) : [];
+    });
+
+    const [shotsBudgetData, setShotsBudgetData] = React.useState(() => {
+        const saved = localStorage.getItem(`previsBudgetDataShots_v6_${budgetId}`);
+        return saved ? JSON.parse(saved) : [];
+    });
+
+    const [teamRoles, setTeamRoles] = React.useState(() => {
+        const saved = localStorage.getItem(`previsBudgetTeamRoles_v5_${budgetId}`);
+        return saved ? JSON.parse(saved) : [];
+    });
+
+    const [productionData, setProductionData] = React.useState(() => {
+        const saved = localStorage.getItem(`previsBudgetProduction_v2_${budgetId}`);
+        return saved ? JSON.parse(saved) : [];
+    });
+
+    const [contingencyPercent, setContingencyPercent] = React.useState(() => {
+        const saved = localStorage.getItem(`contingencyPercent_${budgetId}`);
+        return saved ? parseFloat(saved) : 15;
+    });
+
+    const [assetsEstimateMultiplier, setAssetsEstimateMultiplier] = React.useState(() => {
+        const saved = localStorage.getItem(`assetsEstimateMultiplier_${budgetId}`);
+        return saved ? parseFloat(saved) : 1.0;
+    });
+
+    const [shotsEstimateMultiplier, setShotsEstimateMultiplier] = React.useState(() => {
+        const saved = localStorage.getItem(`shotsEstimateMultiplier_${budgetId}`);
+        return saved ? parseFloat(saved) : 1.0;
+    });
+
+    const [assetsExtraArtists, setAssetsExtraArtists] = React.useState(() => {
+        const saved = localStorage.getItem(`assetsExtraArtists_${budgetId}`);
+        const value = saved ? parseFloat(saved) : 0;
+        return isNaN(value) ? 0 : value;
+    });
+
+    const [shotsExtraArtists, setShotsExtraArtists] = React.useState(() => {
+        const saved = localStorage.getItem(`shotsExtraArtists_${budgetId}`);
+        const value = saved ? parseFloat(saved) : 0;
+        return isNaN(value) ? 0 : value;
+    });
+
+    // Budget Scenarios state
+    const [savedScenarios, setSavedScenarios] = React.useState(() => {
+        const saved = localStorage.getItem(`budgetScenarios_${budgetId}`);
+        return saved ? JSON.parse(saved) : [
+            { name: 'Default', assetsEst: 1.0, shotsEst: 1.0, assetsExtra: 0, shotsExtra: 0, contingency: 10 },
+            { name: 'Fast', assetsEst: 0.8, shotsEst: 0.8, assetsExtra: 2, shotsExtra: 2, contingency: 5 },
+            { name: 'Deluxe', assetsEst: 1.5, shotsEst: 1.5, assetsExtra: 0, shotsExtra: 0, contingency: 20 }
+        ];
+    });
+
+    const [activeScenario, setActiveScenario] = React.useState('Default');
+
+    React.useEffect(() => {
+        localStorage.setItem(`budgetScenarios_${budgetId}`, JSON.stringify(savedScenarios));
+    }, [savedScenarios, budgetId]);
+
+    // Save to localStorage
+    React.useEffect(() => {
+        localStorage.setItem(`contingencyPercent_${budgetId}`, contingencyPercent.toString());
+    }, [contingencyPercent, budgetId]);
+
+    React.useEffect(() => {
+        localStorage.setItem(`assetsEstimateMultiplier_${budgetId}`, assetsEstimateMultiplier.toString());
+    }, [assetsEstimateMultiplier, budgetId]);
+
+    React.useEffect(() => {
+        localStorage.setItem(`shotsEstimateMultiplier_${budgetId}`, shotsEstimateMultiplier.toString());
+    }, [shotsEstimateMultiplier, budgetId]);
+
+    React.useEffect(() => {
+        localStorage.setItem(`assetsExtraArtists_${budgetId}`, assetsExtraArtists.toString());
+    }, [assetsExtraArtists, budgetId]);
+
+    React.useEffect(() => {
+        localStorage.setItem(`shotsExtraArtists_${budgetId}`, shotsExtraArtists.toString());
+    }, [shotsExtraArtists, budgetId]);
+
+    // Function to reload all data from localStorage
+    const reloadDataFromStorage = React.useCallback(() => {
+        const savedAssets = localStorage.getItem(`previsBudgetDataAssets_v4_${budgetId}`);
+        const savedShots = localStorage.getItem(`previsBudgetDataShots_v6_${budgetId}`);
+        const savedTeam = localStorage.getItem(`previsBudgetTeamRoles_v5_${budgetId}`);
+        const savedProduction = localStorage.getItem(`previsBudgetProduction_v2_${budgetId}`);
+        const savedContingency = localStorage.getItem(`contingencyPercent_${budgetId}`);
+        const savedAssetsMultiplier = localStorage.getItem(`assetsEstimateMultiplier_${budgetId}`);
+        const savedShotsMultiplier = localStorage.getItem(`shotsEstimateMultiplier_${budgetId}`);
+        const savedAssetsExtraArtists = localStorage.getItem(`assetsExtraArtists_${budgetId}`);
+        const savedShotsExtraArtists = localStorage.getItem(`shotsExtraArtists_${budgetId}`);
+
+        if (savedAssets) setAssetsBudgetData(JSON.parse(savedAssets));
+        if (savedShots) setShotsBudgetData(JSON.parse(savedShots));
+        if (savedTeam) setTeamRoles(JSON.parse(savedTeam));
+        if (savedProduction) setProductionData(JSON.parse(savedProduction));
+        if (savedContingency) setContingencyPercent(parseFloat(savedContingency));
+        if (savedAssetsMultiplier) setAssetsEstimateMultiplier(parseFloat(savedAssetsMultiplier));
+        if (savedShotsMultiplier) setShotsEstimateMultiplier(parseFloat(savedShotsMultiplier));
+        const assetsValue = savedAssetsExtraArtists ? parseFloat(savedAssetsExtraArtists) : 0;
+        const shotsValue = savedShotsExtraArtists ? parseFloat(savedShotsExtraArtists) : 0;
+        setAssetsExtraArtists(isNaN(assetsValue) ? 0 : assetsValue);
+        setShotsExtraArtists(isNaN(shotsValue) ? 0 : shotsValue);
+    }, [budgetId]);
+
+    // Reload data when budgetId changes
+    React.useEffect(() => {
+        reloadDataFromStorage();
+    }, [budgetId, reloadDataFromStorage]);
+
+    // Reload data on component mount (to get fresh data when switching to Summary tab)
+    React.useEffect(() => {
+        reloadDataFromStorage();
+    }, [reloadDataFromStorage]);
+
+    // Helper functions
+    const calculateTotalArtistDays = (item) => {
+        const artistDays = parseFloat(item.artistDays) || 0;
+        const revisions = parseFloat(item.revisions) || 0;
+        const complexity = parseFloat(item.complexity) || 1;
+        // Total Artist Days = (artistDays + revisions) * complexity (NOT multiplied by teamSize)
+        return (artistDays + revisions) * complexity;
+    };
+
+    const calculateProductionCost = (item) => {
+        const days = parseFloat(item.days) || 0;
+        const prodMultiplier = parseFloat(item.prodMultiplier) || 1.0;
+        return days * prodMultiplier * 1000;
+    };
+
+    const calculateScenarioCost = (item, budgetData, extraArtists = 0) => {
+        const totalArtistDays = calculateTotalArtistDays(item);
+        const teamSize = parseFloat(item.teamSize) || 1;
+        const adjustedTeamSize = teamSize + extraArtists; // Add extra artists, not multiply
+        const artists = Array.isArray(item.assignedArtists) ? item.assignedArtists : [];
+
+        if (artists.length === 0) {
+            return 0;
+        }
+
+        // Cost = Total Artist Days * rate * adjustedTeamSize
+        let totalCost = 0;
+        const numArtistTypes = artists.length;
+
+        artists.forEach(artistRole => {
+            const role = teamRoles.find(r => r.role === artistRole);
+            if (role) {
+                const rate = parseFloat(role.rate) || 0;
+                const rateUnit = role.rateUnit || 'day';
+                const dailyRate = rateUnit === 'week' ? rate / 5 : rate;
+                const productivity = parseFloat(role.productivity) || 1.0;
+
+                // Cost = (Total Artist Days / productivity) * rate * adjustedTeamSize
+                const artistDaysForThisRole = totalArtistDays / (numArtistTypes * productivity);
+                totalCost += artistDaysForThisRole * dailyRate * adjustedTeamSize;
+            }
+        });
+
+        return totalCost;
+    };
+
+    // Calculate Assets metrics (only billable) with Estimate Correction and Extra Artists applied
+    const billableAssets = assetsBudgetData.filter(item => item.billable !== false);
+    const assetsCount = billableAssets.length;
+    // Total Artist Days doesn't change with Extra Artists - only affected by Estimate Correction
+    const assetsArtistDays = billableAssets.reduce((sum, item) => sum + calculateTotalArtistDays(item), 0) * assetsEstimateMultiplier;
+    // Cost is affected by Extra Artists (more people = higher cost for same work)
+    const assetsCost = billableAssets.reduce((sum, item) => sum + calculateScenarioCost(item, assetsBudgetData, assetsExtraArtists), 0) * assetsEstimateMultiplier;
+
+    // Calculate Shots metrics (only billable) with Estimate Correction and Extra Artists applied
+    const billableShots = shotsBudgetData.filter(item => item.billable !== false);
+    const shotsCount = billableShots.length;
+    // Total Artist Days doesn't change with Extra Artists - only affected by Estimate Correction
+    const shotsArtistDays = billableShots.reduce((sum, item) => sum + calculateTotalArtistDays(item), 0) * shotsEstimateMultiplier;
+    // Cost is affected by Extra Artists (more people = higher cost for same work)
+    const shotsCost = billableShots.reduce((sum, item) => sum + calculateScenarioCost(item, shotsBudgetData, shotsExtraArtists), 0) * shotsEstimateMultiplier;
+
+    // Helper to calculate local project days for an item
+    const calculateLocalProjectDays = (item, extraArtists = 0, estimateMultiplier = 1.0) => {
+        const totalArtistDays = calculateTotalArtistDays(item) * estimateMultiplier; // Apply Est×
+        const teamSize = parseFloat(item.teamSize) || 1;
+        const adjustedTeamSize = teamSize + extraArtists; // Add extra artists, not multiply
+        const artists = Array.isArray(item.assignedArtists) ? item.assignedArtists : [];
+
+        if (artists.length === 0) {
+            return totalArtistDays / adjustedTeamSize;
+        }
+
+        let totalProductivity = 0;
+        artists.forEach(artistRole => {
+            const role = teamRoles.find(r => r.role === artistRole);
+            if (role) {
+                totalProductivity += (role.productivity || 1.0);
+            }
+        });
+
+        if (totalProductivity === 0) {
+            return totalArtistDays / adjustedTeamSize;
+        }
+
+        // Real Days = Total Artist Days / (Adjusted Team Size * productivity)
+        // More people or higher productivity = fewer days
+        return totalArtistDays / (adjustedTeamSize * totalProductivity);
+    };
+
+    // Calculate Total Artist Days
+    const totalArtistDays = assetsArtistDays + shotsArtistDays;
+
+    // Calculate Local Days for Assets and Shots (with Est× applied)
+    const assetsLocalDays = billableAssets.reduce((sum, item) => sum + calculateLocalProjectDays(item, assetsExtraArtists, assetsEstimateMultiplier), 0);
+    const shotsLocalDays = billableShots.reduce((sum, item) => sum + calculateLocalProjectDays(item, shotsExtraArtists, shotsEstimateMultiplier), 0);
+    const totalLocalDays = assetsLocalDays + shotsLocalDays;
+
+    // Calculate Team Capacity per day
+    const teamCapacityPerDay = teamRoles.reduce((sum, role) => sum + role.headcount, 0);
+
+    // Calculate Project Days
+    const projectDays = teamCapacityPerDay > 0 ? totalArtistDays / teamCapacityPerDay : 0;
+
+    // Calculate Labor Cost
+    const laborCost = assetsCost + shotsCost;
+
+    // Calculate Production Cost (only billable)
+    const billableProductionData = productionData.filter(item => item.billable !== false);
+    const productionCost = billableProductionData.reduce((sum, item) => sum + calculateProductionCost(item), 0);
+
+    // Subtotal before contingency
+    const subtotal = laborCost + productionCost;
+
+    // Contingency calculation
+    const contingencyAmount = subtotal * (contingencyPercent / 100);
+
+    // Grand Total with contingency
+    const grandTotal = subtotal + contingencyAmount;
+
+    // Pie chart data
+    const chartData = [
+        { label: 'Assets', value: assetsCost, color: '#9E9E9E' },
+        { label: 'Shots', value: shotsCost, color: '#616161' },
+        { label: 'Production', value: productionCost, color: '#BDBDBD' },
+        { label: 'Contingency', value: contingencyAmount, color: '#E0E0E0' }
+    ];
+
+    const total = chartData.reduce((sum, item) => sum + item.value, 0);
+    let currentAngle = -90; // Start from top
+
+    return (
+        <div style={{ padding: '2rem' }}>
+            {/* Budget Scenarios Table */}
+            <div className="budget-section" style={{ marginBottom: '2rem' }}>
+                <div className="budget-section-header">
+                    <h3>Budget Scenarios</h3>
+                    <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                        <select
+                            value={activeScenario}
+                            onChange={(e) => {
+                                const scenarioName = e.target.value;
+                                setActiveScenario(scenarioName);
+                                const scenario = savedScenarios.find(s => s.name === scenarioName);
+                                if (scenario) {
+                                    setAssetsEstimateMultiplier(scenario.assetsEst);
+                                    setShotsEstimateMultiplier(scenario.shotsEst);
+                                    setAssetsExtraArtists(scenario.assetsExtra);
+                                    setShotsExtraArtists(scenario.shotsExtra);
+                                    setContingencyPercent(scenario.contingency);
+                                }
+                            }}
+                            style={{
+                                padding: '0.4rem 0.6rem',
+                                background: 'var(--bg-surface)',
+                                border: '1px solid var(--border-color)',
+                                borderRadius: '4px',
+                                color: 'var(--text-primary)',
+                                fontSize: '0.875rem'
+                            }}
+                        >
+                            {savedScenarios.map(scenario => (
+                                <option key={scenario.name} value={scenario.name}>{scenario.name}</option>
+                            ))}
+                        </select>
+                        <button
+                            onClick={() => {
+                                const currentScenario = savedScenarios.find(s => s.name === activeScenario);
+                                if (currentScenario) {
+                                    const updated = savedScenarios.map(s =>
+                                        s.name === activeScenario
+                                            ? { ...s, assetsEst: assetsEstimateMultiplier, shotsEst: shotsEstimateMultiplier, assetsExtra: assetsExtraArtists, shotsExtra: shotsExtraArtists, contingency: contingencyPercent }
+                                            : s
+                                    );
+                                    setSavedScenarios(updated);
+                                }
+                            }}
+                            style={{
+                                padding: '0.4rem 0.8rem',
+                                background: 'var(--bg-surface)',
+                                border: '1px solid var(--border-color)',
+                                borderRadius: '4px',
+                                color: 'var(--text-primary)',
+                                cursor: 'pointer',
+                                fontSize: '0.875rem'
+                            }}
+                        >
+                            Save
+                        </button>
+                        <button
+                            onClick={() => {
+                                const name = prompt('Enter scenario name:');
+                                if (name && name.trim()) {
+                                    setSavedScenarios([...savedScenarios, {
+                                        name: name.trim(),
+                                        assetsEst: assetsEstimateMultiplier,
+                                        shotsEst: shotsEstimateMultiplier,
+                                        assetsExtra: assetsExtraArtists,
+                                        shotsExtra: shotsExtraArtists,
+                                        contingency: contingencyPercent
+                                    }]);
+                                    setActiveScenario(name.trim());
+                                }
+                            }}
+                            style={{
+                                padding: '0.4rem 0.8rem',
+                                background: 'var(--bg-surface)',
+                                border: '1px solid var(--border-color)',
+                                borderRadius: '4px',
+                                color: 'var(--text-primary)',
+                                cursor: 'pointer',
+                                fontSize: '0.875rem'
+                            }}
+                        >
+                            New
+                        </button>
+                        <button
+                            onClick={() => {
+                                if (savedScenarios.length === 1) {
+                                    alert('Cannot delete the last scenario');
+                                    return;
+                                }
+                                if (window.confirm(`Delete scenario "${activeScenario}"?`)) {
+                                    const filtered = savedScenarios.filter(s => s.name !== activeScenario);
+                                    setSavedScenarios(filtered);
+                                    setActiveScenario(filtered[0].name);
+                                    const first = filtered[0];
+                                    setAssetsEstimateMultiplier(first.assetsEst);
+                                    setShotsEstimateMultiplier(first.shotsEst);
+                                    setAssetsExtraArtists(first.assetsExtra);
+                                    setShotsExtraArtists(first.shotsExtra);
+                                    setContingencyPercent(first.contingency);
+                                }
+                            }}
+                            style={{
+                                padding: '0.4rem 0.8rem',
+                                background: 'var(--bg-surface)',
+                                border: '1px solid var(--border-color)',
+                                borderRadius: '4px',
+                                color: 'var(--text-primary)',
+                                cursor: 'pointer',
+                                fontSize: '0.875rem'
+                            }}
+                        >
+                            Delete
+                        </button>
+                    </div>
+                </div>
+                <table className="budget-table" style={{ width: '100%' }}>
+                    <thead>
+                        <tr>
+                            <th style={{ textAlign: 'left' }}>Parameter</th>
+                            <th style={{ textAlign: 'left' }}>Assets</th>
+                            <th style={{ textAlign: 'left' }}>Shots</th>
+                            <th style={{ textAlign: 'left' }}>Global</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style={{ textAlign: 'left' }}>Estimate Correction (Est×)</td>
+                            <td>
+                                <input
+                                    type="number"
+                                    step="0.1"
+                                    value={assetsEstimateMultiplier}
+                                    onChange={(e) => setAssetsEstimateMultiplier(parseFloat(e.target.value) || 1.0)}
+                                    style={{
+                                        width: '80px',
+                                        padding: '0.25rem 0.5rem',
+                                        background: 'var(--bg-surface)',
+                                        border: '1px solid var(--border-color)',
+                                        borderRadius: '4px',
+                                        color: 'var(--text-primary)',
+                                        fontSize: '0.875rem'
+                                    }}
+                                />
+                            </td>
+                            <td>
+                                <input
+                                    type="number"
+                                    step="0.1"
+                                    value={shotsEstimateMultiplier}
+                                    onChange={(e) => setShotsEstimateMultiplier(parseFloat(e.target.value) || 1.0)}
+                                    style={{
+                                        width: '80px',
+                                        padding: '0.25rem 0.5rem',
+                                        background: 'var(--bg-surface)',
+                                        border: '1px solid var(--border-color)',
+                                        borderRadius: '4px',
+                                        color: 'var(--text-primary)',
+                                        fontSize: '0.875rem'
+                                    }}
+                                />
+                            </td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td style={{ textAlign: 'left' }}>Extra artists</td>
+                            <td>
+                                <input
+                                    type="number"
+                                    step="1"
+                                    value={assetsExtraArtists}
+                                    onChange={(e) => setAssetsExtraArtists(parseFloat(e.target.value) || 0)}
+                                    style={{
+                                        width: '80px',
+                                        padding: '0.25rem 0.5rem',
+                                        background: 'var(--bg-surface)',
+                                        border: '1px solid var(--border-color)',
+                                        borderRadius: '4px',
+                                        color: 'var(--text-primary)',
+                                        fontSize: '0.875rem'
+                                    }}
+                                />
+                            </td>
+                            <td>
+                                <input
+                                    type="number"
+                                    step="1"
+                                    value={shotsExtraArtists}
+                                    onChange={(e) => setShotsExtraArtists(parseFloat(e.target.value) || 0)}
+                                    style={{
+                                        width: '80px',
+                                        padding: '0.25rem 0.5rem',
+                                        background: 'var(--bg-surface)',
+                                        border: '1px solid var(--border-color)',
+                                        borderRadius: '4px',
+                                        color: 'var(--text-primary)',
+                                        fontSize: '0.875rem'
+                                    }}
+                                />
+                            </td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td style={{ textAlign: 'left' }}>Contingency %</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>
+                                <input
+                                    type="number"
+                                    step="1"
+                                    value={contingencyPercent}
+                                    onChange={(e) => setContingencyPercent(parseFloat(e.target.value) || 0)}
+                                    style={{
+                                        width: '80px',
+                                        padding: '0.25rem 0.5rem',
+                                        background: 'var(--bg-surface)',
+                                        border: '1px solid var(--border-color)',
+                                        borderRadius: '4px',
+                                        color: 'var(--text-primary)',
+                                        fontSize: '0.875rem'
+                                    }}
+                                />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            {/* Scenario Summary */}
+            <div className="budget-section">
+                <div className="budget-section-header">
+                    <h3>Scenario Summary</h3>
+                </div>
+            <div style={{ display: 'flex', gap: '1rem', alignItems: 'stretch', padding: '1.5rem' }}>
+                <div style={{
+                    flex: '1',
+                    background: 'var(--bg-surface)',
+                    border: '1px solid var(--border-color)',
+                    borderRadius: '8px',
+                    padding: '1rem'
+                }}>
+                    <table className="budget-table" style={{ width: '100%', background: 'transparent', border: 'none' }}>
+                    <tbody>
+                        <tr>
+                            <td style={{ textAlign: 'left', width: '200px' }}>Assets Count</td>
+                            <td style={{ textAlign: 'right', fontFamily: "'Courier New', monospace" }}>{assetsCount}</td>
+                        </tr>
+                        <tr>
+                            <td style={{ textAlign: 'left' }}>Shots Count</td>
+                            <td style={{ textAlign: 'right', fontFamily: "'Courier New', monospace" }}>{shotsCount}</td>
+                        </tr>
+                        <tr style={{ borderTop: '1px solid var(--border-color)' }}>
+                            <td style={{ textAlign: 'left' }}>Assets Artist Days</td>
+                            <td style={{ textAlign: 'right', fontFamily: "'Courier New', monospace" }}>{assetsArtistDays.toFixed(1)}</td>
+                        </tr>
+                        <tr>
+                            <td style={{ textAlign: 'left' }}>Shots Artist Days</td>
+                            <td style={{ textAlign: 'right', fontFamily: "'Courier New', monospace" }}>{shotsArtistDays.toFixed(1)}</td>
+                        </tr>
+                        <tr>
+                            <td style={{ textAlign: 'left', fontWeight: 'bold' }}>Total Artist Days</td>
+                            <td style={{ textAlign: 'right', fontFamily: "'Courier New', monospace", fontWeight: 'bold' }}>{totalArtistDays.toFixed(1)}</td>
+                        </tr>
+                        <tr style={{ borderTop: '1px solid var(--border-color)' }}>
+                            <td style={{ textAlign: 'left' }}>Assets Real Days</td>
+                            <td style={{ textAlign: 'right', fontFamily: "'Courier New', monospace" }}>{assetsLocalDays.toFixed(1)}</td>
+                        </tr>
+                        <tr>
+                            <td style={{ textAlign: 'left' }}>Shots Real Days</td>
+                            <td style={{ textAlign: 'right', fontFamily: "'Courier New', monospace" }}>{shotsLocalDays.toFixed(1)}</td>
+                        </tr>
+                        <tr>
+                            <td style={{ textAlign: 'left', fontWeight: 'bold' }}>Total Real Days</td>
+                            <td style={{ textAlign: 'right', fontFamily: "'Courier New', monospace", fontWeight: 'bold' }}>{totalLocalDays.toFixed(1)}</td>
+                        </tr>
+                        <tr style={{ borderTop: '1px solid var(--border-color)' }}>
+                            <td style={{ textAlign: 'left' }}>Assets Cost</td>
+                            <td style={{ textAlign: 'right', fontFamily: "'Courier New', monospace" }}>${assetsCost.toLocaleString()}</td>
+                        </tr>
+                        <tr>
+                            <td style={{ textAlign: 'left' }}>Shots Cost</td>
+                            <td style={{ textAlign: 'right', fontFamily: "'Courier New', monospace" }}>${shotsCost.toLocaleString()}</td>
+                        </tr>
+                        <tr>
+                            <td style={{ textAlign: 'left' }}>Production Cost</td>
+                            <td style={{ textAlign: 'right', fontFamily: "'Courier New', monospace" }}>${productionCost.toLocaleString()}</td>
+                        </tr>
+                        <tr style={{ borderTop: '1px solid var(--border-color)' }}>
+                            <td style={{ textAlign: 'left', fontWeight: 'bold' }}>Subtotal</td>
+                            <td style={{ textAlign: 'right', fontFamily: "'Courier New', monospace", fontWeight: 'bold' }}>${subtotal.toLocaleString()}</td>
+                        </tr>
+                        <tr>
+                            <td style={{ textAlign: 'left' }}>Contingency ({contingencyPercent}%)</td>
+                            <td style={{ textAlign: 'right', fontFamily: "'Courier New', monospace" }}>${contingencyAmount.toLocaleString()}</td>
+                        </tr>
+                        <tr style={{ borderTop: '2px solid var(--border-color)' }}>
+                            <td style={{ textAlign: 'left', fontWeight: 'bold', fontSize: '16px' }}>Grand Total</td>
+                            <td style={{ textAlign: 'right', fontFamily: "'Courier New', monospace", fontWeight: 'bold', fontSize: '16px' }}>${grandTotal.toLocaleString()} USD</td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+
+                <div style={{
+                    flex: '1',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: '1rem',
+                    padding: '1rem',
+                    background: 'var(--bg-surface)',
+                    border: '1px solid var(--border-color)',
+                    borderRadius: '8px'
+                }}>
+                    <h4 style={{ margin: '0 0 0.5rem 0', color: 'var(--text-primary)' }}>Cost Distribution</h4>
+                    <svg width="100%" height="auto" viewBox="0 0 250 250" style={{ maxWidth: '350px' }}>
+                        {chartData.map((item, index) => {
+                            const percentage = total > 0 ? (item.value / total) * 100 : 0;
+                            const angle = (percentage / 100) * 360;
+                            const startAngle = currentAngle;
+                            const endAngle = currentAngle + angle;
+
+                            // Convert angles to radians
+                            const startRad = (startAngle * Math.PI) / 180;
+                            const endRad = (endAngle * Math.PI) / 180;
+
+                            // Calculate arc path
+                            const x1 = 125 + 100 * Math.cos(startRad);
+                            const y1 = 125 + 100 * Math.sin(startRad);
+                            const x2 = 125 + 100 * Math.cos(endRad);
+                            const y2 = 125 + 100 * Math.sin(endRad);
+
+                            const largeArc = angle > 180 ? 1 : 0;
+                            const path = `M 125 125 L ${x1} ${y1} A 100 100 0 ${largeArc} 1 ${x2} ${y2} Z`;
+
+                            currentAngle = endAngle;
+
+                            return (
+                                <path
+                                    key={index}
+                                    d={path}
+                                    fill={item.color}
+                                    stroke="var(--bg-primary)"
+                                    strokeWidth="2"
+                                />
+                            );
+                        })}
+                    </svg>
+                    <div style={{
+                        width: '100%',
+                        maxWidth: '350px',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        padding: '0 1rem'
+                    }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                            {chartData.map((item, index) => {
+                                const percentage = total > 0 ? ((item.value / total) * 100).toFixed(1) : 0;
+                                return (
+                                    <div key={index} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                        <div style={{ width: '16px', height: '16px', backgroundColor: item.color, borderRadius: '3px' }}></div>
+                                        <span style={{ color: 'var(--text-primary)', fontSize: '14px' }}>
+                                            {item.label}: ${item.value.toLocaleString()} ({percentage}%)
+                                        </span>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style={{ padding: '1.5rem 1rem' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+                    <button
+                        onClick={() => window.print()}
+                        style={{
+                            padding: '10px 20px',
+                            cursor: 'pointer',
+                            background: 'var(--bg-surface)',
+                            color: 'var(--text-primary)',
+                            border: '1px solid var(--border-color)',
+                            borderRadius: '8px',
+                            fontSize: '14px',
+                            fontWeight: '600',
+                            transition: 'all 0.2s ease'
+                        }}
+                        onMouseEnter={(e) => {
+                            e.target.style.background = 'var(--bg-surface-hover)';
+                            e.target.style.borderColor = 'var(--accent-primary)';
+                        }}
+                        onMouseLeave={(e) => {
+                            e.target.style.background = 'var(--bg-surface)';
+                            e.target.style.borderColor = 'var(--border-color)';
+                        }}
+                    >
+                        🖨️ Print
+                    </button>
+                    <button
+                        onClick={() => alert('Save as PDF functionality coming soon')}
+                        style={{
+                            padding: '10px 20px',
+                            cursor: 'pointer',
+                            background: 'var(--bg-surface)',
+                            color: 'var(--text-primary)',
+                            border: '1px solid var(--border-color)',
+                            borderRadius: '8px',
+                            fontSize: '14px',
+                            fontWeight: '600',
+                            transition: 'all 0.2s ease'
+                        }}
+                        onMouseEnter={(e) => {
+                            e.target.style.background = 'var(--bg-surface-hover)';
+                            e.target.style.borderColor = 'var(--accent-primary)';
+                        }}
+                        onMouseLeave={(e) => {
+                            e.target.style.background = 'var(--bg-surface)';
+                            e.target.style.borderColor = 'var(--border-color)';
+                        }}
+                    >
+                        📄 Save as PDF
+                    </button>
+                    <button
+                        onClick={() => alert('Export to Excel functionality coming soon')}
+                        style={{
+                            padding: '10px 20px',
+                            cursor: 'pointer',
+                            background: 'var(--bg-surface)',
+                            color: 'var(--text-primary)',
+                            border: '1px solid var(--border-color)',
+                            borderRadius: '8px',
+                            fontSize: '14px',
+                            fontWeight: '600',
+                            transition: 'all 0.2s ease'
+                        }}
+                        onMouseEnter={(e) => {
+                            e.target.style.background = 'var(--bg-surface-hover)';
+                            e.target.style.borderColor = 'var(--accent-primary)';
+                        }}
+                        onMouseLeave={(e) => {
+                            e.target.style.background = 'var(--bg-surface)';
+                            e.target.style.borderColor = 'var(--border-color)';
+                        }}
+                    >
+                        📊 Export to Excel
+                    </button>
+                    <button
+                        onClick={() => alert('Send Invoice functionality coming soon')}
+                        style={{
+                            padding: '10px 20px',
+                            cursor: 'pointer',
+                            background: 'var(--bg-surface)',
+                            color: 'var(--text-primary)',
+                            border: '1px solid var(--border-color)',
+                            borderRadius: '8px',
+                            fontSize: '14px',
+                            fontWeight: '600',
+                            transition: 'all 0.2s ease'
+                        }}
+                        onMouseEnter={(e) => {
+                            e.target.style.background = 'var(--bg-surface-hover)';
+                            e.target.style.borderColor = 'var(--accent-primary)';
+                        }}
+                        onMouseLeave={(e) => {
+                            e.target.style.background = 'var(--bg-surface)';
+                            e.target.style.borderColor = 'var(--border-color)';
+                        }}
+                    >
+                        📧 Send Invoice
+                    </button>
+                    <button
+                        onClick={() => alert('Share Link functionality coming soon')}
+                        style={{
+                            padding: '10px 20px',
+                            cursor: 'pointer',
+                            background: 'var(--bg-surface)',
+                            color: 'var(--text-primary)',
+                            border: '1px solid var(--border-color)',
+                            borderRadius: '8px',
+                            fontSize: '14px',
+                            fontWeight: '600',
+                            transition: 'all 0.2s ease'
+                        }}
+                        onMouseEnter={(e) => {
+                            e.target.style.background = 'var(--bg-surface-hover)';
+                            e.target.style.borderColor = 'var(--accent-primary)';
+                        }}
+                        onMouseLeave={(e) => {
+                            e.target.style.background = 'var(--bg-surface)';
+                            e.target.style.borderColor = 'var(--border-color)';
+                        }}
+                    >
+                        🔗 Share Link
+                    </button>
+                </div>
+            </div>
+            </div>
         </div>
     );
 };
