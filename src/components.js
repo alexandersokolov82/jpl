@@ -634,10 +634,10 @@ export const PrevisBudgetView = ({ data, onShotClick, onAssetClick, budgetId, bu
 
     const assetsTotalDays = assetsBudgetData
         .filter(item => item.billable !== false)
-        .reduce((sum, item) => sum + calculateTotal(item), 0);
+        .reduce((sum, item) => sum + calculateTotalArtistDays(item), 0);
     const shotsTotalDays = shotsBudgetData
         .filter(item => item.billable !== false)
-        .reduce((sum, item) => sum + calculateTotal(item), 0);
+        .reduce((sum, item) => sum + calculateTotalArtistDays(item), 0);
     const grandTotal = Math.round(assetsTotalDays + shotsTotalDays);
 
     const handleCellClick = (itemId, field, tableType) => {
