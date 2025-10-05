@@ -8,7 +8,7 @@ import './App.css';
 function App() {
     // Clear old budget data to force reload with new shot names
     useEffect(() => {
-        const currentVersion = 'v11_budget_scenarios';
+        const currentVersion = 'v12_default_values';
         const storedVersion = localStorage.getItem('budgetDataVersion');
         if (storedVersion !== currentVersion) {
             // Clear ALL localStorage to reset to defaults

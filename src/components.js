@@ -372,10 +372,9 @@ export const PrevisBudgetView = ({ data, onShotClick, onAssetClick, budgetId, bu
 
     const defaultRoles = [
         { id: 0, role: 'Supervisor', headcount: 1, rateUnit: 'day', rate: 900, productivity: 1.0 },
-        { id: 2, role: 'Animator 1', headcount: 3, rateUnit: 'day', rate: 700, productivity: 1.0 },
-        { id: 3, role: 'Animator 2', headcount: 2, rateUnit: 'day', rate: 550, productivity: 0.8 },
-        { id: 1, role: 'Modeler', headcount: 2, rateUnit: 'day', rate: 400, productivity: 1.0 },
-        { id: 4, role: 'Coordinator', headcount: 1, rateUnit: 'day', rate: 250, productivity: 1.0 },
+        { id: 1, role: 'Animator', headcount: 1, rateUnit: 'day', rate: 600, productivity: 1.0 },
+        { id: 2, role: 'Modeler', headcount: 1, rateUnit: 'day', rate: 400, productivity: 1.0 },
+        { id: 3, role: 'Coordinator', headcount: 1, rateUnit: 'day', rate: 250, productivity: 1.0 },
     ];
 
     const [teamRoles, setTeamRoles] = React.useState(() => {
@@ -434,20 +433,20 @@ export const PrevisBudgetView = ({ data, onShotClick, onAssetClick, budgetId, bu
 
     const initialAssetsBudgetData = [
         // Characters
-        { id: 0, category: 'chr', name: 'Jack Torrance', artistDays: 8, revisions: 2, teamSize: 1, complexity: 1.0, assignedArtists: ['Modeler'] },
-        { id: 1, category: 'chr', name: 'Wendy Torrance', artistDays: 8, revisions: 2, teamSize: 1, complexity: 1.0, assignedArtists: ['Modeler'] },
+        { id: 0, category: 'chr', name: 'Jack Torrance', artistDays: 2, revisions: 1, teamSize: 2, complexity: 1.0, assignedArtists: ['Modeler'] },
+        { id: 1, category: 'chr', name: 'Wendy Torrance', artistDays: 2, revisions: 1, teamSize: 1, complexity: 1.0, assignedArtists: ['Modeler'] },
         // Environments
-        { id: 2, category: 'env', name: 'Overlook Hotel Exterior', artistDays: 12, revisions: 3, teamSize: 2, complexity: 1.2, assignedArtists: ['Modeler'] },
-        { id: 3, category: 'env', name: 'Hedge Maze', artistDays: 15, revisions: 3, teamSize: 2, complexity: 1.1, assignedArtists: ['Modeler'] },
+        { id: 2, category: 'env', name: 'Overlook Hotel Exterior', artistDays: 2, revisions: 1, teamSize: 1, complexity: 1.0, assignedArtists: ['Modeler'] },
+        { id: 3, category: 'env', name: 'Hedge Maze', artistDays: 2, revisions: 1, teamSize: 1, complexity: 1.0, assignedArtists: ['Modeler'] },
         // Props
         { id: 4, category: 'prp', name: 'Typewriter', artistDays: 2, revisions: 1, teamSize: 1, complexity: 1.0, assignedArtists: ['Modeler'] },
-        { id: 5, category: 'prp', name: 'Axe', artistDays: 1, revisions: 1, teamSize: 1, complexity: 1.0, assignedArtists: ['Modeler'] },
+        { id: 5, category: 'prp', name: 'Axe', artistDays: 2, revisions: 1, teamSize: 1, complexity: 1.0, assignedArtists: ['Modeler'] },
         // Vehicles
-        { id: 6, category: 'veh', name: 'Yellow Volkswagen Beetle', artistDays: 5, revisions: 2, teamSize: 1, complexity: 1.0, assignedArtists: ['Modeler'] },
-        { id: 7, category: 'veh', name: 'Snowcat', artistDays: 6, revisions: 2, teamSize: 1, complexity: 1.1, assignedArtists: ['Modeler'] },
+        { id: 6, category: 'veh', name: 'Yellow Volkswagen Beetle', artistDays: 2, revisions: 1, teamSize: 1, complexity: 1.0, assignedArtists: ['Modeler'] },
+        { id: 7, category: 'veh', name: 'Snowcat', artistDays: 2, revisions: 1, teamSize: 1, complexity: 1.0, assignedArtists: ['Modeler'] },
         // EFX
-        { id: 8, category: 'efx', name: 'Blizzard/Snowstorm', artistDays: 5, revisions: 2, teamSize: 1, complexity: 1.1, assignedArtists: ['Modeler'] },
-        { id: 9, category: 'efx', name: 'Blood Flood from Elevator', artistDays: 8, revisions: 3, teamSize: 2, complexity: 1.2, assignedArtists: ['Modeler'] },
+        { id: 8, category: 'efx', name: 'Blizzard/Snowstorm', artistDays: 2, revisions: 1, teamSize: 1, complexity: 1.0, assignedArtists: ['Modeler'] },
+        { id: 9, category: 'efx', name: 'Blood Flood from Elevator', artistDays: 2, revisions: 1, teamSize: 1, complexity: 1.0, assignedArtists: ['Modeler'] },
     ];
 
     const [assetsBudgetData, setAssetsBudgetData] = React.useState(() => {
