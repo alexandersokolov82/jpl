@@ -214,6 +214,12 @@ function App() {
         setActiveBudgetTab(null);
     };
 
+    const handleNavigateToProject = () => {
+        setActiveTab('Project');
+        setViewStack(['PROJ_001']);
+        setActiveBudgetTab(null);
+    };
+
     const handleBudgetTitleChange = (newTitle) => {
         setBudgetTabs(tabs => tabs.map(tab =>
             tab.id === activeBudgetTab ? { ...tab, name: newTitle } : tab
@@ -359,7 +365,7 @@ function App() {
             ) : activeTab === 'Main' ? (
                 <ProjectsListView onProjectClick={handleProjectClick} />
             ) : activeTab === 'Previs Shots' ? (
-                <PrevisShotsView data={data} onShotClick={handleShotClick} />
+                <PrevisShotsView data={data} onShotClick={handleShotClick} onNavigateToProject={handleNavigateToProject} />
             ) : activeTab === 'Previs Assets' && viewStack.length > 1 ? (
                 <>
                     <Breadcrumbs items={breadcrumbItems} onClick={handleBreadcrumbClick} />
@@ -381,9 +387,9 @@ function App() {
                     </div>
                 </>
             ) : activeTab === 'Previs Assets' ? (
-                <PrevisAssetsView data={data} onAssetClick={handleAssetClick} />
+                <PrevisAssetsView data={data} onAssetClick={handleAssetClick} onNavigateToProject={handleNavigateToProject} />
             ) : activeTab === 'Previs Summary' ? (
-                <PrevisSummaryView budgetId={activeBudgetTab || budgetTabs[0]?.id || 'budget_1'} />
+                <PrevisSummaryView budgetId={activeBudgetTab || budgetTabs[0]?.id || 'budget_1'} onNavigateToProject={handleNavigateToProject} />
             ) : activeTab === 'Project' ? (
                 <>
                     <Breadcrumbs items={breadcrumbItems} onClick={handleBreadcrumbClick} />
@@ -415,6 +421,7 @@ function App() {
                     onDuplicateBudget={handleDuplicateBudget}
                     onNewBudget={handleNewBudget}
                     onDeleteBudget={handleDeleteBudget}
+                    onNavigateToProject={handleNavigateToProject}
                 />
             )}
         </div>

@@ -2,6 +2,68 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import ImageUploadModal from './ImageUploadModal';
 
+export const ProjectHeader = ({
+    title = 'The Shining',
+    description = 'A family heads to an isolated hotel for the winter where a sinister presence influences the father into violence.',
+    thumbnail = 'https://m.media-amazon.com/images/M/MV5BZWFlYmY2MGEtZjVkYS00YzU4LTg0YjQtYzY1ZGE3NTA5NGQxXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_.jpg',
+    onNavigateToProject
+}) => {
+    return (
+        <div
+            onClick={onNavigateToProject}
+            style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '1rem',
+                padding: '1rem 1.5rem',
+                background: 'var(--bg-surface)',
+                borderBottom: '1px solid var(--border-color)',
+                marginBottom: '1.5rem',
+                cursor: onNavigateToProject ? 'pointer' : 'default',
+                transition: 'background 0.2s ease'
+            }}
+            onMouseEnter={(e) => {
+                if (onNavigateToProject) {
+                    e.currentTarget.style.background = 'var(--bg-primary)';
+                }
+            }}
+            onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'var(--bg-surface)';
+            }}
+        >
+            <img
+                src={thumbnail}
+                alt={title}
+                style={{
+                    width: '90px',
+                    height: '60px',
+                    objectFit: 'cover',
+                    borderRadius: '4px',
+                    border: '1px solid var(--border-color)'
+                }}
+            />
+            <div style={{ flex: 1 }}>
+                <h2 style={{
+                    margin: '0 0 0.25rem 0',
+                    fontSize: '1.25rem',
+                    fontWeight: '600',
+                    color: 'var(--text-primary)'
+                }}>
+                    {title}
+                </h2>
+                <p style={{
+                    margin: 0,
+                    fontSize: '0.875rem',
+                    color: 'var(--text-secondary)',
+                    lineHeight: '1.4'
+                }}>
+                    {description}
+                </p>
+            </div>
+        </div>
+    );
+};
+
 export const ProjectsListView = ({ onProjectClick }) => {
     const projects = [
         {
@@ -334,12 +396,13 @@ export const DetailView = ({ item, onAddItem, onNavigate, onUpdateItem, onDelete
     );
 };
 
-export const PrevisShotsView = ({ data, onShotClick }) => {
+export const PrevisShotsView = ({ data, onShotClick, onNavigateToProject }) => {
     // Extract first 10 shots from data to match budget table
     const allShots = Object.values(data).filter(item => item.type === 'shot').slice(0, 10);
 
     return (
         <div className="previs-shots-view">
+            <ProjectHeader onNavigateToProject={onNavigateToProject} />
             <div className="shots-grid">
                 {allShots.map((shot) => (
                     <div key={shot.id} className="shot-card" onClick={() => onShotClick(shot.id)}>
@@ -353,7 +416,7 @@ export const PrevisShotsView = ({ data, onShotClick }) => {
     );
 };
 
-export const PrevisAssetsView = ({ data, onAssetClick }) => {
+export const PrevisAssetsView = ({ data, onAssetClick, onNavigateToProject }) => {
     const assetRoot = Object.values(data).find(item => item.type === 'asset_root');
     if (!assetRoot) return <div>No assets found.</div>;
 
@@ -361,6 +424,7 @@ export const PrevisAssetsView = ({ data, onAssetClick }) => {
 
     return (
         <div className="previs-assets-view">
+            <ProjectHeader onNavigateToProject={onNavigateToProject} />
             {assetCategories.map((category) => (
                 <div key={category.id} className="asset-category">
                     <h2 className="category-title">{category.name}</h2>
@@ -381,7 +445,7 @@ export const PrevisAssetsView = ({ data, onAssetClick }) => {
     );
 };
 
-export const PrevisBudgetView = ({ data, onShotClick, onAssetClick, budgetId, budgetTitle, onBudgetTitleChange, onDuplicateBudget, onNewBudget, onDeleteBudget, readOnly = false }) => {
+export const PrevisBudgetView = ({ data, onShotClick, onAssetClick, budgetId, budgetTitle, onBudgetTitleChange, onDuplicateBudget, onNewBudget, onDeleteBudget, onNavigateToProject, readOnly = false }) => {
     const [assetsCollapsed, setAssetsCollapsed] = React.useState(false);
     const [shotsCollapsed, setShotsCollapsed] = React.useState(false);
     const [teamCollapsed, setTeamCollapsed] = React.useState(false);
@@ -1765,6 +1829,7 @@ export const PrevisBudgetView = ({ data, onShotClick, onAssetClick, budgetId, bu
 
     return (
         <div className="previs-budget-view">
+            <ProjectHeader onNavigateToProject={onNavigateToProject} />
             {!readOnly && (
                 <div className="budget-header" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '2rem' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
@@ -1870,7 +1935,7 @@ export const PrevisBudgetView = ({ data, onShotClick, onAssetClick, budgetId, bu
     );
 };
 
-export const PrevisSummaryView = ({ budgetId }) => {
+export const PrevisSummaryView = ({ budgetId, onNavigateToProject }) => {
     // Load all budget data
     const [assetsBudgetData, setAssetsBudgetData] = React.useState(() => {
         const saved = localStorage.getItem(`previsBudgetDataAssets_v4_${budgetId}`);
@@ -2130,7 +2195,8 @@ export const PrevisSummaryView = ({ budgetId }) => {
     let currentAngle = -90; // Start from top
 
     return (
-        <div style={{ padding: '2rem' }}>
+        <div>
+            <ProjectHeader onNavigateToProject={onNavigateToProject} />
             {/* Budget Scenarios Table */}
             <div className="budget-section" style={{ marginBottom: '2rem' }}>
                 <div className="budget-section-header">
