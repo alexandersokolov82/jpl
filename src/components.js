@@ -203,6 +203,8 @@ export const DetailView = ({ item, onAddItem, onNavigate, onUpdateItem, onDelete
     const [editedChildrenCount, setEditedChildrenCount] = React.useState(item.children ? item.children.length : 0);
     const [editedDuration, setEditedDuration] = React.useState(item.duration);
     const [editedStudio, setEditedStudio] = React.useState(item.studio);
+    const [editedAspectRatio, setEditedAspectRatio] = React.useState(item.aspectRatio || '16:9 (HD / UHD)');
+    const [editedTargetResolution, setEditedTargetResolution] = React.useState(item.targetResolution || '1920×1080 (Full HD)');
     const [showModal, setShowModal] = React.useState(false);
     const [errors, setErrors] = React.useState({});
 
@@ -213,6 +215,8 @@ export const DetailView = ({ item, onAddItem, onNavigate, onUpdateItem, onDelete
         setEditedChildrenCount(item.children ? item.children.length : 0);
         setEditedDuration(item.duration);
         setEditedStudio(item.studio);
+        setEditedAspectRatio(item.aspectRatio || '16:9 (HD / UHD)');
+        setEditedTargetResolution(item.targetResolution || '1920×1080 (Full HD)');
     }, [item]);
 
     const childTypeName = {
@@ -253,6 +257,10 @@ export const DetailView = ({ item, onAddItem, onNavigate, onUpdateItem, onDelete
         if (item.type === 'shot') {
             updatedItem.duration = editedDuration;
         }
+        if (item.type === 'project') {
+            updatedItem.aspectRatio = editedAspectRatio;
+            updatedItem.targetResolution = editedTargetResolution;
+        }
         onUpdateItem(updatedItem);
         setErrors({});
         setIsEditing(false);
@@ -265,6 +273,8 @@ export const DetailView = ({ item, onAddItem, onNavigate, onUpdateItem, onDelete
         setEditedChildrenCount(item.children ? item.children.length : 0);
         setEditedDuration(item.duration);
         setEditedStudio(item.studio);
+        setEditedAspectRatio(item.aspectRatio || '16:9 (HD / UHD)');
+        setEditedTargetResolution(item.targetResolution || '1920×1080 (Full HD)');
         setErrors({});
         setIsEditing(false);
     };
@@ -276,6 +286,8 @@ export const DetailView = ({ item, onAddItem, onNavigate, onUpdateItem, onDelete
         else if (name === 'description') setEditedDescription(value);
         else if (name === 'duration') setEditedDuration(Number(value));
         else if (name === 'studio') setEditedStudio(value);
+        else if (name === 'aspectRatio') setEditedAspectRatio(value);
+        else if (name === 'targetResolution') setEditedTargetResolution(value);
     };
 
     const handleImageUploaded = (itemId, newImage) => {
@@ -317,6 +329,39 @@ export const DetailView = ({ item, onAddItem, onNavigate, onUpdateItem, onDelete
                         </select>
                     ) : (
                         <p>{item.studio}</p>
+                    )}
+
+                    {item.type === 'project' && (
+                        <>
+                            <span>Aspect Ratio</span>
+                            {isEditing ? (
+                                <select name="aspectRatio" value={editedAspectRatio} onChange={handleChange}>
+                                    <option value="16:9 (HD / UHD)">16:9 (HD / UHD)</option>
+                                    <option value="2.35:1 (Cinematic Scope)">2.35:1 (Cinematic Scope)</option>
+                                    <option value="1.85:1 (Standard Film)">1.85:1 (Standard Film)</option>
+                                    <option value="9:16 (Vertical / Social)">9:16 (Vertical / Social)</option>
+                                    <option value="1:1 (Square)">1:1 (Square)</option>
+                                    <option value="Custom">Custom</option>
+                                </select>
+                            ) : (
+                                <p>{item.aspectRatio || '16:9 (HD / UHD)'}</p>
+                            )}
+
+                            <span>Target Resolution</span>
+                            {isEditing ? (
+                                <select name="targetResolution" value={editedTargetResolution} onChange={handleChange}>
+                                    <option value="1920×1080 (Full HD)">1920×1080 (Full HD)</option>
+                                    <option value="3840×2160 (4K UHD)">3840×2160 (4K UHD)</option>
+                                    <option value="4096×2160 (DCI 4K)">4096×2160 (DCI 4K)</option>
+                                    <option value="2560×1440 (QHD)">2560×1440 (QHD)</option>
+                                    <option value="1080×1920 (Vertical Full HD)">1080×1920 (Vertical Full HD)</option>
+                                    <option value="1280×720 (HD)">1280×720 (HD)</option>
+                                    <option value="Custom">Custom</option>
+                                </select>
+                            ) : (
+                                <p>{item.targetResolution || '1920×1080 (Full HD)'}</p>
+                            )}
+                        </>
                     )}
 
                     {item.type === 'scene' && item.children && (

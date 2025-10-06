@@ -7,7 +7,9 @@ export const projectData = {
         description: "A family heads to an isolated hotel for the winter where a sinister presence influences the father into violence, while his psychic son sees horrific forebodings from both past and future.",
         image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0059.jpg',
         children: ['SEQ01', 'SEQ02', 'SEQ03', 'SEQ04', 'SEQ05', 'SEQ06', 'SEQ07', 'SEQ08', 'SEQ09', 'ASSETS_ROOT'],
-        studio: 'Warner Bros.'
+        studio: 'Warner Bros.',
+        aspectRatio: '16:9 (HD / UHD)',
+        targetResolution: '1920×1080 (Full HD)'
     },
     'ASSETS_ROOT': {
         id: 'ASSETS_ROOT',
