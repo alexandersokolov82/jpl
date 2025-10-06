@@ -156,6 +156,19 @@ export const TabNavigation = ({ activeTab, onTabChange, budgetTabs, activeBudget
 
     return (
         <nav className="tab-navigation">
+            <img
+                src={`https://alexandersokolov.com/jpl/logo1.png?v=${Date.now()}`}
+                alt="Continuum"
+                onClick={() => onTabChange('Main')}
+                style={{
+                    height: '28px',
+                    marginRight: '1rem',
+                    opacity: 0.8,
+                    position: 'relative',
+                    top: '8px',
+                    cursor: 'pointer'
+                }}
+            />
             {mainTabs.map((tab) => (
                 <button
                     key={tab}
