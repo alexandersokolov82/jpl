@@ -5,7 +5,7 @@ import ImageUploadModal from './ImageUploadModal';
 export const ProjectHeader = ({
     title = 'The Shining',
     description = 'A family heads to an isolated hotel for the winter where a sinister presence influences the father into violence.',
-    thumbnail = 'https://m.media-amazon.com/images/M/MV5BZWFlYmY2MGEtZjVkYS00YzU4LTg0YjQtYzY1ZGE3NTA5NGQxXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_.jpg',
+    thumbnail = 'https://alexandersokolov.com/jpl/tsh_logo.jpg',
     onNavigateToProject
 }) => {
     return (

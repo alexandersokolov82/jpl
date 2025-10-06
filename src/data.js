@@ -5,7 +5,7 @@ export const projectData = {
         name: 'The Shining',
         code: 'SHINING-1980',
         description: "A family heads to an isolated hotel for the winter where a sinister presence influences the father into violence, while his psychic son sees horrific forebodings from both past and future.",
-        image: 'https://alexandersokolov.com/continuity/thumbnails/shining_thumb_0059.jpg',
+        image: 'https://alexandersokolov.com/jpl/tsh_logo.jpg',
         children: ['SEQ01', 'SEQ02', 'SEQ03', 'SEQ04', 'SEQ05', 'SEQ06', 'SEQ07', 'SEQ08', 'SEQ09', 'ASSETS_ROOT'],
         studio: 'Warner Bros.',
         aspectRatio: '16:9 (HD / UHD)',
