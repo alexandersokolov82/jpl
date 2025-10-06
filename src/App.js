@@ -1,14 +1,14 @@
 // src/App.js
 import React, { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { TabNavigation, Breadcrumbs, DetailView, CardListView, PrevisShotsView, PrevisAssetsView, PrevisBudgetView, PrevisSummaryView } from './components';
+import { TabNavigation, Breadcrumbs, DetailView, CardListView, PrevisShotsView, PrevisAssetsView, PrevisBudgetView, PrevisSummaryView, ProjectsListView } from './components';
 import { projectData } from './data';
 import './App.css';
 
 function App() {
     // Clear old budget data to force reload with new shot names
     useEffect(() => {
-        const currentVersion = 'v12_default_values';
+        const currentVersion = 'v13_project_estimates';
         const storedVersion = localStorage.getItem('budgetDataVersion');
         if (storedVersion !== currentVersion) {
             // Clear ALL localStorage to reset to defaults
@@ -27,12 +27,12 @@ function App() {
         // return savedData ? JSON.parse(savedData) : projectData;
     });
     const [viewStack, setViewStack] = useState(['PROJ_001']);
-    const [activeTab, setActiveTab] = useState(null);
+    const [activeTab, setActiveTab] = useState('Main');
 
     // Budget tabs management
     const [budgetTabs, setBudgetTabs] = useState(() => {
         const saved = localStorage.getItem('budgetTabs');
-        return saved ? JSON.parse(saved) : [{ id: 'budget_1', name: 'Previs Budget' }];
+        return saved ? JSON.parse(saved) : [{ id: 'budget_1', name: 'Project Estimates' }];
     });
 
     const [activeBudgetTab, setActiveBudgetTab] = useState(() => {
@@ -208,6 +208,12 @@ function App() {
         setActiveBudgetTab(null);
     };
 
+    const handleProjectClick = (projectId) => {
+        setViewStack([projectId]);
+        setActiveTab('Project');
+        setActiveBudgetTab(null);
+    };
+
     const handleBudgetTitleChange = (newTitle) => {
         setBudgetTabs(tabs => tabs.map(tab =>
             tab.id === activeBudgetTab ? { ...tab, name: newTitle } : tab
@@ -256,7 +262,7 @@ function App() {
 
     const handleNewBudget = () => {
         const newBudgetId = `budget_${Date.now()}`;
-        const newBudgetName = 'New Budget';
+        const newBudgetName = 'New Estimate';
 
         setBudgetTabs(tabs => [...tabs, { id: newBudgetId, name: newBudgetName }]);
         setActiveBudgetTab(newBudgetId);
@@ -350,6 +356,8 @@ function App() {
                         </AnimatePresence>
                     </div>
                 </>
+            ) : activeTab === 'Main' ? (
+                <ProjectsListView onProjectClick={handleProjectClick} />
             ) : activeTab === 'Previs Shots' ? (
                 <PrevisShotsView data={data} onShotClick={handleShotClick} />
             ) : activeTab === 'Previs Assets' && viewStack.length > 1 ? (
@@ -376,7 +384,7 @@ function App() {
                 <PrevisAssetsView data={data} onAssetClick={handleAssetClick} />
             ) : activeTab === 'Previs Summary' ? (
                 <PrevisSummaryView budgetId={activeBudgetTab || budgetTabs[0]?.id || 'budget_1'} />
-            ) : activeTab === 'Main' ? (
+            ) : activeTab === 'Project' ? (
                 <>
                     <Breadcrumbs items={breadcrumbItems} onClick={handleBreadcrumbClick} />
                     <div className="main-content">

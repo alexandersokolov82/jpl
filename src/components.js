@@ -2,8 +2,95 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import ImageUploadModal from './ImageUploadModal';
 
+export const ProjectsListView = ({ onProjectClick }) => {
+    const projects = [
+        {
+            id: 'PROJ_001',
+            title: 'The Shining',
+            description: 'A family heads to an isolated hotel for the winter where a sinister presence influences the father into violence.',
+            year: 1980,
+            director: 'Stanley Kubrick',
+            thumbnail: 'https://m.media-amazon.com/images/M/MV5BZWFlYmY2MGEtZjVkYS00YzU4LTg0YjQtYzY1ZGE3NTA5NGQxXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_.jpg',
+            available: true
+        },
+        {
+            id: 'PROJ_002',
+            title: 'JPL',
+            description: 'A deep space mission to explore the outer reaches of our solar system reveals an ancient alien artifact that challenges everything we know about the universe.',
+            year: 2025,
+            director: 'To Be Announced',
+            thumbnail: 'https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=800',
+            available: false
+        }
+    ];
+
+    return (
+        <div style={{ padding: '2rem' }}>
+            <h2 style={{ marginBottom: '2rem', color: 'var(--text-primary)' }}>Projects</h2>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(400px, 1fr))', gap: '2rem' }}>
+                {projects.map(project => (
+                    <div
+                        key={project.id}
+                        onClick={() => {
+                            if (project.available) {
+                                onProjectClick(project.id);
+                            } else {
+                                alert('This project is not yet populated. Coming soon!');
+                            }
+                        }}
+                        style={{
+                            background: 'var(--bg-surface)',
+                            border: '1px solid var(--border-color)',
+                            borderRadius: '12px',
+                            overflow: 'hidden',
+                            cursor: 'pointer',
+                            transition: 'all 0.2s ease',
+                        }}
+                        onMouseEnter={(e) => {
+                            e.currentTarget.style.borderColor = 'var(--accent-color)';
+                            e.currentTarget.style.transform = 'translateY(-4px)';
+                            e.currentTarget.style.boxShadow = '0 8px 16px rgba(0,0,0,0.2)';
+                        }}
+                        onMouseLeave={(e) => {
+                            e.currentTarget.style.borderColor = 'var(--border-color)';
+                            e.currentTarget.style.transform = 'translateY(0)';
+                            e.currentTarget.style.boxShadow = 'none';
+                        }}
+                    >
+                        <div style={{
+                            width: '100%',
+                            height: '250px',
+                            background: `url(${project.thumbnail}) center/cover`,
+                            position: 'relative'
+                        }}>
+                            <div style={{
+                                position: 'absolute',
+                                bottom: 0,
+                                left: 0,
+                                right: 0,
+                                padding: '1rem',
+                                background: 'linear-gradient(to top, rgba(0,0,0,0.9), transparent)',
+                            }}>
+                                <h3 style={{ margin: '0', color: '#fff', fontSize: '1.5rem' }}>{project.title}</h3>
+                            </div>
+                        </div>
+                        <div style={{ padding: '1.5rem' }}>
+                            <p style={{ margin: '0 0 0.75rem 0', color: 'var(--text-secondary)', fontSize: '0.875rem' }}>
+                                {project.year} • {project.director}
+                            </p>
+                            <p style={{ margin: 0, color: 'var(--text-secondary)', fontSize: '0.875rem', lineHeight: '1.6' }}>
+                                {project.description}
+                            </p>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+};
+
 export const TabNavigation = ({ activeTab, onTabChange, budgetTabs, activeBudgetTab, onBudgetTabChange }) => {
-    const mainTabs = ['Previs Shots', 'Previs Assets'];
+    const mainTabs = ['Main', 'Project', 'Previs Shots', 'Previs Assets'];
 
     return (
         <nav className="tab-navigation">
@@ -19,7 +106,7 @@ export const TabNavigation = ({ activeTab, onTabChange, budgetTabs, activeBudget
             {budgetTabs && budgetTabs.map((budgetTab) => (
                 <button
                     key={budgetTab.id}
-                    className={`tab-button ${activeBudgetTab === budgetTab.id && activeTab !== 'Previs Summary' ? 'active' : ''}`}
+                    className={`tab-button ${activeBudgetTab === budgetTab.id && !['Main', 'Project', 'Previs Shots', 'Previs Assets', 'Previs Summary'].includes(activeTab) ? 'active' : ''}`}
                     onClick={() => onBudgetTabChange(budgetTab.id)}
                 >
                     {budgetTab.name}
@@ -1534,7 +1621,7 @@ export const PrevisBudgetView = ({ data, onShotClick, onAssetClick, budgetId, bu
                                     <th style={{ width: '60px' }}>Cat</th>
                                     <th style={{ textAlign: 'left', width: '250px' }}>Item</th>
                                     <th style={{ width: '80px', textAlign: 'center' }}>Billable</th>
-                                    <th style={{ width: '100px' }}>Prod×</th>
+                                    <th style={{ width: '100px' }}>Involvement</th>
                                     <th style={{ width: '100px' }}>Days</th>
                                     <th style={{ textAlign: 'right' }}>Cost (USD)</th>
                                     <th style={{ textAlign: 'center', width: '80px' }}>Actions</th>
@@ -1760,8 +1847,6 @@ export const PrevisBudgetView = ({ data, onShotClick, onAssetClick, budgetId, bu
                 </div>
             )}
 
-            {renderTeamTable()}
-
             {renderBudgetTable(
                 assetsBudgetData,
                 'assets',
@@ -1838,9 +1923,9 @@ export const PrevisSummaryView = ({ budgetId }) => {
     const [savedScenarios, setSavedScenarios] = React.useState(() => {
         const saved = localStorage.getItem(`budgetScenarios_${budgetId}`);
         return saved ? JSON.parse(saved) : [
-            { name: 'Default', assetsEst: 1.0, shotsEst: 1.0, assetsExtra: 0, shotsExtra: 0, contingency: 10 },
-            { name: 'Fast', assetsEst: 0.8, shotsEst: 0.8, assetsExtra: 2, shotsExtra: 2, contingency: 5 },
-            { name: 'Deluxe', assetsEst: 1.5, shotsEst: 1.5, assetsExtra: 0, shotsExtra: 0, contingency: 20 }
+            { name: 'Default', assetsEst: 1.0, shotsEst: 1.0, assetsExtra: 0, shotsExtra: 0, contingency: 10, teamRoles: [] },
+            { name: 'Fast', assetsEst: 0.8, shotsEst: 0.8, assetsExtra: 2, shotsExtra: 2, contingency: 5, teamRoles: [] },
+            { name: 'Deluxe', assetsEst: 1.5, shotsEst: 1.5, assetsExtra: 0, shotsExtra: 0, contingency: 20, teamRoles: [] }
         ];
     });
 
@@ -1870,6 +1955,10 @@ export const PrevisSummaryView = ({ budgetId }) => {
     React.useEffect(() => {
         localStorage.setItem(`shotsExtraArtists_${budgetId}`, shotsExtraArtists.toString());
     }, [shotsExtraArtists, budgetId]);
+
+    React.useEffect(() => {
+        localStorage.setItem(`previsBudgetTeamRoles_v5_${budgetId}`, JSON.stringify(teamRoles));
+    }, [teamRoles, budgetId]);
 
     // Function to reload all data from localStorage
     const reloadDataFromStorage = React.useCallback(() => {
@@ -1916,9 +2005,12 @@ export const PrevisSummaryView = ({ budgetId }) => {
     };
 
     const calculateProductionCost = (item) => {
-        const days = parseFloat(item.days) || 0;
-        const prodMultiplier = parseFloat(item.prodMultiplier) || 1.0;
-        return days * prodMultiplier * 1000;
+        // Find the role rate from teamRoles based on item name
+        const role = teamRoles.find(r => r.role === item.name);
+        if (!role) return 0;
+
+        const ratePerDay = role.rateUnit === 'week' ? role.rate / 5 : role.rate;
+        return item.days * ratePerDay * (item.prodMultiplier || 1.0);
     };
 
     const calculateScenarioCost = (item, budgetData, extraArtists = 0) => {
@@ -2056,6 +2148,10 @@ export const PrevisSummaryView = ({ budgetId }) => {
                                     setAssetsExtraArtists(scenario.assetsExtra);
                                     setShotsExtraArtists(scenario.shotsExtra);
                                     setContingencyPercent(scenario.contingency);
+                                    if (scenario.teamRoles && scenario.teamRoles.length > 0) {
+                                        setTeamRoles(scenario.teamRoles);
+                                        localStorage.setItem(`previsBudgetTeamRoles_v5_${budgetId}`, JSON.stringify(scenario.teamRoles));
+                                    }
                                 }
                             }}
                             style={{
@@ -2077,7 +2173,15 @@ export const PrevisSummaryView = ({ budgetId }) => {
                                 if (currentScenario) {
                                     const updated = savedScenarios.map(s =>
                                         s.name === activeScenario
-                                            ? { ...s, assetsEst: assetsEstimateMultiplier, shotsEst: shotsEstimateMultiplier, assetsExtra: assetsExtraArtists, shotsExtra: shotsExtraArtists, contingency: contingencyPercent }
+                                            ? {
+                                                ...s,
+                                                assetsEst: assetsEstimateMultiplier,
+                                                shotsEst: shotsEstimateMultiplier,
+                                                assetsExtra: assetsExtraArtists,
+                                                shotsExtra: shotsExtraArtists,
+                                                contingency: contingencyPercent,
+                                                teamRoles: teamRoles
+                                            }
                                             : s
                                     );
                                     setSavedScenarios(updated);
@@ -2105,7 +2209,8 @@ export const PrevisSummaryView = ({ budgetId }) => {
                                         shotsEst: shotsEstimateMultiplier,
                                         assetsExtra: assetsExtraArtists,
                                         shotsExtra: shotsExtraArtists,
-                                        contingency: contingencyPercent
+                                        contingency: contingencyPercent,
+                                        teamRoles: teamRoles
                                     }]);
                                     setActiveScenario(name.trim());
                                 }
@@ -2138,6 +2243,10 @@ export const PrevisSummaryView = ({ budgetId }) => {
                                     setAssetsExtraArtists(first.assetsExtra);
                                     setShotsExtraArtists(first.shotsExtra);
                                     setContingencyPercent(first.contingency);
+                                    if (first.teamRoles && first.teamRoles.length > 0) {
+                                        setTeamRoles(first.teamRoles);
+                                        localStorage.setItem(`previsBudgetTeamRoles_v5_${budgetId}`, JSON.stringify(first.teamRoles));
+                                    }
                                 }
                             }}
                             style={{
@@ -2262,6 +2371,107 @@ export const PrevisSummaryView = ({ budgetId }) => {
                                 />
                             </td>
                         </tr>
+                        <tr style={{ borderTop: '2px solid var(--border-color)' }}>
+                            <td colSpan="4" style={{ padding: '1rem 0.5rem 0.5rem', fontWeight: 'bold', fontSize: '1rem' }}>
+                                Team Breakdown & Rates
+                            </td>
+                        </tr>
+                        <tr style={{ background: 'var(--bg-primary)' }}>
+                            <td style={{ textAlign: 'left', fontWeight: '600', fontSize: '0.75rem', color: 'var(--text-secondary)' }}>ROLE</td>
+                            <td style={{ textAlign: 'left', fontWeight: '600', fontSize: '0.75rem', color: 'var(--text-secondary)' }}>RATE</td>
+                            <td style={{ textAlign: 'left', fontWeight: '600', fontSize: '0.75rem', color: 'var(--text-secondary)' }}>RATE UNIT</td>
+                            <td style={{ textAlign: 'left', fontWeight: '600', fontSize: '0.75rem', color: 'var(--text-secondary)' }}>PROD×</td>
+                        </tr>
+                        {teamRoles.map(role => (
+                            <tr key={role.id}>
+                                <td style={{ textAlign: 'left' }}>
+                                    <input
+                                        type="text"
+                                        value={role.role}
+                                        onChange={(e) => {
+                                            const updatedRoles = teamRoles.map(r =>
+                                                r.id === role.id ? { ...r, role: e.target.value } : r
+                                            );
+                                            setTeamRoles(updatedRoles);
+                                        }}
+                                        style={{
+                                            width: '100%',
+                                            padding: '0.25rem 0.5rem',
+                                            background: 'var(--bg-surface)',
+                                            border: '1px solid var(--border-color)',
+                                            borderRadius: '4px',
+                                            color: 'var(--text-primary)',
+                                            fontSize: '0.875rem'
+                                        }}
+                                    />
+                                </td>
+                                <td style={{ textAlign: 'left' }}>
+                                    <input
+                                        type="number"
+                                        value={role.rate}
+                                        onChange={(e) => {
+                                            const updatedRoles = teamRoles.map(r =>
+                                                r.id === role.id ? { ...r, rate: parseFloat(e.target.value) || 0 } : r
+                                            );
+                                            setTeamRoles(updatedRoles);
+                                        }}
+                                        style={{
+                                            width: '80px',
+                                            padding: '0.25rem 0.5rem',
+                                            background: 'var(--bg-surface)',
+                                            border: '1px solid var(--border-color)',
+                                            borderRadius: '4px',
+                                            color: 'var(--text-primary)',
+                                            fontSize: '0.875rem'
+                                        }}
+                                    />
+                                </td>
+                                <td style={{ textAlign: 'left' }}>
+                                    <select
+                                        value={role.rateUnit}
+                                        onChange={(e) => {
+                                            const updatedRoles = teamRoles.map(r =>
+                                                r.id === role.id ? { ...r, rateUnit: e.target.value } : r
+                                            );
+                                            setTeamRoles(updatedRoles);
+                                        }}
+                                        style={{
+                                            padding: '0.25rem 0.5rem',
+                                            background: 'var(--bg-surface)',
+                                            border: '1px solid var(--border-color)',
+                                            borderRadius: '4px',
+                                            color: 'var(--text-primary)',
+                                            fontSize: '0.875rem'
+                                        }}
+                                    >
+                                        <option value="day">per day</option>
+                                        <option value="week">per week</option>
+                                    </select>
+                                </td>
+                                <td style={{ textAlign: 'left' }}>
+                                    <input
+                                        type="number"
+                                        step="0.1"
+                                        value={role.productivity}
+                                        onChange={(e) => {
+                                            const updatedRoles = teamRoles.map(r =>
+                                                r.id === role.id ? { ...r, productivity: parseFloat(e.target.value) || 1.0 } : r
+                                            );
+                                            setTeamRoles(updatedRoles);
+                                        }}
+                                        style={{
+                                            width: '80px',
+                                            padding: '0.25rem 0.5rem',
+                                            background: 'var(--bg-surface)',
+                                            border: '1px solid var(--border-color)',
+                                            borderRadius: '4px',
+                                            color: 'var(--text-primary)',
+                                            fontSize: '0.875rem'
+                                        }}
+                                    />
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>
