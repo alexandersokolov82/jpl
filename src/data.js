@@ -8,8 +8,8 @@ export const projectData = {
         image: 'https://alexandersokolov.com/jpl/tsh_logo.jpg',
         children: ['SEQ01', 'SEQ02', 'SEQ03', 'SEQ04', 'SEQ05', 'SEQ06', 'SEQ07', 'SEQ08', 'SEQ09', 'ASSETS_ROOT'],
         studio: 'Warner Bros.',
-        aspectRatio: '16:9 (HD / UHD)',
-        targetResolution: '1920×1080 (Full HD)'
+        aspectRatio: '1.85:1 (Standard Film)',
+        targetResolution: '1998×1080 (1.85:1)'
     },
     'ASSETS_ROOT': {
         id: 'ASSETS_ROOT',

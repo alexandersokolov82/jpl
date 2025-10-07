@@ -364,6 +364,7 @@ export const DetailView = ({ item, onAddItem, onNavigate, onUpdateItem, onDelete
                             {isEditing ? (
                                 <select name="targetResolution" value={editedTargetResolution} onChange={handleChange}>
                                     <option value="1920×1080 (Full HD)">1920×1080 (Full HD)</option>
+                                    <option value="1998×1080 (1.85:1)">1998×1080 (1.85:1)</option>
                                     <option value="3840×2160 (4K UHD)">3840×2160 (4K UHD)</option>
                                     <option value="4096×2160 (DCI 4K)">4096×2160 (DCI 4K)</option>
                                     <option value="2560×1440 (QHD)">2560×1440 (QHD)</option>
